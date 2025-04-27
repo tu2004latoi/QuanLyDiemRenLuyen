@@ -43,6 +43,7 @@
             </div>
 
             <div class="mb-3 mt-3">
+                <label for="location" class="form-label">Khoa: </label>
                 <select class="form-select" name="facultyId">
                     <option th:each="f : ${faculties}" th:value="${f.id}" th:text="${f.name}"></option>
                 </select>

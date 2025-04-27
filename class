@@ -1,0 +1,213 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+' 1. Lớp người dùng
+class User {
+  + id: String
+  + email: String
+  + password: String
+  + name: String
+  + avatar: String
+  + login()
+  + logout()
+  + changePassword()
+}
+
+class Admin {
+  + department: String
+  + createAssistantAccount()
+  + createStudentAccount()
+  + viewSchoolStatistics()
+  + exportReports()
+}
+
+class Staff {
+  + faculty: Faculty
+  + createActivity()
+  + importAttendance()
+  + confirmPoints()
+  + rejectPoints()
+  + viewFacultyStatistics()
+  + exportFacultyReports()
+  + viewMissingReports()
+}
+
+class Student {
+  + studentId: String
+  + class: String
+  + faculty: Faculty
+  + registerActivity()
+  + viewActivities()
+  + viewPoints()
+  + reportMissingActivity()
+  + viewRegisteredActivities()
+  + commentOnActivity()
+  + likeActivity()
+}
+
+' 2. Lớp nghiệp vụ chính
+class Activity {
+  + id: String
+  + name: String
+  + description: String
+  + startDate: DateTime
+  + endDate: DateTime
+  + location: String
+  + organizer: Staff
+  + maxParticipants: int
+  + currentParticipants: int
+  + pointValue: int
+  + status: Enum
+  + registerStudent()
+  + cancelRegistration()
+}
+
+class TrainingPoint {
+  + id: String
+  + student: Student
+  + activity: Activity
+  + point: int
+  + dateAwarded: DateTime
+  + confirmedBy: Staff
+  + status: Enum
+}
+
+' 3. Lớp mới bổ sung
+class Evidence {
+  + id: String
+  + filePath: String
+  + uploadDate: DateTime
+  + verifyStatus: Enum
+}
+
+class Attendance {
+  + id: String
+  + status: Enum
+  + timestamp: DateTime
+}
+
+class Report {
+  + id: String
+  + generatedAt: DateTime
+  + generatePDF()
+  + generateCSV()
+}
+
+class ReportDetail {
+  + reportId: String
+  + trainingPointId: String
+}
+
+class Statistics {
+  + calculateByFaculty()
+  + calculateByClass()
+}
+
+class NewsFeed {
+  + activities: List<Activity>
+}
+
+class Comment {
+  + id: String
+  + content: String
+}
+
+class Like {
+  + id: String
+}
+
+' 4. Tích hợp Firebase Chat
+class ChatService {
+  + sendMessage()
+  + getHistory()
+}
+
+class Message {
+  + content: String
+  + timestamp: DateTime
+}
+
+' 5. Quan hệ kế thừa
+User <|-- Admin
+User <|-- Staff
+User <|-- Student
+
+' 6. Quan hệ nghiệp vụ
+Admin "1" --> "n" Staff
+Staff "1" --> "n" Student
+
+Student "n" -- "n" Activity : "Tham gia" via TrainingPoint
+Staff "1" --> "n" Activity : "Tạo"
+
+TrainingPoint "1" --> "0..1" Evidence : "Minh chứng"
+Student "1" --> "n" Evidence : "Tải lên"
+
+Report "1" --> "n" ReportDetail
+ReportDetail "n" --> "1" TrainingPoint
+
+Activity "1" --> "n" Attendance
+Staff "1" --> "n" Attendance : "Nhập CSV"
+
+NewsFeed "1" --> "n" Activity
+NewsFeed "1" --> "n" Comment
+NewsFeed "1" --> "n" Like
+
+Student "1" --> "n" Comment
+Student "1" --> "n" Like
+
+Statistics o-- Student : Aggregation
+Statistics o-- TrainingPoint : Aggregation
+
+Student -- ChatService
+Staff -- ChatService
+ChatService "1" --> "n" Message
+
+' 7. Lớp Faculty (Khoa)
+class Faculty {
+  + id: String
+  + name: String
+  + description: String
+}
+
+' 8. Quan hệ lớp Faculty
+Staff "1" --> "1" Faculty
+Student "1" --> "1" Faculty
+Activity "n" --> "1" Faculty
+
+' 9. Enum định nghĩa
+enum PointStatus {
+  PENDING
+  CONFIRMED
+  REJECTED
+}
+
+enum ActivityStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+enum EvidenceStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+}
+
+enum ReportType {
+  PDF
+  CSV
+  EXCEL
+}
+
+' 10. Ghi chú
+note top of Report: "Truy vấn dữ liệu động khi xuất báo cáo"
+note right of Evidence: "Lưu trữ minh chứng\ncho điểm rèn luyện"
+note left of ChatService: "Firebase Realtime Database"
+@enduml

@@ -1,0 +1,46 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <!-- Thêm các style từ base (được định nghĩa ở đâu đó trong project của bạn) -->
+    <block th:replace="base :: styles"></block>
+</head>
+<body>
+
+    <!-- Header section -->
+    <div th:replace="base :: header"></div>
+
+    <!-- Content section -->
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Danh sách Hoạt Động</h1>
+
+        <div class="row">
+            <!-- Lặp qua các hoạt động và hiển thị dưới dạng cards -->
+            <div class="col-md-4" th:each="a : ${activities}">
+                <div class="card mb-4">
+                    <img class="card-img-top" th:src="@{${a.image}}" alt="Ảnh hoạt động" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${a.name}"></h5>
+                        <p class="card-text">
+                            <strong>Ngày bắt đầu:</strong> <span th:text="${#dates.format(a.startDate, 'dd/MM/yyyy HH:mm')}"></span><br>
+                            <strong>Ngày kết thúc:</strong> <span th:text="${#dates.format(a.endDate, 'dd/MM/yyyy HH:mm')}"></span><br>
+                            <strong>Điểm:</strong> <span th:text="${a.pointValue}"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thêm phân trang hoặc thông báo nếu có -->
+        <div th:if="${#lists.isEmpty(activities)}">
+            <p class="text-center">Hiện không có hoạt động nào.</p>
+        </div>
+    </div>
+
+    <!-- Footer section -->
+    <div th:replace="base :: footer"></div>
+
+</body>
+</html>

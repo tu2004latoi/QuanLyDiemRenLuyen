@@ -1,0 +1,43 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.dtt.services.impl;
+
+import com.dtt.pojo.Faculty;
+import com.dtt.repositories.FacultyRepository;
+import com.dtt.services.FacultyService;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ *
+ * @author MR TU
+ */
+@Service
+public class FacultyServiceImpl implements FacultyService{
+    @Autowired
+    private FacultyRepository facultyRepo;
+
+    @Override
+    public Faculty getFacultyById(String id) {
+        return this.facultyRepo.getFacultyById(id);
+    }
+
+    @Override
+    public Faculty addOrUpdateFaculty(Faculty a) {
+        return this.facultyRepo.addOrUpdateFaculty(a);
+    }
+
+    @Override
+    public List<Faculty> getAllFaculties() {
+        return this.facultyRepo.getAllFaculties();
+    }
+
+    @Override
+    public void deleteFaculty(String id) {
+        this.facultyRepo.deleteFaculty(id);
+    }
+    
+}

@@ -5,11 +5,12 @@
 package com.dtt.controllers;
 
 import com.dtt.services.ActivityService;
-import com.dtt.services.NewsFeedService;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -18,17 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
     @Autowired
-    private NewsFeedService newsFeedSer;
-    
-    @Autowired
     private ActivityService activitySer;
     @RequestMapping("/")
-    public String index(Model model){
-        //NewsFeed
-        model.addAttribute("newsFeeds",newsFeedSer.getAllNewsFeeds());
-        
+    public String index(Model model, @RequestParam Map<String, String> params){
         //Activity
-        model.addAttribute("activities",activitySer.getAllActivities());
+        model.addAttribute("activities", this.activitySer.getActivities(params));
         return "index";
     }
 }

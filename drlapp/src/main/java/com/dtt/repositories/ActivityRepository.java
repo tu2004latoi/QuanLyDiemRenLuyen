@@ -6,6 +6,7 @@ package com.dtt.repositories;
 
 import com.dtt.pojo.Activity;
 import java.util.List;
+import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,9 +15,10 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ActivityRepository {
-//    Activity getActivityById(String id);
-//    Activity addActivity(Activity a);
+    Activity getActivityById(String id);
+    List<Activity> getActivities(Map<String, String> params);
+    Activity addOrUpdateActivity(Activity a);
     List<Activity> getAllActivities();
-//    boolean deleteActivity(String id);
+    void deleteActivity(String id);
 //    List<Activity> getActivitiesByStatus(String status);
 }

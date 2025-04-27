@@ -4,9 +4,8 @@
  */
 package com.dtt.services;
 
-import com.dtt.pojo.Activity;
+import com.dtt.pojo.Faculty;
 import java.util.List;
-import java.util.Map;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,10 +13,9 @@ import org.springframework.stereotype.Service;
  * @author MR TU
  */
 @Service
-public interface ActivityService {
-    Activity getActivityById(String id);
-    List<Activity> getAllActivities();
-    void deleteActivity(String id);
-    List<Activity> getActivities(Map<String, String> params);
-    Activity addOrUpdateActivity(Activity a);
+public interface FacultyService {
+    Faculty getFacultyById(String id);
+    Faculty addOrUpdateFaculty(Faculty a);
+    List<Faculty> getAllFaculties();
+    void deleteFaculty(String id);
 }

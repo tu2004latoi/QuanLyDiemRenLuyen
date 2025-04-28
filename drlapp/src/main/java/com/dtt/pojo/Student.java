@@ -8,8 +8,9 @@ import java.util.Set;
 @Table(name = "students")
 public class Student implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Tự động tạo id
     @Column(name = "id")
-    private String id;
+    private Integer id; // Thay đổi từ String thành Integer
 
     @OneToOne
     @MapsId

@@ -36,7 +36,7 @@ public class ApiActivityController {
 
     @DeleteMapping("/activities/{activityId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void destroy(@PathVariable("activityId") String activityId) {
+    public void destroy(@PathVariable("activityId") int activityId) {
         this.activityService.deleteActivity(activityId);
     }
 

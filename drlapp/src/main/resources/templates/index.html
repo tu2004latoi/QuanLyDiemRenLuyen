@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Trang chủ</title>
         <!-- Thêm các style từ base -->
-        <block th:replace="base :: styles"></block>
-    </head>
+    <block th:replace="base :: styles"></block>
+</head>
 <body>
 
     <!-- Header -->
@@ -15,7 +15,20 @@
     <!-- Main content -->
     <div class="container mt-4">
         <h1 class="text-center mb-4">Danh sách Hoạt Động</h1>
-
+        <form th:action="@{/}">
+            <div class="mb-3 mt-3">
+                <input type="text" class="form-control" placeholder="Từ khóa" name="kw">
+            </div>
+            <div class="row mb-3 mt-3">
+                <div class="col-6">
+                    <input type="number" class="form-control" placeholder="Điểm min" name="fromPoint">
+                </div>
+                <div class="col-6">
+                    <input type="number" class="form-control" placeholder="Điểm max" name="toPoint">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        </form>
         <!-- Nút Thêm Hoạt Động -->
         <div class="d-flex justify-content-end mb-4">
             <a th:href="@{/activities}" class="btn btn-success">

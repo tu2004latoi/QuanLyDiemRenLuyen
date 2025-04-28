@@ -9,8 +9,9 @@ import java.util.Set;
 public class Activity implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Tự động sinh giá trị cho id
     @Column(name = "id")
-    private String id;
+    private Integer id;  // Chuyển kiểu từ String sang Integer
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -62,11 +63,11 @@ public class Activity implements Serializable {
 
     // Getter and Setter methods for each field
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

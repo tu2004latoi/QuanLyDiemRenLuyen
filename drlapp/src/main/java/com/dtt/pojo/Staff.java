@@ -9,8 +9,9 @@ import java.util.Set;
 public class Staff implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Tự động sinh id
     @Column(name = "id")
-    private String id;
+    private Integer id; // Chuyển từ String thành Integer
 
     @OneToOne
     @MapsId
@@ -31,11 +32,11 @@ public class Staff implements Serializable {
     private Set<Attendance> attendances;
 
     // Getter và Setter
-    public String getId() {
+    public Integer getId() {  // Chuyển từ String thành Integer
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -82,7 +83,7 @@ public class Staff implements Serializable {
     @Override
     public String toString() {
         return "Staff{" +
-                "id='" + id + '\'' +
+                "id=" + id + // Chuyển từ String sang Integer
                 ", faculty=" + faculty +
                 '}';
     }

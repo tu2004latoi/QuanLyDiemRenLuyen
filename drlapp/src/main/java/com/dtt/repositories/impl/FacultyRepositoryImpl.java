@@ -26,7 +26,7 @@ public class FacultyRepositoryImpl implements FacultyRepository{
     private LocalSessionFactoryBean factory;
 
     @Override
-    public Faculty getFacultyById(String id) {
+    public Faculty getFacultyById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createNamedQuery("Faculty.findById", Faculty.class);
         q.setParameter("id", id);
@@ -57,7 +57,7 @@ public class FacultyRepositoryImpl implements FacultyRepository{
     }
 
     @Override
-    public void deleteFaculty(String id) {
+    public void deleteFaculty(int id) {
         try {
             Session s = this.factory.getObject().getCurrentSession();
             Faculty f = this.getFacultyById(id);

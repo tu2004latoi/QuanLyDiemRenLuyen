@@ -4,8 +4,8 @@
  */
 package com.dtt.services;
 
-import com.dtt.pojo.Faculty;
-import java.util.List;
+import com.dtt.pojo.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,9 +13,6 @@ import org.springframework.stereotype.Service;
  * @author MR TU
  */
 @Service
-public interface FacultyService {
-    Faculty getFacultyById(int id);
-    Faculty addOrUpdateFaculty(Faculty a);
-    List<Faculty> getAllFaculties();
-    void deleteFaculty(int id);
+public interface UserService extends UserDetailsService{
+    User getUserByUsername(String username);
 }

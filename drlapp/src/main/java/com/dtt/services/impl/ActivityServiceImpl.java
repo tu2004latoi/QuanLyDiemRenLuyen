@@ -27,12 +27,12 @@ public class ActivityServiceImpl implements ActivityService{
     }
 
     @Override
-    public Activity getActivityById(String id) {
+    public Activity getActivityById(int id) {
         return this.activityRepo.getActivityById(id);
     }
 
     @Override
-    public void deleteActivity(String id) {
+    public void deleteActivity(int id) {
         this.activityRepo.deleteActivity(id);
     }
 

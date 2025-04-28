@@ -18,5 +18,37 @@ public class Admin implements Serializable {
     @Column(name = "department")
     private String department;
 
-    // Getters and setters
+    // Getter và Setter
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id='" + id + '\'' +
+                ", department='" + department + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

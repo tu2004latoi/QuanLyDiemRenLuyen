@@ -12,8 +12,8 @@ import java.util.List;
  * @author admin
  */
 public interface NewsFeedRepository {
-//    NewsFeed getNewsFeedById(String id);
+//    NewsFeed getNewsFeedById(int id);
 //    NewsFeed addNewsFeed(NewsFeed n);
     List<NewsFeed> getAllNewsFeeds();
-//    boolean deleteNewsFeed(String id);
+//    boolean deleteNewsFeed(int id);
 }

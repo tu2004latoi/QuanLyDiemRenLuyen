@@ -9,8 +9,9 @@ import java.util.Set;
 public class Faculty implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Tự động sinh id
     @Column(name = "id")
-    private String id;
+    private Integer id;  // Thay đổi từ String thành Integer
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -26,11 +27,11 @@ public class Faculty implements Serializable {
     private Set<Student> students;
 
     // Getter và Setter
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -69,7 +70,7 @@ public class Faculty implements Serializable {
     @Override
     public String toString() {
         return "Faculty{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';

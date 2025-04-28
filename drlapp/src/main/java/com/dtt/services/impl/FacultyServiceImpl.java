@@ -21,7 +21,7 @@ public class FacultyServiceImpl implements FacultyService{
     private FacultyRepository facultyRepo;
 
     @Override
-    public Faculty getFacultyById(String id) {
+    public Faculty getFacultyById(int id) {
         return this.facultyRepo.getFacultyById(id);
     }
 
@@ -36,7 +36,7 @@ public class FacultyServiceImpl implements FacultyService{
     }
 
     @Override
-    public void deleteFaculty(String id) {
+    public void deleteFaculty(int id) {
         this.facultyRepo.deleteFaculty(id);
     }
     

@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface FacultyRepository {
-    Faculty getFacultyById(String id);
+    Faculty getFacultyById(int id);
     Faculty addOrUpdateFaculty(Faculty a);
     List<Faculty> getAllFaculties();
-    void deleteFaculty(String id);
+    void deleteFaculty(int id);
 }

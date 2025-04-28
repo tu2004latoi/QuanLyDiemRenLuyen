@@ -34,7 +34,7 @@ public class ActivityRepositoryImpl implements ActivityRepository {
     private LocalSessionFactoryBean factory;
 
     @Override
-    public Activity getActivityById(String id) {
+    public Activity getActivityById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createNamedQuery("Activity.findById", Activity.class);
         q.setParameter("id", id);
@@ -65,7 +65,7 @@ public class ActivityRepositoryImpl implements ActivityRepository {
     }
 
     @Override
-    public void deleteActivity(String id) {
+    public void deleteActivity(int id) {
         try {
             Session s = this.factory.getObject().getCurrentSession();
             Activity a = this.getActivityById(id);
@@ -106,12 +106,12 @@ public class ActivityRepositoryImpl implements ActivityRepository {
 
             String fromPoint = params.get("fromPoint");
             if (fromPoint != null && !fromPoint.isEmpty()) {
-                predicates.add(b.greaterThanOrEqualTo(root.get("point_value"), fromPoint));
+                predicates.add(b.greaterThanOrEqualTo(root.get("pointValue"), fromPoint));
             }
 
             String toPoint = params.get("toPoint");
             if (toPoint != null && !toPoint.isEmpty()) {
-                predicates.add(b.lessThanOrEqualTo(root.get("point_value"), toPoint));
+                predicates.add(b.lessThanOrEqualTo(root.get("pointValue"), toPoint));
             }
 
             q.where(predicates.toArray(new jakarta.persistence.criteria.Predicate[0]));

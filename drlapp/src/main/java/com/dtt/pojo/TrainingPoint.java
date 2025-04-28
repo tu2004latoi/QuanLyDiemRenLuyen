@@ -9,8 +9,9 @@ import java.util.Set;
 @Table(name = "training_points")
 public class TrainingPoint implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Tự động tạo giá trị ID
     @Column(name = "id")
-    private String id;
+    private Integer id; // Thay đổi từ String thành Integer
 
     @ManyToOne
     @JoinColumn(name = "student_id")

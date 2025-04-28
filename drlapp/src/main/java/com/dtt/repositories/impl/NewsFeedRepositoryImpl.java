@@ -27,7 +27,7 @@ public class NewsFeedRepositoryImpl implements NewsFeedRepository {
     private LocalSessionFactoryBean factory;
 
 //    @Override
-//    public NewsFeed getNewsFeedById(String id) {
+//    public NewsFeed getNewsFeedById(int id) {
 //        Session s = this.factory.getObject().getCurrentSession();
 //        Query q = s.createNamedQuery("NewsFeed.findById", NewsFeed.class);
 //        q.setParameter("id", id);
@@ -54,7 +54,7 @@ public class NewsFeedRepositoryImpl implements NewsFeedRepository {
     }
 
 //    @Override
-//    public boolean deleteNewsFeed(String id) {
+//    public boolean deleteNewsFeed(int id) {
 //        Session s = this.factory.getObject().getCurrentSession();
 //        NewsFeed n = this.getNewsFeedById(id);
 //        if (n != null) {

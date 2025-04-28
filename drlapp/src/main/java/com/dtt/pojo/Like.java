@@ -7,9 +7,11 @@ import java.util.Date;
 @Entity
 @Table(name = "likes")
 public class Like implements Serializable {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Tự động sinh id
     @Column(name = "id")
-    private String id;
+    private Integer id;  // Thay đổi từ String thành Integer
 
     @ManyToOne
     @JoinColumn(name = "student_id")
@@ -22,5 +24,46 @@ public class Like implements Serializable {
     @Column(name = "created_at")
     private Date createdAt;
 
-    // Getters and setters
+    // Getter và Setter
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Like{" +
+                "id=" + id +
+                ", student=" + student +
+                ", activity=" + activity +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 }

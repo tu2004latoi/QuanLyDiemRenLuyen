@@ -15,9 +15,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface ActivityService {
-    Activity getActivityById(String id);
+    Activity getActivityById(int id);
     List<Activity> getAllActivities();
-    void deleteActivity(String id);
+    void deleteActivity(int id);
     List<Activity> getActivities(Map<String, String> params);
     Activity addOrUpdateActivity(Activity a);
 }

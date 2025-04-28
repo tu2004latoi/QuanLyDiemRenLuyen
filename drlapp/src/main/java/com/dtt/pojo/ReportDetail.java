@@ -5,7 +5,15 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "report_details")
+@NamedQueries({
+    @NamedQuery(name = "ReportDetail.findAll", query = "SELECT rd FROM ReportDetail rd"),
+    @NamedQuery(name = "ReportDetail.findById", query = "SELECT rd FROM ReportDetail rd WHERE rd.id = :id"),
+    @NamedQuery(name = "ReportDetail.findByReport", query = "SELECT rd FROM ReportDetail rd WHERE rd.report.id = :reportId"),
+    @NamedQuery(name = "ReportDetail.findByTrainingPoint", query = "SELECT rd FROM ReportDetail rd WHERE rd.trainingPoint.id = :trainingPointId")
+})
+
 public class ReportDetail implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -19,4 +27,45 @@ public class ReportDetail implements Serializable {
     private TrainingPoint trainingPoint;
 
     // Getters and setters
+    /**
+     * @return the id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the report
+     */
+    public Report getReport() {
+        return report;
+    }
+
+    /**
+     * @param report the report to set
+     */
+    public void setReport(Report report) {
+        this.report = report;
+    }
+
+    /**
+     * @return the trainingPoint
+     */
+    public TrainingPoint getTrainingPoint() {
+        return trainingPoint;
+    }
+
+    /**
+     * @param trainingPoint the trainingPoint to set
+     */
+    public void setTrainingPoint(TrainingPoint trainingPoint) {
+        this.trainingPoint = trainingPoint;
+    }
 }

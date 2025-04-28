@@ -6,8 +6,24 @@ import java.util.Set;
 
 @Entity
 @Table(name = "activities")
-public class Activity implements Serializable {
+@NamedQueries({
+    @NamedQuery(name = "Activity.findAll", query = "SELECT a FROM Activity a"),
+    @NamedQuery(name = "Activity.findById", query = "SELECT a FROM Activity a WHERE a.id = :id"),
+    @NamedQuery(name = "Activity.findByName", query = "SELECT a FROM Activity a WHERE a.name = :name"),
+    @NamedQuery(name = "Activity.findByDescription", query = "SELECT a FROM Activity a WHERE a.description = :description"),
+    @NamedQuery(name = "Activity.findByStartDate", query = "SELECT a FROM Activity a WHERE a.startDate = :startDate"),
+    @NamedQuery(name = "Activity.findByEndDate", query = "SELECT a FROM Activity a WHERE a.endDate = :endDate"),
+    @NamedQuery(name = "Activity.findByLocation", query = "SELECT a FROM Activity a WHERE a.location = :location"),
+    @NamedQuery(name = "Activity.findByOrganizer", query = "SELECT a FROM Activity a WHERE a.organizer = :organizer"),
+    @NamedQuery(name = "Activity.findByMaxParticipants", query = "SELECT a FROM Activity a WHERE a.maxParticipants = :maxParticipants"),
+    @NamedQuery(name = "Activity.findByCurrentParticipants", query = "SELECT a FROM Activity a WHERE a.currentParticipants = :currentParticipants"),
+    @NamedQuery(name = "Activity.findByPointValue", query = "SELECT a FROM Activity a WHERE a.pointValue = :pointValue"),
+    @NamedQuery(name = "Activity.findByStatus", query = "SELECT a FROM Activity a WHERE a.status = :status"),
+    @NamedQuery(name = "Activity.findByImage", query = "SELECT a FROM Activity a WHERE a.image = :image")
+})
 
+public class Activity implements Serializable {
+   
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Tự động sinh giá trị cho id
     @Column(name = "id")
@@ -62,8 +78,12 @@ public class Activity implements Serializable {
     private String image;
 
     // Getter and Setter methods for each field
+<<<<<<< HEAD
 
     public Integer getId() {
+=======
+    public String getId() {
+>>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
         return id;
     }
 

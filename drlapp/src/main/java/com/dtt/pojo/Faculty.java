@@ -6,6 +6,12 @@ import java.util.Set;
 
 @Entity
 @Table(name = "faculties")
+@NamedQueries({
+    @NamedQuery(name = "Faculty.findAll", query = "SELECT f FROM Faculty f"),
+    @NamedQuery(name = "Faculty.findById", query = "SELECT f FROM Faculty f WHERE f.id = :id"),
+    @NamedQuery(name = "Faculty.findByName", query = "SELECT f FROM Faculty f WHERE f.name = :name"),
+    @NamedQuery(name = "Faculty.findByDescription", query = "SELECT f FROM Faculty f WHERE f.description = :description")
+})
 public class Faculty implements Serializable {
 
     @Id
@@ -22,7 +28,7 @@ public class Faculty implements Serializable {
     // Quan hệ 1-N với Staff (một Faculty có thể có nhiều Staff)
     @OneToMany(mappedBy = "faculty")
     private Set<Staff> staff;
-    
+
     @OneToMany(mappedBy = "faculty")
     private Set<Student> students;
 
@@ -58,7 +64,7 @@ public class Faculty implements Serializable {
     public void setStaff(Set<Staff> staff) {
         this.staff = staff;
     }
-    
+
     public Set<Student> getStudents() {
         return students;
     }
@@ -69,10 +75,18 @@ public class Faculty implements Serializable {
 
     @Override
     public String toString() {
+<<<<<<< HEAD
         return "Faculty{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+=======
+        return "Faculty{"
+                + "id='" + id + '\''
+                + ", name='" + name + '\''
+                + ", description='" + description + '\''
+                + '}';
+>>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     }
 }

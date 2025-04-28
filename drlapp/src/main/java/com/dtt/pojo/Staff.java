@@ -6,6 +6,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "staff")
+@NamedQueries({
+    @NamedQuery(name = "Staff.findAll", query = "SELECT s FROM Staff s"),
+    @NamedQuery(name = "Staff.findById", query = "SELECT s FROM Staff s WHERE s.id = :id"),
+    @NamedQuery(name = "Staff.findByFaculty", query = "SELECT s FROM Staff s WHERE s.faculty.id = :facultyId"),
+    @NamedQuery(name = "Staff.findByUser", query = "SELECT s FROM Staff s WHERE s.user.id = :userId")
+})
+
 public class Staff implements Serializable {
 
     @Id
@@ -82,9 +89,16 @@ public class Staff implements Serializable {
 
     @Override
     public String toString() {
+<<<<<<< HEAD
         return "Staff{" +
                 "id=" + id + // Chuyển từ String sang Integer
                 ", faculty=" + faculty +
                 '}';
+=======
+        return "Staff{"
+                + "id='" + id + '\''
+                + ", faculty=" + faculty
+                + '}';
+>>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     }
 }

@@ -78,12 +78,7 @@ public class Activity implements Serializable {
     private String image;
 
     // Getter and Setter methods for each field
-<<<<<<< HEAD
-
     public Integer getId() {
-=======
-    public String getId() {
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
         return id;
     }
 

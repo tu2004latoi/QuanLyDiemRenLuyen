@@ -75,18 +75,10 @@ public class Faculty implements Serializable {
 
     @Override
     public String toString() {
-<<<<<<< HEAD
         return "Faculty{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
-=======
-        return "Faculty{"
-                + "id='" + id + '\''
-                + ", name='" + name + '\''
-                + ", description='" + description + '\''
-                + '}';
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     }
 }

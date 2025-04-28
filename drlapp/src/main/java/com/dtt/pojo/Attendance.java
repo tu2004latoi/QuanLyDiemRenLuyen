@@ -17,8 +17,9 @@ import java.util.Date;
 public class Attendance implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Tự động sinh id
     @Column(name = "id")
-    private String id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
@@ -39,98 +40,42 @@ public class Attendance implements Serializable {
         PRESENT, ABSENT, LATE
     }
 
-    // Getters and setters
-<<<<<<< HEAD
-=======
-    /**
-     * @return the id
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @param id the id to set
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @return the activity
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public Activity getActivity() {
         return activity;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @param activity the activity to set
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @return the staff
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public Staff getStaff() {
         return staff;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @param staff the staff to set
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public void setStaff(Staff staff) {
         this.staff = staff;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @return the status
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public Status getStatus() {
         return status;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @param status the status to set
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public void setStatus(Status status) {
         this.status = status;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @return the timestamp
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public Date getTimestamp() {
         return timestamp;
     }
 
-<<<<<<< HEAD
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
@@ -145,12 +90,4 @@ public class Attendance implements Serializable {
                 ", timestamp=" + timestamp +
                 '}';
     }
-=======
-    /**
-     * @param timestamp the timestamp to set
-     */
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
 }

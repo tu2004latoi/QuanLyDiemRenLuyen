@@ -36,7 +36,6 @@ public class Comment implements Serializable {
     private Date createdAt;
 
     // Getters and setters
-<<<<<<< HEAD
     public Integer getId() {
         return id;
     }
@@ -45,90 +44,34 @@ public class Comment implements Serializable {
         this.id = id;
     }
 
-=======
-    /**
-     * @return the id
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the student
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public Student getStudent() {
         return student;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @param student the student to set
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public void setStudent(Student student) {
         this.student = student;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @return the activity
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public Activity getActivity() {
         return activity;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @param activity the activity to set
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @return the content
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public String getContent() {
         return content;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @param content the content to set
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public void setContent(String content) {
         this.content = content;
     }
-
-<<<<<<< HEAD
-=======
-    /**
-     * @return the createdAt
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
+    
     public Date getCreatedAt() {
         return createdAt;
     }
 
-<<<<<<< HEAD
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
@@ -143,12 +86,4 @@ public class Comment implements Serializable {
                 ", createdAt=" + createdAt +
                 '}';
     }
-=======
-    /**
-     * @param createdAt the createdAt to set
-     */
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
-    }
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
 }

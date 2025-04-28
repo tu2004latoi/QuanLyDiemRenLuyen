@@ -47,60 +47,35 @@ public class Student implements Serializable {
 
     @OneToMany(mappedBy = "student")
     private Set<Like> likes;
-
-    // Getters and setters
-    /**
-     * @return the id
-     */
-    public String getId() {
+    
+    public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return the user
-     */
     public User getUser() {
         return user;
     }
 
-    /**
-     * @param user the user to set
-     */
     public void setUser(User user) {
         this.user = user;
     }
 
-    /**
-     * @return the studentId
-     */
     public String getStudentId() {
         return studentId;
     }
 
-    /**
-     * @param studentId the studentId to set
-     */
     public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
 
-    /**
-     * @return the className
-     */
     public String getClassName() {
         return className;
     }
 
-    /**
-     * @param className the className to set
-     */
     public void setClassName(String className) {
         this.className = className;
     }

@@ -37,7 +37,6 @@ public class Message implements Serializable {
     @Column(name = "timestamp")
     private Date timestamp;
 
-<<<<<<< HEAD
     // Getter và Setter
     public Integer getId() {
         return id;
@@ -47,91 +46,34 @@ public class Message implements Serializable {
         this.id = id;
     }
 
-=======
-    // Getters and setters
-    /**
-     * @return the id
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
-     * @return the chatService
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public ChatService getChatService() {
         return chatService;
     }
-
-<<<<<<< HEAD
-=======
-    /**
-     * @param chatService the chatService to set
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
+    
     public void setChatService(ChatService chatService) {
         this.chatService = chatService;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @return the sender
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public User getSender() {
         return sender;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @param sender the sender to set
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public void setSender(User sender) {
         this.sender = sender;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @return the content
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public String getContent() {
         return content;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @param content the content to set
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public void setContent(String content) {
         this.content = content;
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * @return the timestamp
-     */
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
     public Date getTimestamp() {
         return timestamp;
     }
 
-<<<<<<< HEAD
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
@@ -144,12 +86,4 @@ public class Message implements Serializable {
                 ", timestamp=" + timestamp +
                 '}';
     }
-=======
-    /**
-     * @param timestamp the timestamp to set
-     */
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
-    }
->>>>>>> cfa281a825bfbfa4e8f73cbf450eb84e9bc896b8
 }

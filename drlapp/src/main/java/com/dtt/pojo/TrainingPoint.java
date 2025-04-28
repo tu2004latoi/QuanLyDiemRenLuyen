@@ -20,7 +20,7 @@ import java.util.Set;
 public class TrainingPoint implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Tự động tạo giá trị ID
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Tự động tạo giá trị IDENTITY
     @Column(name = "id")
     private Integer id; // Thay đổi từ String thành Integer
 
@@ -55,32 +55,18 @@ public class TrainingPoint implements Serializable {
     public enum Status {
         PENDING, CONFIRMED, REJECTED
     }
-
-    // Getters and setters
-    /**
-     * @return the id
-     */
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    /**
-     * @return the student
-     */
     public Student getStudent() {
         return student;
     }
-
-    /**
-     * @param student the student to set
-     */
+    
     public void setStudent(Student student) {
         this.student = student;
     }
@@ -92,93 +78,54 @@ public class TrainingPoint implements Serializable {
         return activity;
     }
 
-    /**
-     * @param activity the activity to set
-     */
     public void setActivity(Activity activity) {
         this.activity = activity;
     }
 
-    /**
-     * @return the point
-     */
     public Integer getPoint() {
         return point;
     }
 
-    /**
-     * @param point the point to set
-     */
     public void setPoint(Integer point) {
         this.point = point;
     }
 
-    /**
-     * @return the dateAwarded
-     */
     public Date getDateAwarded() {
         return dateAwarded;
     }
 
-    /**
-     * @param dateAwarded the dateAwarded to set
-     */
     public void setDateAwarded(Date dateAwarded) {
         this.dateAwarded = dateAwarded;
     }
 
-    /**
-     * @return the confirmedBy
-     */
     public Staff getConfirmedBy() {
         return confirmedBy;
     }
 
-    /**
-     * @param confirmedBy the confirmedBy to set
-     */
     public void setConfirmedBy(Staff confirmedBy) {
         this.confirmedBy = confirmedBy;
     }
 
-    /**
-     * @return the status
-     */
     public Status getStatus() {
         return status;
     }
 
-    /**
-     * @param status the status to set
-     */
     public void setStatus(Status status) {
         this.status = status;
     }
 
-    /**
-     * @return the evidences
-     */
     public Set<Evidence> getEvidences() {
         return evidences;
     }
 
-    /**
-     * @param evidences the evidences to set
-     */
     public void setEvidences(Set<Evidence> evidences) {
         this.evidences = evidences;
     }
 
-    /**
-     * @return the reportDetails
-     */
     public Set<ReportDetail> getReportDetails() {
         return reportDetails;
     }
 
-    /**
-     * @param reportDetails the reportDetails to set
-     */
     public void setReportDetails(Set<ReportDetail> reportDetails) {
         this.reportDetails = reportDetails;
     }

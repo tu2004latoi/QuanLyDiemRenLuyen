@@ -6,13 +6,11 @@ package com.dtt.services;
 
 import com.dtt.pojo.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author MR TU
  */
-@Service
 public interface UserService extends UserDetailsService{
     User getUserByUsername(String username);
 }

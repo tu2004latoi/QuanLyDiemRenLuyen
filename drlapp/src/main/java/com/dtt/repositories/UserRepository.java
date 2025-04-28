@@ -5,12 +5,13 @@
 package com.dtt.repositories;
 
 import com.dtt.pojo.User;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author MR TU
  */
-
+@Repository
 public interface UserRepository {
-    User getUserByUsername(String username);
+    User getUserByUsername(String username); 
 }

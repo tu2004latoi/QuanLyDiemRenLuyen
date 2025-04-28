@@ -13,16 +13,22 @@
 
     <section class="container">
         <h1 class="text-center mb-4">Đăng nhập</h1>
+
+        <!-- Hiển thị thông báo lỗi nếu có -->
+        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+            Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại.
+        </div>
+
         <form method="post" th:action="@{/login}">
             <!-- Tên hoạt động -->
             <div class="mb-3 mt-3">
                 <label for="username" class="form-label">Tên đăng nhập </label>
-                <input type="text" class="form-control" name="username" id="username" placeholder="Tên đăng nhập" />
+                <input type="text" class="form-control" name="username" id="username" placeholder="Tên đăng nhập" autocomplete="username" />
             </div>
 
             <div class="mb-3 mt-3">
                 <label for="password" class="form-label">Mật khẩu </label>
-                <input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu" />
+                <input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu" autocomplete="current-password" />
             </div>
             <button class="btn btn-success mt-1" type="submit">Đăng nhập</button>
         </form>
@@ -30,8 +36,5 @@
 
     <!-- Footer -->
     <div th:replace="base :: footer"></div>
-
-    <script th:src="@{/js/main.js}"></script>
-
 </body>
 </html>

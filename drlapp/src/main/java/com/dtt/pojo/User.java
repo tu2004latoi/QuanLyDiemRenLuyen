@@ -1,5 +1,6 @@
 package com.dtt.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
 
@@ -37,6 +38,7 @@ public class User implements Serializable {
     private Role role;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Admin admin;
 
     public Integer getId() {

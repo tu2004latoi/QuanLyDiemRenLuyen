@@ -31,4 +31,12 @@ public class UserRepositoryImpl implements UserRepository{
         
         return (User) q.getSingleResult();
     }
+
+    @Override
+    public User register(User u) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.persist(u);
+        s.refresh(u);
+        return u;
+    }
 }

@@ -4,6 +4,8 @@
  */
 package com.dtt.configs;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import jakarta.ws.rs.HttpMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -49,7 +51,10 @@ public class SpringSecurityConfigs {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
             Exception {
         http.csrf(c -> c.disable()).authorizeHttpRequests(requests
-                -> requests.requestMatchers("/", "/home").authenticated())
+                -> requests.requestMatchers("/", "/home").authenticated()
+                        .requestMatchers("/js/**").permitAll()
+                        .requestMatchers("/api/users").permitAll()
+                        .requestMatchers("/api/**").authenticated())
                 .formLogin(form -> form.loginPage("/login")
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/", true)
@@ -57,6 +62,17 @@ public class SpringSecurityConfigs {
                 .logout(logout
                         -> logout.logoutSuccessUrl("/login").permitAll());
         return http.build();
+    }
+
+    @Bean
+    public Cloudinary cloudinary() {
+        Cloudinary cloudinary
+                = new Cloudinary(ObjectUtils.asMap(
+                        "cloud_name", "dq1oo3fod",
+                        "api_key", "216276187471198",
+                        "api_secret", "IPwc-sSRfgqIY30pkisZ_SBINC8",
+                        "secure", true));
+        return cloudinary;
     }
 
 }

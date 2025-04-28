@@ -4,12 +4,17 @@
  */
 package com.dtt.services.impl;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.dtt.pojo.User;
 import com.dtt.pojo.User.Role;
 import com.dtt.repositories.UserRepository;
 import com.dtt.services.UserService;
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -25,6 +31,9 @@ import org.springframework.stereotype.Service;
  */
 @Service("userDetailsService")
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private Cloudinary cloudinary;
 
     @Autowired
     private UserRepository userRepo;
@@ -49,5 +58,24 @@ public class UserServiceImpl implements UserService {
 
         return new org.springframework.security.core.userdetails.User(u.getEmail(), u.getPassword(), authorities);
     }
-}
 
+    @Override
+    public User register(Map<String, String> params, MultipartFile avatar) {
+        User u = new User();
+        u.setEmail(params.get("email"));
+        u.setPassword(this.passwordEncoder.encode(params.get("password")));
+        u.setName(params.get("name"));
+        u.setRole(Role.ADMIN);
+        
+        if (!avatar.isEmpty()) {
+            try {
+                Map res = cloudinary.uploader().upload(avatar.getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                u.setAvatar(res.get("secure_url").toString());
+            } catch (IOException ex) {
+
+            }
+        }
+        return this.userRepo.register(u);
+    }
+}

@@ -26,7 +26,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
     "com.dtt.repositories",
     "com.dtt.services"
 })
-public class WebAppContextConfigs implements WebMvcConfigurer{
+public class WebAppContextConfigs implements WebMvcConfigurer {
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
@@ -42,6 +42,4 @@ public class WebAppContextConfigs implements WebMvcConfigurer{
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new FacultyFormatter());
     }
-    
-    
 }

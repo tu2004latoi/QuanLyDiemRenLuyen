@@ -14,9 +14,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -62,9 +60,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(Map<String, String> params, MultipartFile avatar) {
         User u = new User();
+        u.setName(params.get("name"));
         u.setEmail(params.get("email"));
         u.setPassword(this.passwordEncoder.encode(params.get("password")));
-        u.setName(params.get("name"));
         u.setRole(Role.ADMIN);
         
         if (!avatar.isEmpty()) {
@@ -72,9 +70,7 @@ public class UserServiceImpl implements UserService {
                 Map res = cloudinary.uploader().upload(avatar.getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
                 u.setAvatar(res.get("secure_url").toString());
-            } catch (IOException ex) {
-
-            }
+            } catch (IOException ex) {}
         }
         return this.userRepo.register(u);
     }

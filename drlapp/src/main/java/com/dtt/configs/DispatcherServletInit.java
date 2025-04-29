@@ -4,13 +4,15 @@
  */
 package com.dtt.configs;
 
+import jakarta.servlet.MultipartConfigElement;
+import jakarta.servlet.ServletRegistration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
  *
  * @author MR TU
  */
-public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherServletInitializer{
+public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
@@ -30,7 +32,16 @@ public class DispatcherServletInit extends AbstractAnnotationConfigDispatcherSer
 
     @Override
     protected String[] getServletMappings() {
-        return new String[] {"/"};
+        return new String[]{"/"};
     }
-    
+
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        String location = "/";
+        long maxFileSize = 5242880; // 5MB
+        long maxRequestSize = 20971520; // 20MB
+        int fileSizeThreshold = 0;
+
+        registration.setMultipartConfig(new MultipartConfigElement(location, maxFileSize, maxRequestSize, fileSizeThreshold));
+    }
 }

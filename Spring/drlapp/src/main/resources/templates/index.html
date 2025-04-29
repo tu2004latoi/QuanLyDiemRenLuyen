@@ -1,0 +1,69 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Trang chủ</title>
+        <!-- Thêm các style từ base -->
+    <block th:replace="base :: styles"></block>
+</head>
+<body>
+
+    <!-- Header -->
+    <div th:replace="base :: header"></div>
+
+    <!-- Main content -->
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Danh sách Hoạt Động</h1>
+        <form th:action="@{/}">
+            <div class="mb-3 mt-3">
+                <input type="text" class="form-control" placeholder="Từ khóa" name="kw">
+            </div>
+            <div class="row mb-3 mt-3">
+                <div class="col-6">
+                    <input type="number" class="form-control" placeholder="Điểm min" name="fromPoint">
+                </div>
+                <div class="col-6">
+                    <input type="number" class="form-control" placeholder="Điểm max" name="toPoint">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        </form>
+        <!-- Nút Thêm Hoạt Động -->
+        <div class="d-flex justify-content-end mb-4">
+            <a th:href="@{/activities}" class="btn btn-success">
+                <i class="fas fa-plus"></i> Thêm Hoạt Động
+            </a>
+        </div>
+
+        <div class="row">
+            <!-- Loop through activities -->
+            <div class="col-md-4" th:each="a : ${activities}">
+                <div class="card mb-4">
+                    <img class="card-img-top" th:src="@{${a.image}}" alt="Ảnh hoạt động" style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${a.name}"></h5>
+                        <p class="card-text">
+                            <strong>Id:</strong> <span th:text="@{${a.id}}"></span><br>
+                            <strong>Ngày bắt đầu:</strong> <span th:text="${#dates.format(a.startDate, 'dd/MM/yyyy HH:mm')}"></span><br>
+                            <strong>Ngày kết thúc:</strong> <span th:text="${#dates.format(a.endDate, 'dd/MM/yyyy HH:mm')}"></span><br>
+                            <strong>Điểm:</strong> <span th:text="${a.pointValue}"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No activities -->
+        <div th:if="${#lists.isEmpty(activities)}">
+            <p class="text-center">Hiện không có hoạt động nào.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div th:replace="base :: footer"></div>
+
+    <script th:src="@{/js/main.js}"></script>
+
+</body>
+</html>

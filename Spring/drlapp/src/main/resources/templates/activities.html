@@ -1,0 +1,90 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quản lý hoạt động</title>
+        <!-- Thêm các style từ base -->
+    <block th:replace="base :: styles"></block>
+</head>
+<body>
+    <!-- Header -->
+    <div th:replace="base :: header"></div>
+
+    <section class="container">
+        <h1 class="text-center mb-4">Thêm Hoạt Động</h1>
+        <form method="post" th:action="@{/add}" th:object="${activity}" enctype="multipart/form-data">
+            <!-- Tên hoạt động -->
+            <div class="mb-3 mt-3">
+                <label for="name" class="form-label">Tên hoạt động: </label>
+                <input type="text" class="form-control" id="name" placeholder="Tên hoạt động" th:field="*{name}" />
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="description" class="form-label">Mô tả: </label>
+                <input type="text" class="form-control" id="description" placeholder="Mô tả" th:field="*{description}" />
+            </div>
+
+            <!-- Ngày bắt đầu -->
+            <div class="mb-3 mt-3">
+                <label for="startDate" class="form-label">Ngày bắt đầu: </label>
+                <input type="date" class="form-control" id="startDate" placeholder="Ngày bắt đầu" th:field="*{startDate}" />
+            </div>
+
+            <!-- Ngày kết thúc -->
+            <div class="mb-3 mt-3">
+                <label for="endDate" class="form-label">Ngày kết thúc: </label>
+                <input type="date" class="form-control" id="endDate" placeholder="Ngày kết thúc" th:field="*{endDate}" />
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="location" class="form-label">Địa chỉ: </label>
+                <input type="text" class="form-control" id="location" placeholder="Địa chỉ" th:field="*{location}" />
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="location" class="form-label">Khoa: </label>
+                <select class="form-select" name="facultyId">
+                    <option th:each="f : ${faculties}" th:value="${f.id}" th:text="${f.name}"></option>
+                </select>
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="maxParticipants" class="form-label">Số người tham gia tối đa: </label>
+                <input type="number" class="form-control" id="maxParticipants" placeholder="Số người tham gia tối đa" th:field="*{maxParticipants}" />
+            </div>
+
+            <!-- Điểm -->
+            <div class="mb-3 mt-3">
+                <label for="pointValue" class="form-label">Điểm: </label>
+                <input type="number" class="form-control" id="pointValue" placeholder="Điểm" th:field="*{pointValue}" />
+            </div>
+
+            <!--             Ảnh sản phẩm 
+                        <div class="mb-3 mt-3">
+                            <label for="image" class="form-label">Ảnh hoạt động: </label>
+                            <input type="file" class="form-control" th:field="*{file}" />
+            
+                             Hiển thị ảnh nếu có 
+                            <img th:if="${activity.image != null}" th:src="@{${activity.image}}" width="200" />
+                        </div>-->
+
+            <!-- Nút thêm hoặc cập nhật -->
+            <div class="mb-3 mt-3">
+                <input type="hidden" th:field="*{id}" />
+                <!--                <input type="hidden" th:field="*{image}" />-->
+                <button class="btn btn-success mt-1" type="submit">
+                    <span th:if="${activity.id == null}">Thêm hoạt động</span>
+                    <span th:unless="${activity.id == null}">Cập nhật hoạt động</span>
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <div th:replace="base :: footer"></div>
+
+    <script th:src="@{/js/main.js}"></script>
+
+</body>
+</html>

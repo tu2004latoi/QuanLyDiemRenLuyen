@@ -1,70 +1,58 @@
-<!doctype html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" />
+        <title>Trang chủ CTSV</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Trang chủ</title>
-        <!-- Thêm các style từ base -->
-    <block th:replace="base :: styles"></block>
+    <th:block th:replace="base :: styles"></th:block>
 </head>
-<body>
 
-    <!-- Header -->
-    <div th:replace="base :: header"></div>
+<body th:replace="base :: layout(~{::content})">
+<th:block th:fragment="content">
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Bảng điều khiển - Chuyên viên CTSV</h2>
 
-    <!-- Main content -->
-    <div class="container mt-4">
-        <h1 class="text-center mb-4">Danh sách Hoạt Động</h1>
-        <form th:action="@{/}">
-            <div class="mb-3 mt-3">
-                <input type="text" class="form-control" placeholder="Từ khóa" name="kw">
-            </div>
-            <div class="row mb-3 mt-3">
-                <div class="col-6">
-                    <input type="number" class="form-control" placeholder="Điểm min" name="fromPoint">
-                </div>
-                <div class="col-6">
-                    <input type="number" class="form-control" placeholder="Điểm max" name="toPoint">
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-        </form>
-        <!-- Nút Thêm Hoạt Động -->
-        <div class="d-flex justify-content-end mb-4">
-            <a th:href="@{/activities}" class="btn btn-success">
-                <i class="fas fa-plus"></i> Thêm Hoạt Động
-            </a>
-        </div>
-
-        <div class="row">
-            <!-- Loop through activities -->
-            <div class="col-md-4" th:each="a : ${activities}">
-                <div class="card mb-4">
-                    <img class="card-img-top" th:src="@{${a.image}}" alt="Ảnh hoạt động" style="height: 200px; object-fit: cover;">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${a.name}"></h5>
-                        <p class="card-text">
-                            <strong>Id:</strong> <span th:text="@{${a.id}}"></span><br>
-                            <strong>Ngày bắt đầu:</strong> <span th:text="${#dates.format(a.startDate, 'dd/MM/yyyy HH:mm')}"></span><br>
-                            <strong>Ngày kết thúc:</strong> <span th:text="${#dates.format(a.endDate, 'dd/MM/yyyy HH:mm')}"></span><br>
-                            <strong>Điểm:</strong> <span th:text="${a.pointValue}"></span>
-                        </p>
-                        <a th:href="@{'/activities/details/' + ${a.id}}" class="btn btn-info btn-sm">Chi tiết</a>
-                    </div>
+        <!-- Thống kê nhanh -->
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <div class="card shadow rounded p-3">
+                    <h5>Hoạt động</h5>
+                    <p class="fs-4 text-success" th:text="${stats.totalActivities}">56</p>
                 </div>
             </div>
         </div>
 
-        <!-- No activities -->
-        <div th:if="${#lists.isEmpty(activities)}">
-            <p class="text-center">Hiện không có hoạt động nào.</p>
+        <!-- Menu chức năng -->
+        <div class="row mt-4">
+            <div class="col-md-4 mb-4">
+                <a th:href="@{/activities}" class="btn btn-outline-primary w-100">Quản lý hoạt động</a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="/students" class="btn btn-outline-success w-100">Quản lý sinh viên</a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="/assistants" class="btn btn-outline-secondary w-100">Quản lý trợ lý sinh viên</a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="/statistics" class="btn btn-outline-info w-100">Thống kê điểm rèn luyện</a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="/reports" class="btn btn-outline-warning w-100">Xử lý báo thiếu hoạt động</a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a href="/exports" class="btn btn-outline-dark w-100">Xuất báo cáo (PDF/CSV)</a>
+            </div>
+        </div>
+
+        <!-- Chat hỗ trợ -->
+        <div class="mt-5">
+            <h5>Hỗ trợ trực tuyến (Firebase Chat)</h5>
+            <div id="chat-box" style="border: 1px solid #ccc; height: 300px; overflow-y: auto; padding: 10px;">
+                <p>Chat đang tải...</p>
+            </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <div th:replace="base :: footer"></div>
-
     <script th:src="@{/js/main.js}"></script>
-
+</th:block>
 </body>
 </html>

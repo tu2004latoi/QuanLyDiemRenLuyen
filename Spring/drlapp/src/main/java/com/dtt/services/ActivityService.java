@@ -20,4 +20,5 @@ public interface ActivityService {
     void deleteActivity(int id);
     List<Activity> getActivities(Map<String, String> params);
     Activity addOrUpdateActivity(Activity a);
+    long getCountActivities();
 }

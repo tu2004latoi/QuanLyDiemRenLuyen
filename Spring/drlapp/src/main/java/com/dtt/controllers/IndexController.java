@@ -5,6 +5,7 @@
 package com.dtt.controllers;
 
 import com.dtt.services.ActivityService;
+import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,11 +20,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class IndexController {
     @Autowired
-    private ActivityService activitySer;
+    private ActivityService activityService;
+    
     @RequestMapping("/")
-    public String index(Model model, @RequestParam Map<String, String> params){
-        //Activity
-        model.addAttribute("activities", this.activitySer.getActivities(params));
+    public String showDashboard(Model model) {
+        Map<String, Object> stats = new HashMap<>();
+
+        // Lấy dữ liệu từ service hoặc repository
+//        stats.put("totalStudents", studentService.countAll());
+        stats.put("totalActivities", activityService.getCountActivities());
+//        stats.put("totalPoints", trainingPointService.sumAllPoints());
+//        stats.put("totalReports", reportService.countAll());
+
+        model.addAttribute("stats", stats);
         return "index";
     }
 }

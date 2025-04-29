@@ -12,7 +12,7 @@ function deleteActivity(endpoint, id) {
         .then(res => {
             if (res.status === 204) {
                 alert("Xóa thành công");
-                window.location.href = "/drlapp/";
+                window.location.href = "/drlapp/activities";
             } else {
                 // Xử lý chi tiết lỗi từ server
                 res.text().then(errorMessage => {

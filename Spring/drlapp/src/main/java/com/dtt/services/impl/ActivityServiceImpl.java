@@ -64,4 +64,9 @@ public class ActivityServiceImpl implements ActivityService {
         }
         return this.activityRepo.addOrUpdateActivity(a);
     }
+
+    @Override
+    public long getCountActivities() {
+        return this.activityRepo.getCountActivities();
+    }
 }

@@ -20,5 +20,6 @@ public interface ActivityRepository {
     Activity addOrUpdateActivity(Activity a);
     List<Activity> getAllActivities();
     void deleteActivity(int id);
+    long getCountActivities();
 //    List<Activity> getActivitiesByStatus(String status);
 }

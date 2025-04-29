@@ -1,5 +1,6 @@
 package com.dtt.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -26,10 +27,13 @@ public class Faculty implements Serializable {
     private String description;
 
     // Quan hệ 1-N với Staff (một Faculty có thể có nhiều Staff)
+    
     @OneToMany(mappedBy = "faculty")
+    @JsonIgnore
     private Set<Staff> staff;
 
     @OneToMany(mappedBy = "faculty")
+    @JsonIgnore
     private Set<Student> students;
 
     // Getter và Setter

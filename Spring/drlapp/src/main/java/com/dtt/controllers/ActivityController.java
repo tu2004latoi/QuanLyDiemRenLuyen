@@ -13,6 +13,7 @@ import com.dtt.services.FacultyService;
 import com.dtt.services.UserService;
 import jakarta.validation.Valid;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -40,30 +42,36 @@ public class ActivityController {
 
     @Autowired
     private UserService userSer;
+    
+    @RequestMapping("/activities")
+    public String index(Model model, @RequestParam Map<String, String> params){
+        model.addAttribute("activities", this.activitySer.getActivities(params));
+        return "activities";
+    }
 
-    @GetMapping("/activities")
+    @GetMapping("/activities/add")
     public String manageActivity(Model model) {
         System.out.println("==> Đã vào controller addActivity()");
         Activity activity = new Activity();
-        activity.setFaculty(new Faculty()); // ⭐ Khởi tạo để tránh null
+        activity.setFaculty(new Faculty());
         model.addAttribute("activity", activity);
 
         List<Faculty> faculties = facultySer.getAllFaculties();
         model.addAttribute("faculties", faculties);
 
-        return "activities";
+        return "activitiesAddOrUpdate";
     }
 
-    @GetMapping("/activities/{id}")
+    @GetMapping("/activities/update/{id}")
     public String updateActivity(Model model, @PathVariable("id") int id) {
         model.addAttribute("activity", this.activitySer.getActivityById(id));
 
         List<Faculty> faculties = facultySer.getAllFaculties();
         model.addAttribute("faculties", faculties);
-        return "activities";
+        return "activitiesAddOrUpdate";
     }
 
-    @GetMapping("/activities/details/{id}")
+    @GetMapping("/activities/{id}")
     public String activityDetails(Model model, @PathVariable("id") int id) {
         Activity a = activitySer.getActivityById(id);
         model.addAttribute("activity", a);
@@ -88,7 +96,7 @@ public class ActivityController {
         // Lưu hoạt động
         this.activitySer.addOrUpdateActivity(a);
 
-        return "redirect:/";  // Chuyển hướng sau khi lưu thành công
+        return "redirect:/activities";
     }
 
 }

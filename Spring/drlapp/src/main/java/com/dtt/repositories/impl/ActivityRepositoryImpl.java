@@ -130,4 +130,11 @@ public class ActivityRepositoryImpl implements ActivityRepository {
         return query.getResultList();
     }
 
+    @Override
+    public long getCountActivities() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Activity", Activity.class);
+        return q.getResultStream().count();
+    }
+
 }

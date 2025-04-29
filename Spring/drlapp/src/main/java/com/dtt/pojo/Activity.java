@@ -1,5 +1,9 @@
 package com.dtt.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -54,10 +58,14 @@ public class Activity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "organizer_id", referencedColumnName = "id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private User organizer;
 
     @ManyToOne
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+    @JsonIdentityReference(alwaysAsId = true)
     private Faculty faculty;
 
     @Column(name = "max_participants")
@@ -77,15 +85,19 @@ public class Activity implements Serializable {
     private String image;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<TrainingPoint> trainingPoints;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<Comment> comments;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<Like> likes;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<Attendance> attendances;
 
     @Transient
@@ -98,7 +110,7 @@ public class Activity implements Serializable {
     public void setFile(MultipartFile file) {
         this.file = file;
     }
-    
+
     public Integer getId() {
         return id;
     }

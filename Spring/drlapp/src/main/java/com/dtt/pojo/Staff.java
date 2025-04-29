@@ -1,5 +1,6 @@
 package com.dtt.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -15,6 +16,7 @@ public class Staff implements Serializable {
 
     @OneToOne
     @MapsId
+    @JsonIgnore
     @JoinColumn(name = "id")
     private User user;
 
@@ -23,9 +25,11 @@ public class Staff implements Serializable {
     private Faculty faculty;
 
     @OneToMany(mappedBy = "confirmedBy")
+    @JsonIgnore
     private Set<TrainingPoint> confirmedTrainingPoints;
 
     @OneToMany(mappedBy = "staff")
+    @JsonIgnore
     private Set<Attendance> attendances;
 
     // Getter và Setter

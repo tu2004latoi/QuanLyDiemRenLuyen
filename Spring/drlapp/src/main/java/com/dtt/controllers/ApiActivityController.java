@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,18 +36,23 @@ public class ApiActivityController {
     public List<Activity> getAllActivities() {
         return activityService.getAllActivities();
     }
+    
+    @GetMapping("/activities/{id}")
+    public Activity getActivityById(@PathVariable("id") int id){
+        return activityService.getActivityById(id);
+    }
 
     @DeleteMapping("/activities/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String destroy(@PathVariable("id") int id) {
         this.activityService.deleteActivity(id);
         
-        return "redirect:/";
+        return "redirect:/activities";
     }
 
-//    @PostMapping(path = "/activities", consumes = MediaType.MULTIPART_FORM_DATA)
-//    public ResponseEntity<Activity> addAcitivity(){
-//        Activity a = this.activityService.addOrUpdateActivity(a);
-//        return new ResponseEntity<>(a, HttpStatus.CREATED);
-//    }
+    @PostMapping(path = "/activities", consumes = MediaType.MULTIPART_FORM_DATA)
+    public ResponseEntity<Activity> addAcitivity(@ModelAttribute Activity a){
+        Activity saved = this.activityService.addOrUpdateActivity(a);
+        return new ResponseEntity<>(saved, HttpStatus.CREATED);
+    }
 }

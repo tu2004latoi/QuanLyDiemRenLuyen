@@ -52,6 +52,9 @@ public class SpringSecurityConfigs {
             Exception {
         http.csrf(c -> c.disable()).authorizeHttpRequests(requests
                 -> requests.requestMatchers("/", "/home").authenticated()
+                        .requestMatchers("/activities").authenticated()
+                        .requestMatchers("/activities/**").authenticated()
+                        .requestMatchers("/add").authenticated()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/api/users").permitAll()
                         .requestMatchers("/api/**").authenticated())

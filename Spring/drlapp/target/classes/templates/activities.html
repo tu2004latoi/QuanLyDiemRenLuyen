@@ -18,61 +18,114 @@
             <div class="mb-3 mt-3">
                 <label for="name" class="form-label">Tên hoạt động: </label>
                 <input type="text" class="form-control" id="name" placeholder="Tên hoạt động" th:field="*{name}" />
+                <!-- Thông báo lỗi cho trường 'name' -->
+                <div th:if="${#fields.hasErrors('name')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('name')}" th:text="${err}"></p>
+                </div>
             </div>
 
+            <!-- Mô tả -->
             <div class="mb-3 mt-3">
                 <label for="description" class="form-label">Mô tả: </label>
                 <input type="text" class="form-control" id="description" placeholder="Mô tả" th:field="*{description}" />
+                <!-- Thông báo lỗi cho trường 'description' -->
+                <div th:if="${#fields.hasErrors('description')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('description')}" th:text="${err}"></p>
+                </div>
             </div>
 
             <!-- Ngày bắt đầu -->
             <div class="mb-3 mt-3">
                 <label for="startDate" class="form-label">Ngày bắt đầu: </label>
-                <input type="date" class="form-control" id="startDate" placeholder="Ngày bắt đầu" th:field="*{startDate}" />
+                <input type="datetime-local" class="form-control" id="startDate" placeholder="Ngày bắt đầu" th:field="*{startDate}" />
+                <!-- Thông báo lỗi cho trường 'startDate' -->
+                <div th:if="${#fields.hasErrors('startDate')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('startDate')}" th:text="${err}"></p>
+                </div>
             </div>
 
             <!-- Ngày kết thúc -->
             <div class="mb-3 mt-3">
                 <label for="endDate" class="form-label">Ngày kết thúc: </label>
-                <input type="date" class="form-control" id="endDate" placeholder="Ngày kết thúc" th:field="*{endDate}" />
+                <input type="datetime-local" class="form-control" id="endDate" placeholder="Ngày kết thúc" th:field="*{endDate}" />
+                <!-- Thông báo lỗi cho trường 'endDate' -->
+                <div th:if="${#fields.hasErrors('endDate')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('endDate')}" th:text="${err}"></p>
+                </div>
             </div>
 
+            <!-- Địa chỉ -->
             <div class="mb-3 mt-3">
                 <label for="location" class="form-label">Địa chỉ: </label>
                 <input type="text" class="form-control" id="location" placeholder="Địa chỉ" th:field="*{location}" />
+                <!-- Thông báo lỗi cho trường 'location' -->
+                <div th:if="${#fields.hasErrors('location')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('location')}" th:text="${err}"></p>
+                </div>
             </div>
 
+            <!-- Khoa -->
             <div class="mb-3 mt-3">
-                <label for="location" class="form-label">Khoa: </label>
-                <select class="form-select" name="facultyId">
+                <label for="faculty" class="form-label">Khoa tổ chức: </label>
+                <select class="form-select" th:field="*{faculty}">
                     <option th:each="f : ${faculties}" th:value="${f.id}" th:text="${f.name}"></option>
                 </select>
+                <!-- Thông báo lỗi cho trường 'faculty' -->
+                <div th:if="${#fields.hasErrors('faculty.id')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('faculty.id')}" th:text="${err}"></p>
+                </div>
             </div>
 
+            <!-- Số người tham gia tối đa -->
             <div class="mb-3 mt-3">
                 <label for="maxParticipants" class="form-label">Số người tham gia tối đa: </label>
                 <input type="number" class="form-control" id="maxParticipants" placeholder="Số người tham gia tối đa" th:field="*{maxParticipants}" />
+                <!-- Thông báo lỗi cho trường 'maxParticipants' -->
+                <div th:if="${#fields.hasErrors('maxParticipants')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('maxParticipants')}" th:text="${err}"></p>
+                </div>
             </div>
 
             <!-- Điểm -->
             <div class="mb-3 mt-3">
                 <label for="pointValue" class="form-label">Điểm: </label>
                 <input type="number" class="form-control" id="pointValue" placeholder="Điểm" th:field="*{pointValue}" />
+                <!-- Thông báo lỗi cho trường 'pointValue' -->
+                <div th:if="${#fields.hasErrors('pointValue')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('pointValue')}" th:text="${err}"></p>
+                </div>
             </div>
 
-            <!--             Ảnh sản phẩm 
-                        <div class="mb-3 mt-3">
-                            <label for="image" class="form-label">Ảnh hoạt động: </label>
-                            <input type="file" class="form-control" th:field="*{file}" />
+            <!-- Trạng thái hoạt động -->
+            <div class="mb-3 mt-3">
+                <label for="status" class="form-label">Trạng thái hoạt động:</label>
+                <select class="form-select" th:field="*{status}">
+                    <option th:value="UPCOMING" th:text="'Sắp diễn ra'"></option>
+                    <option th:value="ONGOING" th:text="'Đang diễn ra'"></option>
+                    <option th:value="COMPLETED" th:text="'Đã hoàn thành'"></option>
+                    <option th:value="CANCELLED" th:text="'Đã huỷ'"></option>
+                </select>
+                <!-- Thông báo lỗi cho trường 'status' -->
+                <div th:if="${#fields.hasErrors('status')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('status')}" th:text="${err}"></p>
+                </div>
+            </div>
             
-                             Hiển thị ảnh nếu có 
-                            <img th:if="${activity.image != null}" th:src="@{${activity.image}}" width="200" />
-                        </div>-->
+            <div class="mb-3 mt-3">
+                <label for="image" class="form-label">Ảnh hoạt động: </label>
+                <input type="file" class="form-control" id="image" placeholder="Ảnh" th:field="*{file}" />
+                
+                <img th:src="${activity.image}" th:if="${activity.id!=null && activity.image!=null}" width="200"/>
+                <!-- Thông báo lỗi cho trường 'location' -->
+                <div th:if="${#fields.hasErrors('image')}" class="alert alert-danger">
+                    <p th:each="err : ${#fields.errors('image')}" th:text="${err}"></p>
+                </div>
+            </div>
 
             <!-- Nút thêm hoặc cập nhật -->
             <div class="mb-3 mt-3">
                 <input type="hidden" th:field="*{id}" />
-                <!--                <input type="hidden" th:field="*{image}" />-->
+                <input type="hidden" th:field="*{image}" />
                 <button class="btn btn-success mt-1" type="submit">
                     <span th:if="${activity.id == null}">Thêm hoạt động</span>
                     <span th:unless="${activity.id == null}">Cập nhật hoạt động</span>

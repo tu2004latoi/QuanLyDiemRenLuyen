@@ -22,9 +22,6 @@ public class Staff implements Serializable {
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
     private Faculty faculty;
 
-    @OneToMany(mappedBy = "organizer")
-    private Set<Activity> activities;
-
     @OneToMany(mappedBy = "confirmedBy")
     private Set<TrainingPoint> confirmedTrainingPoints;
 
@@ -54,14 +51,6 @@ public class Staff implements Serializable {
 
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
-    }
-
-    public Set<Activity> getActivities() {
-        return activities;
-    }
-
-    public void setActivities(Set<Activity> activities) {
-        this.activities = activities;
     }
 
     public Set<TrainingPoint> getConfirmedTrainingPoints() {

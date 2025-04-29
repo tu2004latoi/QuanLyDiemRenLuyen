@@ -14,5 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository {
     User getUserByUsername(String username);
+    User getUserById(int id);
     User register(User u);
 }

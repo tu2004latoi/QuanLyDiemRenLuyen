@@ -4,11 +4,16 @@
  */
 package com.dtt.services.impl;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.dtt.pojo.Activity;
 import com.dtt.repositories.ActivityRepository;
 import com.dtt.services.ActivityService;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +22,16 @@ import org.springframework.stereotype.Service;
  * @author MR TU
  */
 @Service
-public class ActivityServiceImpl implements ActivityService{
+public class ActivityServiceImpl implements ActivityService {
+
     @Autowired
     private ActivityRepository activityRepo;
-    
+
+    @Autowired
+    private Cloudinary cloudinary;
+
     @Override
-    public List<Activity> getAllActivities(){
+    public List<Activity> getAllActivities() {
         return this.activityRepo.getAllActivities();
     }
 
@@ -43,7 +52,16 @@ public class ActivityServiceImpl implements ActivityService{
 
     @Override
     public Activity addOrUpdateActivity(Activity a) {
-        a.setImage("https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg");
+        if (!a.getFile().isEmpty()) {
+            try {
+                Map res = cloudinary.uploader().upload(a.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                a.setImage(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(ActivityServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
         return this.activityRepo.addOrUpdateActivity(a);
     }
 }

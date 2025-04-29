@@ -2,7 +2,10 @@ package com.dtt.pojo;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "activities")
@@ -21,13 +24,14 @@ import java.util.Set;
     @NamedQuery(name = "Activity.findByStatus", query = "SELECT a FROM Activity a WHERE a.status = :status"),
     @NamedQuery(name = "Activity.findByImage", query = "SELECT a FROM Activity a WHERE a.image = :image")
 })
-
 public class Activity implements Serializable {
-   
+
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Tự động sinh giá trị cho id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;  // Chuyển kiểu từ String sang Integer
+    private Integer id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -36,23 +40,31 @@ public class Activity implements Serializable {
     private String description;
 
     @Column(name = "start_date")
-    private java.util.Date startDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private Date startDate;
 
     @Column(name = "end_date")
-    private java.util.Date endDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private Date endDate;
 
     @Column(name = "location")
     private String location;
 
     @ManyToOne
-    @JoinColumn(name = "organizer_id")
-    private Staff organizer;
+    @JoinColumn(name = "organizer_id", referencedColumnName = "id")
+    private User organizer;
+
+    @ManyToOne
+    @JoinColumn(name = "faculty_id", referencedColumnName = "id")
+    private Faculty faculty;
 
     @Column(name = "max_participants")
     private Integer maxParticipants;
 
-    @Column(name = "current_participants")
-    private Integer currentParticipants;
+    @Column(name = "current_participants", nullable = false)
+    private Integer currentParticipants = 0;
 
     @Column(name = "point_value")
     private Integer pointValue;
@@ -61,23 +73,32 @@ public class Activity implements Serializable {
     @Column(name = "status")
     private ActivityStatus status;
 
-    @OneToMany(mappedBy = "activity")
-    private Set<TrainingPoint> trainingPoints;
-
-    @OneToMany(mappedBy = "activity")
-    private Set<Comment> comments;
-
-    @OneToMany(mappedBy = "activity")
-    private Set<Like> likes;
-
-    @OneToMany(mappedBy = "activity")
-    private Set<Attendance> attendances;
-
-    // Thêm trường image vào
     @Column(name = "image")
     private String image;
 
-    // Getter and Setter methods for each field
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<TrainingPoint> trainingPoints;
+
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Comment> comments;
+
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Like> likes;
+
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Attendance> attendances;
+
+    @Transient
+    private MultipartFile file;
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -102,19 +123,19 @@ public class Activity implements Serializable {
         this.description = description;
     }
 
-    public java.util.Date getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(java.util.Date startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public java.util.Date getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(java.util.Date endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -126,12 +147,20 @@ public class Activity implements Serializable {
         this.location = location;
     }
 
-    public Staff getOrganizer() {
+    public User getOrganizer() {
         return organizer;
     }
 
-    public void setOrganizer(Staff organizer) {
+    public void setOrganizer(User organizer) {
         this.organizer = organizer;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
     public Integer getMaxParticipants() {
@@ -166,6 +195,14 @@ public class Activity implements Serializable {
         this.status = status;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public Set<TrainingPoint> getTrainingPoints() {
         return trainingPoints;
     }
@@ -198,17 +235,28 @@ public class Activity implements Serializable {
         this.attendances = attendances;
     }
 
-    // Getter and Setter for image field
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    // Enum ActivityStatus
+    // Enum đại diện cho status
     public enum ActivityStatus {
         UPCOMING, ONGOING, COMPLETED, CANCELLED
     }
+
+    @Override
+    public String toString() {
+        return "Activity{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", description='" + description + '\''
+                + ", startDate=" + startDate
+                + ", endDate=" + endDate
+                + ", location='" + location + '\''
+                + ", organizer=" + (organizer != null ? organizer.getId() : null)
+                + ", faculty=" + (faculty != null ? faculty.getId() : null)
+                + ", maxParticipants=" + maxParticipants
+                + ", currentParticipants=" + currentParticipants
+                + ", pointValue=" + pointValue
+                + ", status=" + status
+                + ", image='" + image + '\''
+                + '}';
+    }
+
 }

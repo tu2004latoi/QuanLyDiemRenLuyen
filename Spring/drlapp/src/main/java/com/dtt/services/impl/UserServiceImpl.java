@@ -9,6 +9,7 @@ import com.cloudinary.utils.ObjectUtils;
 import com.dtt.pojo.User;
 import com.dtt.pojo.User.Role;
 import com.dtt.repositories.UserRepository;
+import com.dtt.secutiry.CustomUserDetails;
 import com.dtt.services.UserService;
 import java.io.IOException;
 import java.util.HashSet;
@@ -54,7 +55,7 @@ public class UserServiceImpl implements UserService {
         Set<GrantedAuthority> authorities = new HashSet<>();
         authorities.add(new SimpleGrantedAuthority(u.getRole().name()));
 
-        return new org.springframework.security.core.userdetails.User(u.getEmail(), u.getPassword(), authorities);
+        return new CustomUserDetails(u.getId(), u.getEmail(), u.getPassword(), authorities);
     }
 
     @Override
@@ -64,14 +65,20 @@ public class UserServiceImpl implements UserService {
         u.setEmail(params.get("email"));
         u.setPassword(this.passwordEncoder.encode(params.get("password")));
         u.setRole(Role.ADMIN);
-        
+
         if (!avatar.isEmpty()) {
             try {
                 Map res = cloudinary.uploader().upload(avatar.getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
                 u.setAvatar(res.get("secure_url").toString());
-            } catch (IOException ex) {}
+            } catch (IOException ex) {
+            }
         }
         return this.userRepo.register(u);
+    }
+
+    @Override
+    public User getUserById(int id) {
+        return this.userRepo.getUserById(id);
     }
 }

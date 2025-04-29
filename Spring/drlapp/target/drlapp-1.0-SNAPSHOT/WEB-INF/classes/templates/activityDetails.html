@@ -1,0 +1,52 @@
+
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chi tiết Hoạt Động</title>
+    <block th:replace="base :: styles"></block>
+</head>
+<body>
+
+    <!-- Header -->
+    <div th:replace="base :: header"></div>
+
+    <!-- Main content -->
+    <div class="container mt-5">
+        <h2 class="text-center mb-4" th:text="${activity.name}">Tên hoạt động</h2>
+
+        <div class="card">
+            <img class="card-img-top" th:if="${activity.image != null}" th:src="@{${activity.image}}" alt="Ảnh hoạt động" style="height: 400px; object-fit: cover;">
+            <div class="card-body">
+                <h5 class="card-title">Thông tin chi tiết</h5>
+                <p class="card-text"><strong>ID:</strong> <span th:text="${activity.id}"></span></p>
+                <p class="card-text"><strong>Mô tả:</strong> <span th:text="${activity.description}">Không có mô tả</span></p>
+                <p class="card-text"><strong>Ngày bắt đầu:</strong> <span th:text="${#dates.format(activity.startDate, 'dd/MM/yyyy HH:mm')}"></span></p>
+                <p class="card-text"><strong>Ngày kết thúc:</strong> <span th:text="${#dates.format(activity.endDate, 'dd/MM/yyyy HH:mm')}"></span></p>
+                <p class="card-text"><strong>Điểm:</strong> <span th:text="${activity.pointValue}"></span></p>
+                <p class="card-text"><strong>Khoa tổ chức:</strong> <span th:text="${activity.faculty.name}">Chưa xác định</span></p>
+                <p class="card-text"><strong>Người tổ chức:</strong> <span th:text="${activity.organizer.name}">Chưa rõ</span></p>
+            </div>
+        </div>
+
+        <div class="mt-4 text-center">
+            <a th:href="@{/}" class="btn btn-secondary">Quay lại</a>
+        </div>
+
+        <a th:href="@{'/activities/' + ${activity.id}}" class="btn btn-primary mx-2">
+            <i class="fas fa-edit"></i> Sửa
+        </a>
+
+        <!-- Nút Xóa -->
+        <button type="submit" class="btn btn-danger" th:onclick="'deleteActivity(\''+@{/api/activities}+'\',' + ${activity.id} + ')'">
+            <i class="fas fa-trash-alt"></i> Xóa
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <div th:replace="base :: footer"></div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

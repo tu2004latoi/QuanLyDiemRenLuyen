@@ -6,6 +6,7 @@ package com.dtt.repositories.impl;
 
 import com.dtt.pojo.User;
 import com.dtt.repositories.UserRepository;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,4 +40,19 @@ public class UserRepositoryImpl implements UserRepository{
         s.refresh(u);
         return u;
     }
+
+    @Override
+    public User getUserById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createNamedQuery("User.findById", User.class);
+        q.setParameter("id", id);
+
+        try {
+            return (User) q.getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
+    }
+    
+    
 }

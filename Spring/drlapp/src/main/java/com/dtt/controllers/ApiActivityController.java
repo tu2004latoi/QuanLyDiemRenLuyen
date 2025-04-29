@@ -6,6 +6,7 @@ package com.dtt.controllers;
 
 import com.dtt.pojo.Activity;
 import com.dtt.services.ActivityService;
+import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,10 +36,17 @@ public class ApiActivityController {
         return activityService.getAllActivities();
     }
 
-    @DeleteMapping("/activities/{activityId}")
+    @DeleteMapping("/activities/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void destroy(@PathVariable("activityId") int activityId) {
-        this.activityService.deleteActivity(activityId);
+    public String destroy(@PathVariable("id") int id) {
+        this.activityService.deleteActivity(id);
+        
+        return "redirect:/";
     }
 
+//    @PostMapping(path = "/activities", consumes = MediaType.MULTIPART_FORM_DATA)
+//    public ResponseEntity<Activity> addAcitivity(){
+//        Activity a = this.activityService.addOrUpdateActivity(a);
+//        return new ResponseEntity<>(a, HttpStatus.CREATED);
+//    }
 }

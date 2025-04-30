@@ -13,8 +13,11 @@ import com.dtt.secutiry.CustomUserDetails;
 import com.dtt.services.UserService;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -61,10 +64,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(Map<String, String> params, MultipartFile avatar) {
         User u = new User();
-        u.setName(params.get("name"));
+        u.setFirstName(params.get("firstName"));
+        u.setLastName(params.get("lastName"));
         u.setEmail(params.get("email"));
         u.setPassword(this.passwordEncoder.encode(params.get("password")));
-        u.setRole(Role.ADMIN);
+        u.setPoints(0);
+        u.setRole(User.Role.valueOf(params.get("role")));
 
         if (!avatar.isEmpty()) {
             try {
@@ -81,4 +86,41 @@ public class UserServiceImpl implements UserService {
     public User getUserById(int id) {
         return this.userRepo.getUserById(id);
     }
+
+    @Override
+    public List<User> getUsers(Map<String, String> params) {
+        return this.userRepo.getUsers(params);
+    }
+
+    @Override
+    public User addOrUpdateUser(User u) {
+        if (!u.getFile().isEmpty()) {
+            try {
+                Map res = cloudinary.uploader().upload(u.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                u.setAvatar(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(ActivityServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if (u.getPassword() != null && !u.getPassword().isEmpty()) {
+            u.setPassword(this.passwordEncoder.encode(u.getPassword()));
+        } else if (u.getId() != null) {
+            User existingUser = this.userRepo.getUserById(u.getId());
+            u.setPassword(existingUser.getPassword());
+        }
+        return this.userRepo.addOrUpdateUser(u);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return this.userRepo.getAllUsers();
+    }
+
+    @Override
+    public void deleteUserById(int id) {
+        this.userRepo.deleteUserById(id);
+    }
+
 }

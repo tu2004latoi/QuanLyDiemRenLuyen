@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý người dùng</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="base :: styles"></th:block>
+</head>
+<body th:replace="base :: layout(~{::content})">
+<th:block th:fragment="content">
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Quản lý người dùng</h2>
+
+        <div class="row justify-content-center">
+            <div class="col-md-4 mb-4">
+                <a th:href="@{/users/list}" class="btn btn-outline-primary w-100">Danh sách người dùng</a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <a th:href="@{/users/register}" class="btn btn-outline-success w-100">Danh sách đăng ký hoạt động</a>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

@@ -5,6 +5,7 @@
 package com.dtt.services;
 
 import com.dtt.pojo.User;
+import java.util.List;
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,4 +18,8 @@ public interface UserService extends UserDetailsService{
     User getUserByUsername(String username);
     User register(Map<String, String> params, MultipartFile avatar);
     User getUserById(int id);
+    User addOrUpdateUser(User u);
+    List<User> getUsers(Map<String, String> params);
+    List<User> getAllUsers();
+    void deleteUserById(int id);
 }

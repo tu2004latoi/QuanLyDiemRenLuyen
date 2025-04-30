@@ -19,8 +19,13 @@
 
         <form method="post" th:action="@{/api/users}" enctype="multipart/form-data">
             <div class="mb-3 mt-3">
-                <label for="name" class="form-label">Tên người dùng</label>
-                <input type="text" class="form-control" name="name" id="name" placeholder="Tên người dùng" autocomplete="name" />
+                <label for="firstName" class="form-label">Họ</label>
+                <input type="text" class="form-control" name="firstName" id="firstName" placeholder="Họ" autocomplete="firstName" />
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="lastName" class="form-label">Tên</label>
+                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="Tên" autocomplete="lastName" />
             </div>
 
             <div class="mb-3 mt-3">
@@ -42,7 +47,17 @@
                 <label for="avatar" class="form-label">Ảnh đại diện</label>
                 <input type="file" class="form-control" name="avatar" id="avatar" accept="image/*" />
             </div>
-            
+
+            <div class="mb-3 mt-3">
+                <label for="role" class="form-label">Vai trò</label>
+                <select class="form-select" name="role" id="role" required>
+                    <option value="" disabled selected>Chọn vai trò</option>
+                    <option value="ADMIN">Cộng tác Sinh Viên</option>
+                    <option value="STAFF">Trợ lý Sinh Viên</option>
+                    <option value="STUDENT">Sinh viên</option>
+                </select>
+            </div>
+
             <button class="btn btn-success mt-1" type="submit">Đăng ký</button>
         </form>
     </section>

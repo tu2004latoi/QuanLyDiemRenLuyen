@@ -24,17 +24,17 @@ DROP TABLE IF EXISTS `training_points`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `training_points` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `student_id` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
   `activity_id` int DEFAULT NULL,
   `point` int DEFAULT NULL,
   `date_awarded` datetime DEFAULT NULL,
   `confirmed_by` int DEFAULT NULL,
   `status` enum('PENDING','CONFIRMED','REJECTED') DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `student_id` (`student_id`),
+  KEY `user_id` (`user_id`),
   KEY `activity_id` (`activity_id`),
   KEY `confirmed_by` (`confirmed_by`),
-  CONSTRAINT `training_points_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `training_points_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `training_points_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`) ON DELETE CASCADE,
   CONSTRAINT `training_points_ibfk_3` FOREIGN KEY (`confirmed_by`) REFERENCES `staff` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -58,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-29 17:42:44
+-- Dump completed on 2025-04-30 18:08:14

@@ -36,8 +36,6 @@ public class Student implements Serializable {
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
     private Faculty faculty;
 
-    @OneToMany(mappedBy = "student")
-    private Set<TrainingPoint> trainingPoints;
 
     @OneToMany(mappedBy = "student")
     private Set<Evidence> evidences;
@@ -92,20 +90,6 @@ public class Student implements Serializable {
      */
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
-    }
-
-    /**
-     * @return the trainingPoints
-     */
-    public Set<TrainingPoint> getTrainingPoints() {
-        return trainingPoints;
-    }
-
-    /**
-     * @param trainingPoints the trainingPoints to set
-     */
-    public void setTrainingPoints(Set<TrainingPoint> trainingPoints) {
-        this.trainingPoints = trainingPoints;
     }
 
     /**

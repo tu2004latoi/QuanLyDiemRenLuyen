@@ -2,6 +2,7 @@ package com.dtt.pojo;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -10,7 +11,7 @@ import java.util.Set;
 @NamedQueries({
     @NamedQuery(name = "TrainingPoint.findAll", query = "SELECT t FROM TrainingPoint t"),
     @NamedQuery(name = "TrainingPoint.findById", query = "SELECT t FROM TrainingPoint t WHERE t.id = :id"),
-    @NamedQuery(name = "TrainingPoint.findByStudent", query = "SELECT t FROM TrainingPoint t WHERE t.student.id = :studentId"),
+    @NamedQuery(name = "TrainingPoint.findByUser", query = "SELECT t FROM TrainingPoint t WHERE t.user.id = :userId"),
     @NamedQuery(name = "TrainingPoint.findByActivity", query = "SELECT t FROM TrainingPoint t WHERE t.activity.id = :activityId"),
     @NamedQuery(name = "TrainingPoint.findByStatus", query = "SELECT t FROM TrainingPoint t WHERE t.status = :status"),
     @NamedQuery(name = "TrainingPoint.findByConfirmedBy", query = "SELECT t FROM TrainingPoint t WHERE t.confirmedBy.id = :staffId"),
@@ -25,8 +26,8 @@ public class TrainingPoint implements Serializable {
     private Integer id; // Thay đổi từ String thành Integer
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
@@ -36,7 +37,7 @@ public class TrainingPoint implements Serializable {
     private Integer point;
 
     @Column(name = "date_awarded")
-    private Date dateAwarded;
+    private LocalDateTime dateAwarded;
 
     @ManyToOne
     @JoinColumn(name = "confirmed_by")
@@ -55,6 +56,7 @@ public class TrainingPoint implements Serializable {
     public enum Status {
         PENDING, CONFIRMED, REJECTED
     }
+
     public Integer getId() {
         return id;
     }
@@ -63,12 +65,12 @@ public class TrainingPoint implements Serializable {
         this.id = id;
     }
 
-    public Student getStudent() {
-        return student;
+    public User getUser() {
+        return user;
     }
-    
-    public void setStudent(Student student) {
-        this.student = student;
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     /**
@@ -90,11 +92,11 @@ public class TrainingPoint implements Serializable {
         this.point = point;
     }
 
-    public Date getDateAwarded() {
+    public LocalDateTime getDateAwarded() {
         return dateAwarded;
     }
 
-    public void setDateAwarded(Date dateAwarded) {
+    public void setDateAwarded(LocalDateTime dateAwarded) {
         this.dateAwarded = dateAwarded;
     }
 

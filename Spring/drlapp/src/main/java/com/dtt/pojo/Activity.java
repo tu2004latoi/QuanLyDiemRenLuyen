@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
@@ -83,6 +84,9 @@ public class Activity implements Serializable {
 
     @Column(name = "image")
     private String image;
+    
+    @Column(name ="active")
+    private Boolean active;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
@@ -99,6 +103,9 @@ public class Activity implements Serializable {
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Set<Attendance> attendances;
+
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ActivityRegistrations> registrations = new HashSet<>();
 
     @Transient
     private MultipartFile file;
@@ -209,6 +216,22 @@ public class Activity implements Serializable {
 
     public String getImage() {
         return image;
+    }
+    
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Set<ActivityRegistrations> getRegistrations() {
+        return registrations;
+    }
+
+    public void setRegistrations(Set<ActivityRegistrations> registrations) {
+        this.registrations = registrations;
     }
 
     public void setImage(String image) {

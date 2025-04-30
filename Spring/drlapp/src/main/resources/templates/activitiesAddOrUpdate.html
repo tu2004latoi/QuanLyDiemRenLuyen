@@ -109,6 +109,13 @@
                 <img th:src="${activity.image}" th:if="${activity.id != null && activity.image != null}" width="200" />
             </div>
 
+            <div class="mb-3 mt-3">
+                <div class="form-check mb-3 mt-3">
+                    <input class="form-check-input" type="checkbox" id="active" th:field="*{active}" />
+                    <label class="form-check-label" for="active">Kích hoạt hoạt động</label>
+                </div>
+            </div>
+
             <!-- Nút thêm hoặc cập nhật -->
             <div class="mb-3 mt-3">
                 <input type="hidden" th:field="*{id}" />

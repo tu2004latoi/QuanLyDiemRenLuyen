@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Người đăng ký hoạt động</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="base :: styles"></th:block>
+</head>
+<body th:replace="base :: layout(~{::content})">
+<th:block th:fragment="content">
+    <div class="container my-5">
+        <h2 class="mb-4 text-center">Danh sách đăng ký hoạt động</h2>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>Tên hoạt động</th>
+                    <th>Thời gian</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="reg, stat : ${registrations}">
+                    <td th:text="${stat.index + 1}">1</td>
+                    <td th:text="${reg.user.fullName}">Nguyễn Văn A</td>
+                    <td th:text="${reg.user.email}">email@example.com</td>
+                    <td th:text="${reg.activity.name}">Tình nguyện hè</td>
+                    <td th:text="${#dates.format(reg.activity.time, 'dd/MM/yyyy')}">12/04/2025</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</th:block>
+</body>
+</html>

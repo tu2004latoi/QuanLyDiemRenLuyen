@@ -5,8 +5,15 @@
 package com.dtt.controllers;
 
 import com.dtt.pojo.Activity;
+import com.dtt.pojo.ActivityRegistrations;
+import com.dtt.pojo.User;
+import com.dtt.services.ActivityRegistrationService;
 import com.dtt.services.ActivityService;
+import com.dtt.services.TrainingPointService;
+import com.dtt.services.UserService;
 import jakarta.ws.rs.core.MediaType;
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,27 +39,56 @@ public class ApiActivityController {
     @Autowired
     private ActivityService activityService;
 
+    @Autowired
+    private ActivityRegistrationService arSer;
+
+    @Autowired
+    private UserService userSer;
+    
+    @Autowired
+    private TrainingPointService trainingPointSer;
+
+    //Toàn bộ hoạt động API
     @GetMapping("/activities")
     public List<Activity> getAllActivities() {
         return activityService.getAllActivities();
     }
-    
+
+    //Chi tiết 1 hoạt động API
     @GetMapping("/activities/{id}")
-    public Activity getActivityById(@PathVariable("id") int id){
+    public Activity getActivityById(@PathVariable("id") int id) {
         return activityService.getActivityById(id);
     }
 
+    //Xóa 1 hoạt động
     @DeleteMapping("/activities/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String destroy(@PathVariable("id") int id) {
         this.activityService.deleteActivity(id);
-        
+
         return "redirect:/activities";
     }
 
+    //Đăng ký hoạt động
+    @PostMapping("/activities/{id}")
+    public ResponseEntity<String> registerActivity(@PathVariable(value = "id") Integer activityId,
+            Principal principal) {
+        try {
+            String username = principal.getName();
+            User user = userSer.getUserByUsername(username);
+            arSer.registerToActivity(user.getId(), activityId);
+            
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception ex) {
+            return new ResponseEntity<>("Lỗi hệ thống: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //Thêm 1 hoạt động
     @PostMapping(path = "/activities", consumes = MediaType.MULTIPART_FORM_DATA)
-    public ResponseEntity<Activity> addAcitivity(@ModelAttribute Activity a){
+    public ResponseEntity<Activity> addAcitivity(@ModelAttribute Activity a) {
         Activity saved = this.activityService.addOrUpdateActivity(a);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }
+
 }

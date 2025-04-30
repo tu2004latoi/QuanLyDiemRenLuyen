@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Đăng ký</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="base :: styles"></th:block>
+</head>
+
+<body th:replace="base :: layout(~{::content})">
+<th:block th:fragment="content">
+    <section class="container">
+        <h1 class="text-center mb-4">Đăng ký</h1>
+
+        <!-- Hiển thị thông báo lỗi nếu có -->
+        <!--        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                    Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại.
+                </div>-->
+
+        <form method="post" th:action="@{/api/users}" enctype="multipart/form-data">
+            <div class="mb-3 mt-3">
+                <label for="name" class="form-label">Tên người dùng</label>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Tên người dùng" autocomplete="name" />
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Email" autocomplete="email" />
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="password" class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu" autocomplete="new-password" />
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="confirmPassword" class="form-label">Xác nhận mật khẩu</label>
+                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Xác nhận mật khẩu" />
+            </div>
+
+            <div class="mb-3 mt-3">
+                <label for="avatar" class="form-label">Ảnh đại diện</label>
+                <input type="file" class="form-control" name="avatar" id="avatar" accept="image/*" />
+            </div>
+            
+            <button class="btn btn-success mt-1" type="submit">Đăng ký</button>
+        </form>
+    </section>
+</th:block>
+</body>
+</html>

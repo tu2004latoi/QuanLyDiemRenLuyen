@@ -20,4 +20,9 @@ public class UserController {
     public String loginView(){
         return "login";
     }
+    
+    @GetMapping("/register")
+    public String registerView(){
+        return "register";
+    }
 }

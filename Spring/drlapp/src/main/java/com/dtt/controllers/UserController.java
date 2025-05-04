@@ -5,6 +5,7 @@
 package com.dtt.controllers;
 
 import com.dtt.pojo.User;
+import com.dtt.services.ActivityRegistrationService;
 import com.dtt.services.UserService;
 import com.dtt.services.impl.UserServiceImpl;
 import jakarta.annotation.PostConstruct;
@@ -29,6 +30,9 @@ public class UserController {
 
     @Autowired
     private UserService userSer;
+    
+    @Autowired
+    private ActivityRegistrationService arSer;
 
     @GetMapping("/login")
     public String loginView() {
@@ -74,5 +78,11 @@ public class UserController {
     public String addUser(@ModelAttribute("user") @Valid User u, Model model) {
         this.userSer.addOrUpdateUser(u);
         return "redirect:/users/list";
+    }
+    
+    @GetMapping("/users/activity-registrations")
+    public String activityRegistrationsView(Model model){
+        model.addAttribute("ar", this.arSer.getAllActivityRegistrations());
+        return "listUserRegister";
     }
 }

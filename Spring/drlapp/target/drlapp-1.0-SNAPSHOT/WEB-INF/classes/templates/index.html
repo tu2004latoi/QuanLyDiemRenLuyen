@@ -5,50 +5,99 @@
         <title>Trang chủ CTSV</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <th:block th:replace="base :: styles"></th:block>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons.css}" /> <!-- Bootstrap Icons -->
+    <style>
+        .card-stat {
+            transition: transform 0.2s;
+            border-radius: 1rem;
+        }
+
+        .card-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-icon {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+        }
+
+        #chat-box {
+            border-radius: 0.75rem;
+            border: 1px solid #ced4da;
+            background: #f8f9fa;
+            height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+    </style>
 </head>
 
 <body th:replace="base :: layout(~{::content})">
 <th:block th:fragment="content">
     <div class="container my-5">
-        <h2 class="text-center mb-4">Bảng điều khiển - Chuyên viên CTSV</h2>
+        <h2 class="text-center mb-4 fw-bold text-primary">🎓 Bảng điều khiển - Chuyên viên CTSV</h2>
 
         <!-- Thống kê nhanh -->
-        <div class="row text-center">
-            <div class="col-md-3 mb-4">
-                <div class="card shadow rounded p-3">
-                    <h5>Hoạt động</h5>
-                    <p class="fs-4 text-success" th:text="${stats.totalActivities}">56</p>
+        <div class="row row-cols-1 row-cols-md-2 g-4 text-center mb-4 justify-content-center">
+            <div class="col">
+                <div class="card card-stat shadow p-4 bg-light h-100">
+                    <h6 class="text-muted">Hoạt động</h6>
+                    <p class="fs-3 text-success fw-bold" th:text="${stats.totalActivities}"></p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card card-stat shadow p-4 bg-light h-100">
+                    <h6 class="text-muted">Người dùng</h6>
+                    <p class="fs-3 text-success fw-bold" th:text="${stats.totalUsers}"></p>
                 </div>
             </div>
         </div>
 
         <!-- Menu chức năng -->
-        <div class="row mt-4">
-            <div class="col-md-4 mb-4">
-                <a th:href="@{/activities}" class="btn btn-outline-primary w-100">Quản lý hoạt động</a>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <a th:href="@{/activities}" class="btn btn-outline-primary btn-icon w-100">
+                    <i class="bi bi-calendar-event"></i> Quản lý hoạt động
+                </a>
             </div>
-            <div class="col-md-4 mb-4">
-                <a th:href="@{/users}" class="btn btn-outline-success w-100">Quản lý người dùng</a>
+            <div class="col">
+                <a th:href="@{/users}" class="btn btn-outline-success btn-icon w-100">
+                    <i class="bi bi-people-fill"></i> Quản lý người dùng
+                </a>
             </div>
-            <div class="col-md-4 mb-4">
-                <a href="/assistants" class="btn btn-outline-secondary w-100">Quản lý trợ lý sinh viên</a>
+            <div class="col">
+                <a th:href="@{/training-points}" class="btn btn-outline-secondary btn-icon w-100">
+                    <i class="bi bi-person-badge-fill"></i> Quản lý điểm rèn luyện
+                </a>
             </div>
-            <div class="col-md-4 mb-4">
-                <a href="/statistics" class="btn btn-outline-info w-100">Thống kê điểm rèn luyện</a>
+            <div class="col">
+                <a th:href="@{/my-activities}" class="btn btn-outline-info btn-icon w-100">
+                    <i class="bi bi-graph-up"></i> Xem hoạt động đã đăng ký
+                </a>
             </div>
-            <div class="col-md-4 mb-4">
-                <a href="/reports" class="btn btn-outline-warning w-100">Xử lý báo thiếu hoạt động</a>
+            <div class="col">
+                <a href="/reports" class="btn btn-outline-warning btn-icon w-100">
+                    <i class="bi bi-exclamation-triangle-fill"></i> Xử lý báo thiếu hoạt động
+                </a>
             </div>
-            <div class="col-md-4 mb-4">
-                <a href="/exports" class="btn btn-outline-dark w-100">Xuất báo cáo (PDF/CSV)</a>
+            <div class="col">
+                <a href="/exports" class="btn btn-outline-dark btn-icon w-100">
+                    <i class="bi bi-file-earmark-arrow-down"></i> Xuất báo cáo (PDF/CSV)
+                </a>
             </div>
         </div>
 
         <!-- Chat hỗ trợ -->
         <div class="mt-5">
-            <h5>Hỗ trợ trực tuyến (Firebase Chat)</h5>
-            <div id="chat-box" style="border: 1px solid #ccc; height: 300px; overflow-y: auto; padding: 10px;">
-                <p>Chat đang tải...</p>
+            <h5 class="fw-bold"><i class="bi bi-chat-dots text-primary"></i> Hỗ trợ trực tuyến (Firebase Chat)</h5>
+            <div id="chat-box">
+                <p class="text-muted fst-italic">Đang kết nối tới hệ thống chat...</p>
             </div>
         </div>
     </div>

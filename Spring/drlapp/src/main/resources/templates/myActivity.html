@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Hoạt động đã đăng ký</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="base :: styles"></th:block>
+</head>
+<body th:replace="base :: layout(~{::content})">
+<th:block th:fragment="content">
+    <div class="container my-5">
+        <h2 class="text-center fw-bold text-primary mb-4">Danh sách đăng ký hoạt động</h2>
+
+        <!-- Card container for the table -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <table class="table table-hover table-bordered table-striped align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên hoạt động</th>
+                            <th>Thời gian</th>
+                            <th>Minh chứng</th>
+                            <th>Hành động</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="ma : ${myActivity}">
+                            <td th:text="${ma.id}"></td>
+                            <td th:text="${ma.activity.name}"></td>
+                            <td th:text="${#temporals.format(ma.registrationDate, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td>
+                                <div th:if="${evidenceMap[ma.id] == null}" class="text-muted">Chưa có</div>
+                                <div th:if="${evidenceMap[ma.id] != null}">
+                                    <a th:href="@{${evidenceMap[ma.id].filePath}}" target="_blank">
+                                        <img th:src="@{${evidenceMap[ma.id].filePath}}"
+                                             alt="Minh chứng"
+                                             class="rounded shadow-sm"
+                                             style="width: 100px; height: 100px; object-fit: cover;">
+                                    </a>
+                                    <div class="mt-2">
+                                        <button class="btn btn-danger btn-sm" th:onclick="'deleteEvidence(\''+@{/api/evidences}+'\',' + ${evidenceMap[ma.id].id} + ')'">
+                                            <i class="fas fa-trash-alt"></i> Xóa
+                                        </button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div th:if="${evidenceMap[ma.id] == null}">
+                                    <form th:action="@{/training-points/create}" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="arId" th:value="${ma.id}"/>
+                                        <input type="hidden" name="userId" th:value="${ma.user.id}"/>
+                                        <input type="hidden" name="activityId" th:value="${ma.activity.id}"/>
+                                        <input type="hidden" name="point" th:value="${ma.activity.pointValue}"/>
+                                        <input type="file" name="file" class="form-control form-control-sm" required />
+                                        <button type="submit" class="btn btn-success btn-sm mt-1">Gửi minh chứng</button>
+                                        <button class="btn btn-warning btn-sm mt-1" th:onclick="'deleteMyActivity(\''+@{/api/my-activities}+'\',' + ${ma.id} + ')'">
+                                            <i class="fas fa-times-circle"></i> Hủy đăng ký
+                                        </button>
+                                    </form>
+                                </div>
+                                <div th:if="${evidenceMap[ma.id] != null}" class="text-success">
+                                    Đã gửi
+                                    <button class="btn btn-warning btn-sm mt-1" th:onclick="'deleteMyActivity(\''+@{/api/my-activities}+'\',' + ${ma.id} + ')'">
+                                        <i class="fas fa-times-circle"></i> Hủy đăng ký
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
+                                <div th:if="${evidenceMap[ma.id] == null}" class="text-success">
+                                    Chưa gửi
+                                </div>
+                                <div th:unless="${evidenceMap[ma.id] == null}" th:text="${evidenceMap[ma.id].verifyStatus}" class="text-success">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</th:block>
+</body>
+</html>

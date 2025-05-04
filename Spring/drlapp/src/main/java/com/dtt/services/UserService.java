@@ -22,4 +22,5 @@ public interface UserService extends UserDetailsService{
     List<User> getUsers(Map<String, String> params);
     List<User> getAllUsers();
     void deleteUserById(int id);
+    long getCountUsers();
 }

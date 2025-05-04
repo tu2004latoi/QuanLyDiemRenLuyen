@@ -1,5 +1,6 @@
 package com.dtt.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -14,8 +15,10 @@ import java.util.Set;
     @NamedQuery(name = "TrainingPoint.findByUser", query = "SELECT t FROM TrainingPoint t WHERE t.user.id = :userId"),
     @NamedQuery(name = "TrainingPoint.findByActivity", query = "SELECT t FROM TrainingPoint t WHERE t.activity.id = :activityId"),
     @NamedQuery(name = "TrainingPoint.findByStatus", query = "SELECT t FROM TrainingPoint t WHERE t.status = :status"),
-    @NamedQuery(name = "TrainingPoint.findByConfirmedBy", query = "SELECT t FROM TrainingPoint t WHERE t.confirmedBy.id = :staffId"),
-    @NamedQuery(name = "TrainingPoint.findByDateAwarded", query = "SELECT t FROM TrainingPoint t WHERE t.dateAwarded = :dateAwarded")
+    @NamedQuery(name = "TrainingPoint.findByConfirmedBy", query = "SELECT t FROM TrainingPoint t WHERE t.confirmedBy.id = :userId"),
+    @NamedQuery(name = "TrainingPoint.findByDateAwarded", query = "SELECT t FROM TrainingPoint t WHERE t.dateAwarded = :dateAwarded"),
+    @NamedQuery(name = "TrainingPoint.findByUserIdAndActivityId",
+            query = "SELECT t FROM TrainingPoint t WHERE t.user.id = :userId AND t.activity.id = :activityId")
 })
 
 public class TrainingPoint implements Serializable {
@@ -41,7 +44,8 @@ public class TrainingPoint implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "confirmed_by")
-    private Staff confirmedBy;
+    @JsonIgnore
+    private User confirmedBy;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
@@ -100,11 +104,11 @@ public class TrainingPoint implements Serializable {
         this.dateAwarded = dateAwarded;
     }
 
-    public Staff getConfirmedBy() {
+    public User getConfirmedBy() {
         return confirmedBy;
     }
 
-    public void setConfirmedBy(Staff confirmedBy) {
+    public void setConfirmedBy(User confirmedBy) {
         this.confirmedBy = confirmedBy;
     }
 

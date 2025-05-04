@@ -123,4 +123,9 @@ public class UserServiceImpl implements UserService {
         this.userRepo.deleteUserById(id);
     }
 
+    @Override
+    public long getCountUsers() {
+        return this.userRepo.getCountUsers();
+    }
+
 }

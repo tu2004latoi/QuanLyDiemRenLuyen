@@ -40,19 +40,27 @@ public class User implements Serializable {
 
     @Column(name = "avatar")
     private String avatar;
-    
+
     @Column(name = "points")
     private int points;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
-    
-    @Column(name ="active")
+
+    @Column(name = "active")
     private boolean active;
-    
+
     @Transient
     private MultipartFile file;
+
+    @OneToMany(mappedBy = "confirmedBy")
+    @JsonIgnore
+    private Set<TrainingPoint> confirmedTrainingPoints;
+    
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<Evidence> evidences;
 
     @JsonIgnore
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -135,7 +143,7 @@ public class User implements Serializable {
     public void setPoints(int points) {
         this.points = points;
     }
-    
+
     public Role getRole() {
         return role;
     }
@@ -143,7 +151,7 @@ public class User implements Serializable {
     public void setRole(Role role) {
         this.role = role;
     }
-    
+
     public boolean isActive() {
         return active;
     }
@@ -151,13 +159,29 @@ public class User implements Serializable {
     public void setActive(boolean active) {
         this.active = active;
     }
-    
+
     public MultipartFile getFile() {
         return file;
     }
 
     public void setFile(MultipartFile file) {
         this.file = file;
+    }
+    
+    public Set<Evidence> getEvidences() {
+        return evidences;
+    }
+
+    public void setEvidences(Set<Evidence> evidences) {
+        this.evidences = evidences;
+    }
+    
+    public Set<TrainingPoint> getConfirmedTrainingPoints() {
+        return confirmedTrainingPoints;
+    }
+
+    public void setConfirmedTrainingPoints(Set<TrainingPoint> confirmedTrainingPoints) {
+        this.confirmedTrainingPoints = confirmedTrainingPoints;
     }
 
     public Admin getAdmin() {

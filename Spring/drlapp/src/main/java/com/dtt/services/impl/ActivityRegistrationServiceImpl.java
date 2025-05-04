@@ -6,12 +6,15 @@ package com.dtt.services.impl;
 
 import com.dtt.pojo.Activity;
 import com.dtt.pojo.ActivityRegistrations;
+import com.dtt.pojo.TrainingPoint;
 import com.dtt.pojo.User;
 import com.dtt.repositories.ActivityRegistrationRepository;
 import com.dtt.repositories.ActivityRepository;
+import com.dtt.repositories.TrainingPointRepository;
 import com.dtt.repositories.UserRepository;
 import com.dtt.services.ActivityRegistrationService;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +33,9 @@ public class ActivityRegistrationServiceImpl implements ActivityRegistrationServ
 
     @Autowired
     private UserRepository userRepo;
+    
+    @Autowired
+    private TrainingPointRepository tpRepo;
 
     @Override
     public ActivityRegistrations addActivityRegistration(ActivityRegistrations ar) {
@@ -64,10 +70,35 @@ public class ActivityRegistrationServiceImpl implements ActivityRegistrationServ
         ar.setRegistrationDate(LocalDateTime.now());
 
         arRepo.addActivityRegistration(ar);
+        
+//        TrainingPoint t = new TrainingPoint();
+//        t.setUser(u);
+//        t.setActivity(a);
+//        t.setPoint(a.getPointValue());
+//        t.setDateAwarded(LocalDateTime.now());
+//        t.setStatus(TrainingPoint.Status.PENDING);
+//        t.setConfirmedBy(null);
+//        
+//        tpRepo.addOrUpdateTrainingPoint(t);
 
         // Tăng số người tham gia và cập nhật
         a.setCurrentParticipants(a.getCurrentParticipants() + 1);
         activityRepo.addOrUpdateActivity(a);
+    }
+
+    @Override
+    public List<ActivityRegistrations> getAllActivityRegistrations() {
+        return this.arRepo.getAllActivityRegistrations();
+    }
+
+    @Override
+    public ActivityRegistrations getActivityRegistrationById(int id) {
+        return this.arRepo.getActivityRegistrationById(id);
+    }
+
+    @Override
+    public void deleteActivityRegistrationById(int id) {
+        this.arRepo.deleteActivityRegistrationById(id);
     }
 
 }

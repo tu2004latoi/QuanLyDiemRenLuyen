@@ -1,16 +1,23 @@
 package com.dtt.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "evidences")
 @NamedQueries({
     @NamedQuery(name = "Evidence.findAll", query = "SELECT e FROM Evidence e"),
     @NamedQuery(name = "Evidence.findById", query = "SELECT e FROM Evidence e WHERE e.id = :id"),
-    @NamedQuery(name = "Evidence.findByStudent", query = "SELECT e FROM Evidence e WHERE e.student = :student"),
+    @NamedQuery(name = "Evidence.findByUser", query = "SELECT e FROM Evidence e WHERE e.user = :user"),
     @NamedQuery(name = "Evidence.findByTrainingPoint", query = "SELECT e FROM Evidence e WHERE e.trainingPoint = :trainingPoint"),
+    @NamedQuery(name = "Evidence.findByActivityRegistration", query = "SELECT e FROM Evidence e WHERE e.activityRegistration = :activityRegistration"),
+    @NamedQuery(name = "Evidence.findByActivityRegistrationId", query = "SELECT e FROM Evidence e WHERE e.activityRegistration.id = :activityRegistrationId"),
     @NamedQuery(name = "Evidence.findByFilePath", query = "SELECT e FROM Evidence e WHERE e.filePath = :filePath"),
     @NamedQuery(name = "Evidence.findByUploadDate", query = "SELECT e FROM Evidence e WHERE e.uploadDate = :uploadDate"),
     @NamedQuery(name = "Evidence.findByVerifyStatus", query = "SELECT e FROM Evidence e WHERE e.verifyStatus = :verifyStatus")
@@ -23,18 +30,24 @@ public class Evidence implements Serializable {
     private Integer id;  // Thay đổi từ String thành Integer
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "training_point_id")
     private TrainingPoint trainingPoint;
 
+    @ManyToOne
+    @JoinColumn(name = "activity_registration_id", referencedColumnName = "id", nullable = false)
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
+    private ActivityRegistrations activityRegistration;
+
     @Column(name = "file_path")
     private String filePath;
 
     @Column(name = "upload_date")
-    private Date uploadDate;
+    private LocalDateTime uploadDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "verify_status")
@@ -42,6 +55,17 @@ public class Evidence implements Serializable {
 
     public enum VerifyStatus {
         PENDING, APPROVED, REJECTED
+    }
+
+    @Transient
+    private MultipartFile file;
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
 
     // Getters and setters
@@ -53,12 +77,12 @@ public class Evidence implements Serializable {
         this.id = id;
     }
 
-    public Student getStudent() {
-        return student;
+    public User getUser() {
+        return user;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public TrainingPoint getTrainingPoint() {
@@ -69,6 +93,14 @@ public class Evidence implements Serializable {
         this.trainingPoint = trainingPoint;
     }
 
+    public ActivityRegistrations getActivityRegistration() {
+        return activityRegistration;
+    }
+
+    public void setActivityRegistration(ActivityRegistrations activityRegistration) {
+        this.activityRegistration = activityRegistration;
+    }
+
     public String getFilePath() {
         return filePath;
     }
@@ -77,11 +109,11 @@ public class Evidence implements Serializable {
         this.filePath = filePath;
     }
 
-    public Date getUploadDate() {
+    public LocalDateTime getUploadDate() {
         return uploadDate;
     }
 
-    public void setUploadDate(Date uploadDate) {
+    public void setUploadDate(LocalDateTime uploadDate) {
         this.uploadDate = uploadDate;
     }
 
@@ -95,13 +127,13 @@ public class Evidence implements Serializable {
 
     @Override
     public String toString() {
-        return "Evidence{" +
-                "id=" + id +
-                ", student=" + student +
-                ", trainingPoint=" + trainingPoint +
-                ", filePath='" + filePath + '\'' +
-                ", uploadDate=" + uploadDate +
-                ", verifyStatus=" + verifyStatus +
-                '}';
+        return "Evidence{"
+                + "id=" + id
+                + ", user=" + user
+                + ", trainingPoint=" + trainingPoint
+                + ", filePath='" + filePath + '\''
+                + ", uploadDate=" + uploadDate
+                + ", verifyStatus=" + verifyStatus
+                + '}';
     }
 }

@@ -5,6 +5,7 @@
 package com.dtt.controllers;
 
 import com.dtt.pojo.User;
+import com.dtt.services.ActivityRegistrationService;
 import com.dtt.services.UserService;
 import jakarta.ws.rs.core.MediaType;
 import java.util.List;
@@ -32,6 +33,9 @@ public class ApiUserController {
     @Autowired
     private UserService userSer;
     
+    @Autowired
+    private ActivityRegistrationService arSer;
+    
     @PostMapping(path = "/users", consumes = MediaType.MULTIPART_FORM_DATA)
     public ResponseEntity<User> register(@RequestParam Map<String, String> params, 
             @RequestParam(value = "avatar") MultipartFile avatar) {
@@ -54,10 +58,18 @@ public class ApiUserController {
     //Xóa 1 User
     @DeleteMapping("/users/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String destroy(@PathVariable("id") int id){
+    public String destroyUser(@PathVariable("id") int id){
         this.userSer.deleteUserById(id);
         
         return "redirect:/users";
+    }
+    
+    @DeleteMapping("/users/activity-registration/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public String destroyActivityRegistration(@PathVariable("id") int id){
+        this.arSer.deleteActivityRegistrationById(id);
+        
+        return "redirect:/user/activity-registration";
     }
     
 }

@@ -78,6 +78,7 @@ public class ApiActivityController {
             User user = userSer.getUserByUsername(username);
             arSer.registerToActivity(user.getId(), activityId);
             
+            
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
             return new ResponseEntity<>("Lỗi hệ thống: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

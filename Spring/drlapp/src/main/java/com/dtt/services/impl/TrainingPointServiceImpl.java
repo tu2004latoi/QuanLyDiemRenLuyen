@@ -12,6 +12,8 @@ import com.dtt.repositories.TrainingPointRepository;
 import com.dtt.repositories.UserRepository;
 import com.dtt.services.TrainingPointService;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +51,31 @@ public class TrainingPointServiceImpl implements TrainingPointService{
     @Override
     public TrainingPoint addOrUpdateTrainingPoint(TrainingPoint t) {
         return this.trainingPointRepo.addOrUpdateTrainingPoint(t);
+    }
+
+    @Override
+    public List<TrainingPoint> getAllTrainingPoints() {
+        return this.trainingPointRepo.getAllTrainingPoints();
+    }
+
+    @Override
+    public TrainingPoint getTrainingPointById(int id) {
+        return this.trainingPointRepo.getTrainingPointById(id);
+    }
+
+    @Override
+    public void deleteTrainingPointById(int id) {
+        this.trainingPointRepo.deleteTrainingPointById(id);
+    }
+
+    @Override
+    public List<TrainingPoint> getTrainingPoints(Map<String, String> params) {
+        return this.trainingPointRepo.getTrainingPoints(params);
+    }
+
+    @Override
+    public TrainingPoint getTrainingPointByUserIdAndActivityId(int userId, int activityId) {
+        return this.trainingPointRepo.getTrainingPointByUserIdAndActivityId(userId, activityId);
     }
     
 }

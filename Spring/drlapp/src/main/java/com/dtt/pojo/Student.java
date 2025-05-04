@@ -36,10 +36,6 @@ public class Student implements Serializable {
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
     private Faculty faculty;
 
-
-    @OneToMany(mappedBy = "student")
-    private Set<Evidence> evidences;
-
     @OneToMany(mappedBy = "student")
     private Set<Comment> comments;
 
@@ -90,20 +86,6 @@ public class Student implements Serializable {
      */
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
-    }
-
-    /**
-     * @return the evidences
-     */
-    public Set<Evidence> getEvidences() {
-        return evidences;
-    }
-
-    /**
-     * @param evidences the evidences to set
-     */
-    public void setEvidences(Set<Evidence> evidences) {
-        this.evidences = evidences;
     }
 
     /**

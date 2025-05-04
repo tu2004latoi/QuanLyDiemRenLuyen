@@ -1,51 +1,86 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Trang chủ</title>
+<head>
+    <title>Danh sách Hoạt Động</title>
     <th:block th:replace="base :: styles"></th:block>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-icons.css}">
+    <style>
+        .card-activity {
+            border-radius: 1rem;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .card-activity:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img-top {
+            border-top-left-radius: 1rem;
+            border-top-right-radius: 1rem;
+        }
+
+        .search-form input {
+            border-radius: 0.5rem;
+        }
+
+        .btn-icon {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+    </style>
 </head>
+
 <body th:replace="base :: layout(~{::content})">
 <th:block th:fragment="content">
-    <div class="container mt-4">
-        <h1 class="text-center mb-4">Danh sách Hoạt Động</h1>
+    <div class="container mt-5">
+        <h1 class="text-center fw-bold text-primary mb-4">📋 Danh sách Hoạt Động</h1>
 
         <!-- Form tìm kiếm -->
-        <form th:action="@{/activities}">
-            <div class="mb-3 mt-3">
-                <input type="text" class="form-control" placeholder="Từ khóa" name="kw">
-            </div>
-            <div class="row mb-3 mt-3">
-                <div class="col-6">
-                    <input type="number" class="form-control" placeholder="Điểm min" name="fromPoint">
+        <form class="search-form mb-4" th:action="@{/activities}">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="🔍 Từ khóa" name="kw">
                 </div>
-                <div class="col-6">
-                    <input type="number" class="form-control" placeholder="Điểm max" name="toPoint">
+                <div class="col-md-3">
+                    <input type="number" class="form-control" placeholder="⬇️ Điểm min" name="fromPoint">
+                </div>
+                <div class="col-md-3">
+                    <input type="number" class="form-control" placeholder="⬆️ Điểm max" name="toPoint">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-search"></i> Tìm kiếm
+                    </button>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
         </form>
 
         <!-- Nút thêm hoạt động -->
         <div class="d-flex justify-content-end mb-4">
-            <a th:href="@{/activities/add}" class="btn btn-success">
-                <i class="fas fa-plus"></i> Thêm Hoạt Động
+            <a th:href="@{/activities/add}" class="btn btn-success btn-icon">
+                <i class="bi bi-plus-circle-fill"></i> Thêm Hoạt Động
             </a>
         </div>
 
         <!-- Danh sách hoạt động -->
         <div class="row">
             <div class="col-md-4" th:each="a : ${activities}">
-                <div class="card mb-4">
+                <div class="card card-activity mb-4">
                     <img class="card-img-top" th:src="@{${a.image}}" alt="Ảnh hoạt động" style="height: 200px; object-fit: cover;">
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${a.name}"></h5>
-                        <p class="card-text">
-                            <strong>Id:</strong> <span th:text="${a.id}"></span><br>
-                            <strong>Ngày bắt đầu:</strong> <span th:text="${#dates.format(a.startDate, 'dd/MM/yyyy HH:mm')}"></span><br>
-                            <strong>Ngày kết thúc:</strong> <span th:text="${#dates.format(a.endDate, 'dd/MM/yyyy HH:mm')}"></span><br>
-                            <strong>Điểm:</strong> <span th:text="${a.pointValue}"></span>
+                        <h5 class="card-title text-primary fw-semibold" th:text="${a.name}"></h5>
+                        <p class="card-text small text-muted">
+                            <i class="bi bi-hash"></i> ID: <span th:text="${a.id}"></span><br>
+                            <i class="bi bi-calendar-event"></i> Bắt đầu: <span th:text="${#dates.format(a.startDate, 'dd/MM/yyyy HH:mm')}"></span><br>
+                            <i class="bi bi-calendar-check"></i> Kết thúc: <span th:text="${#dates.format(a.endDate, 'dd/MM/yyyy HH:mm')}"></span><br>
+                            <i class="bi bi-star-fill text-warning"></i> Điểm: <span th:text="${a.pointValue}"></span>
                         </p>
-                        <a th:href="@{'/activities/' + ${a.id}}" class="btn btn-info btn-sm">Chi tiết</a>
+                        <a th:href="@{'/activities/' + ${a.id}}" class="btn btn-outline-info btn-sm w-100 mt-2">
+                            <i class="bi bi-info-circle"></i> Chi tiết
+                        </a>
                     </div>
                 </div>
             </div>
@@ -53,7 +88,7 @@
 
         <!-- Không có hoạt động -->
         <div th:if="${#lists.isEmpty(activities)}">
-            <p class="text-center">Hiện không có hoạt động nào.</p>
+            <p class="text-center text-muted fst-italic">Không có hoạt động nào được tìm thấy.</p>
         </div>
     </div>
     <script th:src="@{/js/main.js}"></script>

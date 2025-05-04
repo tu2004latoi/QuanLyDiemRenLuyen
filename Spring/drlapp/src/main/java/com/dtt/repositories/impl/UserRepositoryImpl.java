@@ -131,4 +131,11 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    @Override
+    public long getCountUsers() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM User", User.class);
+        return q.getResultStream().count();
+    }
+
 }

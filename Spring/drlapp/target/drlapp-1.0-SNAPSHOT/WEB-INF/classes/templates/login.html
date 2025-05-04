@@ -5,31 +5,86 @@
         <title>Đăng nhập</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <th:block th:replace="base :: styles"></th:block>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <style>
+        body {
+            background: #f0f2f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .login-box {
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-box h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 0.5rem;
+        }
+
+        .toggle-password {
+            cursor: pointer;
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .btn {
+            border-radius: 0.5rem;
+        }
+    </style>
 </head>
 
-<body th:replace="base :: layout(~{::content})">
+<body>
 <th:block th:fragment="content">
-    <section class="container">
-        <h1 class="text-center mb-4">Đăng nhập</h1>
+    <div class="login-box">
+        <h1 class="text-center">Đăng nhập</h1>
 
-        <!-- Hiển thị thông báo lỗi nếu có -->
+        <!-- Thông báo lỗi -->
         <div th:if="${param.error}" class="alert alert-danger" role="alert">
             Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng thử lại.
         </div>
 
         <form method="post" th:action="@{/login}">
-            <div class="mb-3 mt-3">
-                <label for="username" class="form-label">Tên đăng nhập </label>
-                <input type="text" class="form-control" name="username" id="username" placeholder="Tên đăng nhập" autocomplete="username" />
+            <div class="mb-3">
+                <label for="username" class="form-label">Tên đăng nhập</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Nhập tên đăng nhập" autocomplete="username" required />
             </div>
 
-            <div class="mb-3 mt-3">
-                <label for="password" class="form-label">Mật khẩu </label>
-                <input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu" autocomplete="current-password" />
+            <div class="mb-3 form-group">
+                <label for="password" class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu" autocomplete="current-password" required />
+                <span class="toggle-password" onclick="togglePassword()">👁️</span>
             </div>
-            <button class="btn btn-success mt-1" type="submit">Đăng nhập</button>
+
+            <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
         </form>
-    </section>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const password = document.getElementById("password");
+            password.type = password.type === "password" ? "text" : "password";
+        }
+    </script>
     <script th:src="@{/js/main.js}"></script>
 </th:block>
 </body>

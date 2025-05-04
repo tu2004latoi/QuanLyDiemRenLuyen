@@ -9,67 +9,86 @@
 <body th:replace="base :: layout(~{::content})">
 <th:block th:fragment="content">
     <div class="container my-5">
-        <h2 class="mb-4 text-center">
-            <span th:if="${user.id == null}">Thêm người dùng</span>
-            <span th:unless="${user.id == null}">Chỉnh sửa người dùng</span>
-        </h2>
-        <form th:action="@{/users/add}" th:object="${user}" method="post" enctype="multipart/form-data">
-            <input type="hidden" th:field="*{id}" />
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="mb-4 text-center text-primary">
+                    <span th:if="${user.id == null}">Thêm người dùng</span>
+                    <span th:unless="${user.id == null}">Chỉnh sửa người dùng</span>
+                </h2>
 
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" th:field="*{email}" class="form-control" required />
+                <form th:action="@{/users/add}" th:object="${user}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{id}" />
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" th:field="*{email}" class="form-control" required />
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label class="form-label">Mật khẩu</label>
+                        <input type="password" th:field="*{password}" class="form-control"
+                               th:attr="placeholder=${user.id != null} ? 'Để trống nếu không đổi mật khẩu' : ''" />
+                    </div>
+
+                    <!-- First Name -->
+                    <div class="mb-3">
+                        <label class="form-label">Họ</label>
+                        <input type="text" th:field="*{firstName}" class="form-control" required />
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="mb-3">
+                        <label class="form-label">Tên</label>
+                        <input type="text" th:field="*{lastName}" class="form-control" required />
+                    </div>
+
+                    <!-- Points -->
+                    <div class="mb-3">
+                        <label class="form-label">Điểm</label>
+                        <input type="number" th:field="*{points}" class="form-control" min="0" />
+                    </div>
+
+                    <!-- Role -->
+                    <div class="mb-3">
+                        <label class="form-label">Vai trò</label>
+                        <select th:field="*{role}" class="form-control">
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="STAFF">STAFF</option>
+                            <option value="STUDENT">STUDENT</option>
+                        </select>
+                    </div>
+
+                    <!-- Avatar -->
+                    <div class="mb-3 mt-3">
+                        <label for="avatar" class="form-label">Ảnh đại diện</label>
+                        <input type="file" class="form-control" name="avatar" id="avatar" th:field="*{file}" />
+                        <img th:src="${user.avatar}" th:if="${user.id != null && user.avatar != null}" width="200" />
+                    </div>
+
+                    <!-- Active Checkbox -->
+                    <div class="form-check mb-3">
+                        <input type="checkbox" th:field="*{active}" class="form-check-input" id="activeCheck" />
+                        <label class="form-check-label" for="activeCheck" checked>Kích hoạt</label>
+                    </div>
+
+                    <input type="hidden" th:field="*{id}" />
+                    <input type="hidden" th:field="*{avatar}" />
+
+                    <div class="d-flex justify-content-between">
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-success">
+                            <span th:if="${user.id == null}">Thêm người dùng</span>
+                            <span th:unless="${user.id == null}">Cập nhật người dùng</span>
+                        </button>
+
+                        <!-- Back Button -->
+                        <a th:href="@{/users/list}" class="btn btn-secondary ms-2">Quay lại</a>
+                    </div>
+                </form>
             </div>
-
-            <div class="mb-3">
-                <label class="form-label">Mật khẩu</label>
-                <input type="password" th:field="*{password}" class="form-control"
-                       th:attr="placeholder=${user.id != null} ? 'Để trống nếu không đổi mật khẩu' : ''" />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Họ</label>
-                <input type="text" th:field="*{firstName}" class="form-control" required />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Tên</label>
-                <input type="text" th:field="*{lastName}" class="form-control" required />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Điểm</label>
-                <input type="number" th:field="*{points}" class="form-control" min="0" />
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Vai trò</label>
-                <select th:field="*{role}" class="form-control">
-                    <option value="ADMIN">ADMIN</option>
-                    <option value="STAFF">STAFF</option>
-                    <option value="STUDENT">STUDENT</option>
-                </select>
-            </div>
-
-            <div class="mb-3 mt-3">
-                <label for="avatar" class="form-label">Ảnh đại diện</label>
-                <input type="file" class="form-control" name="avatar" id="avatar" th:field="*{file}" />
-                <img th:src="${user.avatar}" th:if="${user.id != null && user.avatar != null}" width="200" />
-            </div>
-
-            <div class="form-check mb-3">
-                <input type="checkbox" th:field="*{active}" class="form-check-input" id="activeCheck" />
-                <label class="form-check-label" for="activeCheck" checked>Kích hoạt</label>
-            </div>
-
-            <input type="hidden" th:field="*{id}" />
-            <input type="hidden" th:field="*{avatar}" />
-            <button type="submit" class="btn btn-success">
-                <span th:if="${user.id == null}">Thêm người dùng</span>
-                <span th:unless="${user.id == null}">Cập nhật người dùng</span>
-            </button>
-            <a th:href="@{/users/list}" class="btn btn-secondary ms-2">Quay lại</a>
-        </form>
+        </div>
     </div>
 </th:block>
 </body>

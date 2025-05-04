@@ -5,6 +5,7 @@
 package com.dtt.controllers;
 
 import com.dtt.services.ActivityService;
+import com.dtt.services.UserService;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,15 @@ public class IndexController {
     @Autowired
     private ActivityService activityService;
     
+    @Autowired
+    private UserService userSer;
+    
     @RequestMapping("/")
     public String showDashboard(Model model) {
         Map<String, Object> stats = new HashMap<>();
 
         // Lấy dữ liệu từ service hoặc repository
-//        stats.put("totalStudents", studentService.countAll());
+        stats.put("totalUsers", userSer.getCountUsers());
         stats.put("totalActivities", activityService.getCountActivities());
 //        stats.put("totalPoints", trainingPointService.sumAllPoints());
 //        stats.put("totalReports", reportService.countAll());

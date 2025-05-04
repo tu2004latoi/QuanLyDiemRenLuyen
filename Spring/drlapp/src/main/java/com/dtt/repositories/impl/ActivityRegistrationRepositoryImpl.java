@@ -7,7 +7,9 @@ package com.dtt.repositories.impl;
 import com.dtt.pojo.Activity;
 import com.dtt.pojo.ActivityRegistrations;
 import com.dtt.repositories.ActivityRegistrationRepository;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
+import java.util.List;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -45,6 +47,43 @@ public class ActivityRegistrationRepositoryImpl implements ActivityRegistrationR
         q.setParameter("activityId", activityId);
 
         return q.getResultList().isEmpty();
+    }
+
+    @Override
+    public List<ActivityRegistrations> getAllActivityRegistrations() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createNamedQuery("ActivityRegistrations.findAll", ActivityRegistrations.class);
+        return q.getResultList();
+    }
+
+    @Override
+    public void deleteActivityRegistrationById(int id) {
+        try {
+            Session s = this.factory.getObject().getCurrentSession();
+            ActivityRegistrations ar = this.getActivityRegistrationById(id);
+            if (ar != null) {
+                s.remove(ar);
+                System.out.println("Deleted AR with id: " + id); // Log cho kiểm tra
+            } else {
+                throw new RuntimeException("AR not found with id: " + id);
+            }
+        } catch (Exception e) {
+            System.err.println("Error during delete: " + e.getMessage()); // Log lỗi
+            throw e;
+        }
+    }
+
+    @Override
+    public ActivityRegistrations getActivityRegistrationById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createNamedQuery("ActivityRegistrations.findById", ActivityRegistrations.class);
+        q.setParameter("id", id);
+
+        try {
+            return (ActivityRegistrations) q.getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        }
     }
 
 }

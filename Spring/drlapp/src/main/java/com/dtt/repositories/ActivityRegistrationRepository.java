@@ -5,6 +5,7 @@
 package com.dtt.repositories;
 
 import com.dtt.pojo.ActivityRegistrations;
+import java.util.List;
 
 /**
  *
@@ -12,5 +13,8 @@ import com.dtt.pojo.ActivityRegistrations;
  */
 public interface ActivityRegistrationRepository {
     ActivityRegistrations addActivityRegistration(ActivityRegistrations ar);
+    List<ActivityRegistrations> getAllActivityRegistrations();
     boolean isRegistration(int userId, int activityId);
+    void deleteActivityRegistrationById(int id);
+    ActivityRegistrations getActivityRegistrationById(int id);
 }

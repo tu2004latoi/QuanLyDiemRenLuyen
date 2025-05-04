@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Quản lý điểm rèn luyện</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="base :: styles"></th:block>
+</head>
+<body th:replace="base :: layout(~{::content})">
+<th:block th:fragment="content">
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-primary">Danh sách điểm rèn luyện</h2>
+        </div>
+
+        <!-- Form tìm kiếm -->
+        <form th:action="@{/training-points}" class="card shadow-sm p-4 mb-4">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Họ" name="firstName">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Tên" name="lastName">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Email" name="email">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Tên hoạt động" name="activityName">
+                </div>
+                <div class="col-12 text-end mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Tìm kiếm
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Bảng người dùng -->
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered align-middle shadow-sm">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Họ và tên</th>
+                        <th>Email</th>
+                        <th>Tên hoạt động</th>
+                        <th>Điểm</th>
+                        <th>Thời gian</th>
+                        <th>Trạng thái</th>
+                        <th>Người dùng xử lý</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="t : ${tp}" class="text-center">
+                        <td th:text="${t.id}"></td>
+                        <td th:text="${t.user.name}"></td>
+                        <td th:text="${t.user.email}"></td>
+                        <td th:text="${t.activity.name}"></td>
+                        <td th:text="${t.activity.pointValue}"></td>
+                        <td th:text="${#temporals.format(t.dateAwarded, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td th:text="${t.status}"></td>
+                        <td th:text="${t.confirmedBy != null ? t.confirmedBy.name : 'Chưa xác nhận'}"></td>
+                        <td>
+                            <button class="btn btn-sm btn-primary"
+                                    th:onclick="'updateTrainingPoint(\''+@{/api/training-points}+'\',' + ${t.id} + ', \'confirm\')'">
+                                <i class="fas fa-check"></i> Confirm
+                            </button>
+                            <button class="btn btn-sm btn-danger"
+                                    th:onclick="'updateTrainingPoint(\''+@{/api/training-points}+'\',' + ${t.id} + ', \'reject\')'">
+                                <i class="fas fa-times"></i> Reject
+                            </button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script th:src="@{/js/main.js}"></script>
+</th:block>
+</body>
+</html>

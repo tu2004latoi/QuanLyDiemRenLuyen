@@ -4,55 +4,68 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Chi tiết Hoạt Động</title>
-    <block th:replace="base :: styles"></block>
+    <th:block th:replace="base :: styles"></th:block>
 </head>
 <body th:replace="base :: layout(~{::content})">
 <th:block th:fragment="content">
-    <!-- Main content -->
-    <div class="container mt-5">
-        <h2 class="text-center mb-4" th:text="${activity.name}">Tên hoạt động</h2>
+    <div class="container my-5">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-primary" th:text="${activity.name}">Tên hoạt động</h2>
+        </div>
 
-        <!-- Card chứa thông tin chi tiết -->
-        <div class="card mb-4">
+        <div class="card shadow-lg rounded">
             <div class="row g-0">
-                <div class="col-md-6">
-                    <img class="img-fluid rounded-start" th:if="${activity.image != null}" th:src="@{${activity.image}}" alt="Ảnh hoạt động" style="height: 400px; object-fit: cover;">
+                <!-- Hình ảnh hoạt động -->
+                <div class="col-md-5">
+                    <img class="img-fluid rounded-start w-100 h-100" 
+                         th:if="${activity.image != null}" 
+                         th:src="@{${activity.image}}" 
+                         alt="Ảnh hoạt động" 
+                         style="object-fit: cover; height: 100%;">
                 </div>
-                <div class="col-md-6">
+
+                <!-- Thông tin chi tiết -->
+                <div class="col-md-7">
                     <div class="card-body">
-                        <h5 class="card-title">Thông tin chi tiết</h5>
-                        <p class="card-text"><strong>ID:</strong> <span th:text="${activity.id}"></span></p>
-                        <p class="card-text"><strong>Mô tả:</strong> <span th:text="${activity.description}">Không có mô tả</span></p>
-                        <p class="card-text"><strong>Ngày bắt đầu:</strong> <span th:text="${#dates.format(activity.startDate, 'dd/MM/yyyy HH:mm')}"></span></p>
-                        <p class="card-text"><strong>Ngày kết thúc:</strong> <span th:text="${#dates.format(activity.endDate, 'dd/MM/yyyy HH:mm')}"></span></p>
-                        <p class="card-text"><strong>Điểm:</strong> <span th:text="${activity.pointValue}"></span></p>
-                        <p class="card-text"><strong>Khoa tổ chức:</strong> <span th:text="${activity.faculty.name}">Chưa xác định</span></p>
-                        <p class="card-text"><strong>Người tổ chức:</strong> <span th:text="${activity.organizer.name}">Chưa rõ</span></p>
+                        <h5 class="card-title mb-3">Thông tin chi tiết</h5>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>ID:</strong> <span th:text="${activity.id}"></span></li>
+                            <li class="list-group-item"><strong>Mô tả:</strong> <span th:text="${activity.description}"></span></li>
+                            <li class="list-group-item"><strong>Ngày bắt đầu:</strong> <span th:text="${#dates.format(activity.startDate, 'dd/MM/yyyy HH:mm')}"></span></li>
+                            <li class="list-group-item"><strong>Ngày kết thúc:</strong> <span th:text="${#dates.format(activity.endDate, 'dd/MM/yyyy HH:mm')}"></span></li>
+                            <li class="list-group-item"><strong>Điểm:</strong> <span th:text="${activity.pointValue}"></span></li>
+                            <li class="list-group-item"><strong>Khoa tổ chức:</strong> <span th:text="${activity.faculty.name}">Chưa xác định</span></li>
+                            <li class="list-group-item"><strong>Người tổ chức:</strong> <span th:text="${activity.organizer.name}">Chưa rõ</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Các nút điều hướng -->
+        <!-- Các nút hành động -->
         <div class="d-flex justify-content-between mt-4">
-            <a th:href="@{/activities}" class="btn btn-secondary">Quay lại</a>
+            <a th:href="@{/activities}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left"></i> Quay lại
+            </a>
 
-            <div>
-                <button type="submit" class="btn btn-primary" th:onclick="'ActivityRegistration(\''+@{/api/activities}+'\',' + ${activity.id} + ')'">
-                    <i class="fas fa-trash-alt"></i> Đăng ký tham gia
+            <div class="d-flex gap-2">
+                <button class="btn btn-success"
+                        th:onclick="'ActivityRegistration(\''+@{/api/activities}+'\',' + ${activity.id} + ')'">
+                    <i class="fas fa-user-plus"></i> Đăng ký
                 </button>
 
-                <a th:href="@{'/activities/update/' + ${activity.id}}" class="btn btn-primary mx-2">
+                <a th:href="@{'/activities/update/' + ${activity.id}}" class="btn btn-info text-white">
                     <i class="fas fa-edit"></i> Sửa
                 </a>
 
-                <!-- Nút Xóa -->
-                <button type="submit" class="btn btn-danger" th:onclick="'deleteActivity(\''+@{/api/activities}+'\',' + ${activity.id} + ')'">
+                <button class="btn btn-danger"
+                        th:onclick="'deleteActivity(\''+@{/api/activities}+'\',' + ${activity.id} + ')'">
                     <i class="fas fa-trash-alt"></i> Xóa
                 </button>
             </div>
         </div>
     </div>
+
     <script th:src="@{/js/main.js}"></script>
 </th:block>
 </body>

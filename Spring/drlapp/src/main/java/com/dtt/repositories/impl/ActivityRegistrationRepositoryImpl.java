@@ -6,7 +6,12 @@ package com.dtt.repositories.impl;
 
 import com.dtt.pojo.Activity;
 import com.dtt.pojo.ActivityRegistrations;
+import com.dtt.pojo.Evidence;
+import com.dtt.pojo.TrainingPoint;
 import com.dtt.repositories.ActivityRegistrationRepository;
+import com.dtt.services.ActivityService;
+import com.dtt.services.EvidenceService;
+import com.dtt.services.TrainingPointService;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import java.util.List;
@@ -26,6 +31,15 @@ public class ActivityRegistrationRepositoryImpl implements ActivityRegistrationR
 
     @Autowired
     private LocalSessionFactoryBean factory;
+    
+    @Autowired
+    private EvidenceService evidenceSer;
+    
+    @Autowired
+    private TrainingPointService tpSer;
+    
+    @Autowired
+    private ActivityService activitySer;
 
     @Override
     public ActivityRegistrations addActivityRegistration(ActivityRegistrations ar) {
@@ -62,6 +76,17 @@ public class ActivityRegistrationRepositoryImpl implements ActivityRegistrationR
             Session s = this.factory.getObject().getCurrentSession();
             ActivityRegistrations ar = this.getActivityRegistrationById(id);
             if (ar != null) {
+                Evidence e = this.evidenceSer.getEvidenceByActivityRegistrationId(id);
+                if (e!=null){
+                    TrainingPoint t = e.getTrainingPoint();
+                    if (t!=null){
+                        s.remove(t);
+                    }
+                    s.remove(e);
+                }
+                Activity a = this.activitySer.getActivityById(ar.getActivity().getId());
+                a.setCurrentParticipants(a.getCurrentParticipants()-1);
+                this.activitySer.addOrUpdateActivity(a);
                 s.remove(ar);
                 System.out.println("Deleted AR with id: " + id); // Log cho kiểm tra
             } else {

@@ -52,7 +52,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Activity addOrUpdateActivity(Activity a) {
-        if (!a.getFile().isEmpty()) {
+        if (a.getFile() != null && !a.getFile().isEmpty()) {
             try {
                 Map res = cloudinary.uploader().upload(a.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));

@@ -36,8 +36,8 @@ CREATE TABLE `training_points` (
   KEY `confirmed_by` (`confirmed_by`),
   CONSTRAINT `training_points_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `training_points_ibfk_2` FOREIGN KEY (`activity_id`) REFERENCES `activities` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `training_points_ibfk_3` FOREIGN KEY (`confirmed_by`) REFERENCES `staff` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `training_points_ibfk_3` FOREIGN KEY (`confirmed_by`) REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,6 +46,7 @@ CREATE TABLE `training_points` (
 
 LOCK TABLES `training_points` WRITE;
 /*!40000 ALTER TABLE `training_points` DISABLE KEYS */;
+INSERT INTO `training_points` VALUES (1,1,1,10,'2025-05-05 14:59:08',NULL,'PENDING');
 /*!40000 ALTER TABLE `training_points` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -58,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-30 18:08:14
+-- Dump completed on 2025-05-05 15:34:18

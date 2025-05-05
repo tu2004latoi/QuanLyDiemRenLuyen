@@ -24,17 +24,20 @@ DROP TABLE IF EXISTS `evidences`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `evidences` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `student_id` int DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  `activity_registration_id` int DEFAULT NULL,
   `training_point_id` int DEFAULT NULL,
   `file_path` varchar(255) DEFAULT NULL,
   `upload_date` datetime DEFAULT NULL,
   `verify_status` enum('PENDING','APPROVED','REJECTED') DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `student_id` (`student_id`),
+  KEY `user_id` (`user_id`),
+  KEY `activity_registration_id` (`activity_registration_id`),
   KEY `training_point_id` (`training_point_id`),
-  CONSTRAINT `evidences_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `evidences_ibfk_2` FOREIGN KEY (`training_point_id`) REFERENCES `training_points` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `evidences_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `evidences_ibfk_2` FOREIGN KEY (`activity_registration_id`) REFERENCES `activity_registrations` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `evidences_ibfk_3` FOREIGN KEY (`training_point_id`) REFERENCES `training_points` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +46,7 @@ CREATE TABLE `evidences` (
 
 LOCK TABLES `evidences` WRITE;
 /*!40000 ALTER TABLE `evidences` DISABLE KEYS */;
+INSERT INTO `evidences` VALUES (1,1,1,1,'https://res.cloudinary.com/dq1oo3fod/image/upload/v1746431951/mdfx03qtdxnleolkswsj.png','2025-05-05 14:59:08','PENDING');
 /*!40000 ALTER TABLE `evidences` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-30 18:08:13
+-- Dump completed on 2025-05-05 15:34:18

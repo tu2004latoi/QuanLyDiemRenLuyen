@@ -88,4 +88,13 @@ public class EvidenceRepositoryImpl implements EvidenceRepository {
         }
     }
 
+    @Override
+    public Evidence getEvidenceByTrainingPointId(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createNamedQuery("Evidence.findByTrainingPointId", Evidence.class);
+        q.setParameter("trainingPointId", id);
+        
+        return (Evidence) q.getSingleResult();
+    }
+
 }

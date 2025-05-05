@@ -82,6 +82,20 @@
 
                     <!-- Điểm -->
                     <div class="col-md-6">
+                        <label class="form-label fw-semibold" for="pointType">Chọn điều</label>
+                        <select class="form-select" id="pointType" th:field="*{pointType}">
+                            <option value="POINT_1">Điều 1</option>
+                            <option value="POINT_2">Điều 2</option>
+                            <option value="POINT_3">Điều 3</option>
+                            <option value="POINT_4">Điều 4</option>
+                        </select>
+                        <div th:if="${#fields.hasErrors('pointType')}" class="alert alert-danger mt-2">
+                            <p th:each="err : ${#fields.errors('pointType')}" th:text="${err}"></p>
+                        </div>
+                    </div>
+
+                    <!-- Nhập điểm -->
+                    <div class="col-md-6">
                         <label class="form-label fw-semibold" for="pointValue">Điểm</label>
                         <input type="number" class="form-control" id="pointValue" th:field="*{pointValue}" min="0" step="0.5" />
                         <div th:if="${#fields.hasErrors('pointValue')}" class="alert alert-danger mt-2">

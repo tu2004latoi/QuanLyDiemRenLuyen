@@ -45,8 +45,10 @@
                         <th>Họ và tên</th>
                         <th>Email</th>
                         <th>Tên hoạt động</th>
+                        <th>Loại điểm</th>
                         <th>Điểm</th>
                         <th>Thời gian</th>
+                        <th>Minh chứng</th>
                         <th>Trạng thái</th>
                         <th>Người dùng xử lý</th>
                         <th>Hành động</th>
@@ -58,8 +60,17 @@
                         <td th:text="${t.user.name}"></td>
                         <td th:text="${t.user.email}"></td>
                         <td th:text="${t.activity.name}"></td>
+                        <td th:text="${t.activity.pointType.label}"></td>
                         <td th:text="${t.activity.pointValue}"></td>
                         <td th:text="${#temporals.format(t.dateAwarded, 'dd/MM/yyyy HH:mm')}"></td>
+                        <td>
+                            <a th:href="@{${evidenceMap[t.id].filePath}}" target="_blank">
+                                <img th:src="@{${evidenceMap[t.id].filePath}}"
+                                     alt="Minh chứng"
+                                     class="rounded shadow-sm"
+                                     style="width: 100px; height: 100px; object-fit: cover;">
+                            </a>
+                        </td>
                         <td th:text="${t.status}"></td>
                         <td th:text="${t.confirmedBy != null ? t.confirmedBy.name : 'Chưa xác nhận'}"></td>
                         <td>

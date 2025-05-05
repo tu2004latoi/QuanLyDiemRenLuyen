@@ -33,6 +33,7 @@
                             <li class="list-group-item"><strong>Mô tả:</strong> <span th:text="${activity.description}"></span></li>
                             <li class="list-group-item"><strong>Ngày bắt đầu:</strong> <span th:text="${#dates.format(activity.startDate, 'dd/MM/yyyy HH:mm')}"></span></li>
                             <li class="list-group-item"><strong>Ngày kết thúc:</strong> <span th:text="${#dates.format(activity.endDate, 'dd/MM/yyyy HH:mm')}"></span></li>
+                            <li class="list-group-item"><strong>Loại điểm:</strong> <span th:text="${activity.pointType.label}"></span></li>
                             <li class="list-group-item"><strong>Điểm:</strong> <span th:text="${activity.pointValue}"></span></li>
                             <li class="list-group-item"><strong>Khoa tổ chức:</strong> <span th:text="${activity.faculty.name}">Chưa xác định</span></li>
                             <li class="list-group-item"><strong>Người tổ chức:</strong> <span th:text="${activity.organizer.name}">Chưa rõ</span></li>

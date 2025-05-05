@@ -75,6 +75,10 @@ public class Activity implements Serializable {
     @Column(name = "current_participants", nullable = false)
     private Integer currentParticipants = 0;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "point_type")
+    private PointType pointType;
+
     @Column(name = "point_value")
     private Integer pointValue;
 
@@ -84,8 +88,8 @@ public class Activity implements Serializable {
 
     @Column(name = "image")
     private String image;
-    
-    @Column(name ="active")
+
+    @Column(name = "active")
     private Boolean active;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -198,6 +202,14 @@ public class Activity implements Serializable {
         this.currentParticipants = currentParticipants;
     }
 
+    public PointType getPointType() {
+        return pointType;
+    }
+
+    public void setPointType(PointType pointType) {
+        this.pointType = pointType;
+    }
+
     public Integer getPointValue() {
         return pointValue;
     }
@@ -217,7 +229,7 @@ public class Activity implements Serializable {
     public String getImage() {
         return image;
     }
-    
+
     public Boolean getActive() {
         return active;
     }
@@ -273,6 +285,23 @@ public class Activity implements Serializable {
     // Enum đại diện cho status
     public enum ActivityStatus {
         UPCOMING, ONGOING, COMPLETED, CANCELLED
+    }
+
+    public enum PointType {
+        POINT_1("Điều 1"),
+        POINT_2("Điều 2"),
+        POINT_3("Điều 3"),
+        POINT_4("Điều 4");
+
+        private final String label;
+
+        PointType(String label) {
+            this.label = label;
+        }
+
+        public String getLabel() {
+            return label;
+        }
     }
 
     @Override

@@ -45,7 +45,11 @@
                         <th>Họ và tên</th>
                         <th>Email</th>
                         <th>Ảnh đại diện</th>
-                        <th>Điểm</th>
+                        <th>Điểm điều 1</th>
+                        <th>Điểm điều 2</th>
+                        <th>Điểm điều 3</th>
+                        <th>Điểm điều 4</th>
+                        <th>Tổng điểm</th>
                         <th>Vai trò</th>
                         <th>Hành động</th>
                     </tr>
@@ -60,7 +64,11 @@
                                  class="rounded-circle shadow-sm"
                                  style="width: 50px; height: 50px; object-fit: cover;">
                         </td>
-                        <td th:text="${user.points}"></td>
+                        <td th:text="${user.point_1}"></td>
+                        <td th:text="${user.point_2}"></td>
+                        <td th:text="${user.point_3}"></td>
+                        <td th:text="${user.point_4}"></td>
+                        <td th:text="${user.point_1 + user.point_2 + user.point_3 + user.point_4}"></td>
                         <td>
                             <span class="badge bg-info text-dark" th:text="${user.role}"></span>
                         </td>

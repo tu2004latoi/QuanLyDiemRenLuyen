@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
     @NamedQuery(name = "Evidence.findById", query = "SELECT e FROM Evidence e WHERE e.id = :id"),
     @NamedQuery(name = "Evidence.findByUser", query = "SELECT e FROM Evidence e WHERE e.user = :user"),
     @NamedQuery(name = "Evidence.findByTrainingPoint", query = "SELECT e FROM Evidence e WHERE e.trainingPoint = :trainingPoint"),
+    @NamedQuery(name = "Evidence.findByTrainingPointId", query = "SELECT e FROM Evidence e WHERE e.trainingPoint.id = :trainingPointId"),
     @NamedQuery(name = "Evidence.findByActivityRegistration", query = "SELECT e FROM Evidence e WHERE e.activityRegistration = :activityRegistration"),
     @NamedQuery(name = "Evidence.findByActivityRegistrationId", query = "SELECT e FROM Evidence e WHERE e.activityRegistration.id = :activityRegistrationId"),
     @NamedQuery(name = "Evidence.findByFilePath", query = "SELECT e FROM Evidence e WHERE e.filePath = :filePath"),

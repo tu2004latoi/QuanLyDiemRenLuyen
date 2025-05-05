@@ -62,5 +62,10 @@ public class EvidenceServiceImpl implements EvidenceService{
     public Evidence getEvidenceByActivityRegistrationId(int id) {
         return this.eviRepo.getEvidenceByActivityRegistrationId(id);
     }
+
+    @Override
+    public Evidence getEvidenceByTrainingPointId(int id) {
+        return this.eviRepo.getEvidenceByTrainingPointId(id);
+    }
     
 }

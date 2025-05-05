@@ -16,6 +16,8 @@ import com.dtt.services.TrainingPointService;
 import com.dtt.services.UserService;
 import jakarta.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,31 +39,37 @@ public class TrainingPointController {
 
     @Autowired
     private TrainingPointService tpSer;
-    
+
     @Autowired
     private UserService userSer;
-    
+
     @Autowired
     private ActivityService activitySer;
-    
+
     @Autowired
     private EvidenceService evidenceSer;
-    
+
     @Autowired
     private ActivityRegistrationService arSer;
 
     @GetMapping("/training-points")
     public String trainingPointListView(Model model, @RequestParam Map<String, String> params) {
-        model.addAttribute("tp", this.tpSer.getTrainingPoints(params));
+        List<TrainingPoint> listTrainingPoints = this.tpSer.getTrainingPoints(params);
+        Map<Integer, Evidence> evidenceMap = new HashMap<>();
+        for (TrainingPoint t : listTrainingPoints) {
+            int trainingPointId = t.getId();
+            Evidence e = this.evidenceSer.getEvidenceByTrainingPointId(trainingPointId);
+            evidenceMap.put(trainingPointId, e);
+        }
+        
+        model.addAttribute("tp", listTrainingPoints);
+        model.addAttribute("evidenceMap", evidenceMap);
 
         return "trainingPointsList";
     }
 
-    
-    
 //    @DeleteMapping("/training-points/update-evidence/{id}")
 //    public String deleteEvidence(@RequestParam("id") Integer arId){
 //        
 //    }
-
 }

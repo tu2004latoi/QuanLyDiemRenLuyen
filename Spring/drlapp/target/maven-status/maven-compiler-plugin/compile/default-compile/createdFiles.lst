@@ -49,6 +49,7 @@ com\dtt\services\impl\EvidenceServiceImpl.class
 com\dtt\configs\SecurityWebApplicationInitializer.class
 com\dtt\services\UserService.class
 com\dtt\configs\ThymeleafConfig.class
+com\dtt\pojo\Activity$PointType.class
 com\dtt\repositories\TrainingPointRepository.class
 com\dtt\repositories\impl\NewsFeedRepositoryImpl.class
 com\dtt\repositories\impl\UserRepositoryImpl.class

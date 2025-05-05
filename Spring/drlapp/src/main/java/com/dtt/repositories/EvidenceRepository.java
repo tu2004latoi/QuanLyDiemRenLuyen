@@ -19,4 +19,5 @@ public interface EvidenceRepository {
     Evidence getEvidenceByActivityRegistration(ActivityRegistrations ar);
     Evidence getEvidenceById(int id);
     Evidence getEvidenceByActivityRegistrationId(int id);
+    Evidence getEvidenceByTrainingPointId(int id);
 }

@@ -41,8 +41,17 @@ public class User implements Serializable {
     @Column(name = "avatar")
     private String avatar;
 
-    @Column(name = "points")
-    private int points;
+    @Column(name = "point_1")
+    private int point_1;
+
+    @Column(name = "point_2")
+    private int point_2;
+
+    @Column(name = "point_3")
+    private int point_3;
+
+    @Column(name = "point_4")
+    private int point_4;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
@@ -57,7 +66,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "confirmedBy")
     @JsonIgnore
     private Set<TrainingPoint> confirmedTrainingPoints;
-    
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private Set<Evidence> evidences;
@@ -136,14 +145,6 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
     public Role getRole() {
         return role;
     }
@@ -160,6 +161,38 @@ public class User implements Serializable {
         this.active = active;
     }
 
+    public int getPoint_1() {
+        return point_1;
+    }
+
+    public void setPoint_1(int point_1) {
+        this.point_1 = point_1;
+    }
+
+    public int getPoint_2() {
+        return point_2;
+    }
+
+    public void setPoint_2(int point_2) {
+        this.point_2 = point_2;
+    }
+
+    public int getPoint_3() {
+        return point_3;
+    }
+
+    public void setPoint_3(int point_3) {
+        this.point_3 = point_3;
+    }
+
+    public int getPoint_4() {
+        return point_4;
+    }
+
+    public void setPoint_4(int point_4) {
+        this.point_4 = point_4;
+    }
+
     public MultipartFile getFile() {
         return file;
     }
@@ -167,7 +200,7 @@ public class User implements Serializable {
     public void setFile(MultipartFile file) {
         this.file = file;
     }
-    
+
     public Set<Evidence> getEvidences() {
         return evidences;
     }
@@ -175,7 +208,7 @@ public class User implements Serializable {
     public void setEvidences(Set<Evidence> evidences) {
         this.evidences = evidences;
     }
-    
+
     public Set<TrainingPoint> getConfirmedTrainingPoints() {
         return confirmedTrainingPoints;
     }

@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.41, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: drldb
+-- Host: localhost    Database: drldb
 -- ------------------------------------------------------
--- Server version	8.0.40
+-- Server version	8.0.41
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -37,7 +37,7 @@ CREATE TABLE `evidences` (
   CONSTRAINT `evidences_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `evidences_ibfk_2` FOREIGN KEY (`activity_registration_id`) REFERENCES `activity_registrations` (`id`) ON DELETE CASCADE,
   CONSTRAINT `evidences_ibfk_3` FOREIGN KEY (`training_point_id`) REFERENCES `training_points` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,6 @@ CREATE TABLE `evidences` (
 
 LOCK TABLES `evidences` WRITE;
 /*!40000 ALTER TABLE `evidences` DISABLE KEYS */;
-INSERT INTO `evidences` VALUES (1,1,1,1,'https://res.cloudinary.com/dq1oo3fod/image/upload/v1746431951/mdfx03qtdxnleolkswsj.png','2025-05-05 14:59:08','PENDING');
 /*!40000 ALTER TABLE `evidences` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-05 15:34:18
+-- Dump completed on 2025-05-05 21:03:12

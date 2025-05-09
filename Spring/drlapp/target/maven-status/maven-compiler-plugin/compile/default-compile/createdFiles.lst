@@ -24,6 +24,7 @@ com\dtt\services\MyActivityService.class
 com\dtt\pojo\Admin.class
 com\dtt\services\impl\ActivityServiceImpl.class
 com\dtt\controllers\ApiEvidenceController.class
+com\dtt\controllers\ApiExportController.class
 com\dtt\configs\SpringSecurityConfigs.class
 com\dtt\controllers\MyActivityController.class
 com\dtt\pojo\User$Role.class
@@ -46,6 +47,7 @@ com\dtt\configs\DispatcherServletInit.class
 com\dtt\pojo\ReportDetail.class
 com\dtt\configs\PasswordEncoderExample.class
 com\dtt\drlapp\JakartaRestConfiguration.class
+com\dtt\services\ExportService.class
 com\dtt\services\impl\UserServiceImpl.class
 com\dtt\pojo\TrainingPoint.class
 com\dtt\repositories\impl\ActivityRegistrationRepositoryImpl.class
@@ -70,6 +72,7 @@ com\dtt\formatters\FacultyFormatter.class
 com\dtt\controllers\ActivityRegistrationController.class
 com\dtt\repositories\impl\MyActivityRepositoryImpl.class
 com\dtt\services\NewsFeedService.class
+com\dtt\services\impl\ExportServiceImpl.class
 com\dtt\pojo\Attendance.class
 com\dtt\services\TrainingPointService.class
 com\dtt\controllers\ActivityController.class

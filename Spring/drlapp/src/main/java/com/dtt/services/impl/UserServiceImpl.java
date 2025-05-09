@@ -142,4 +142,9 @@ public class UserServiceImpl implements UserService {
         return this.userRepo.addOrUpdateUser(u);
     }
 
+    @Override
+    public List<User> getAllStudents() {
+        return this.userRepo.getAllStudents();
+    }
+
 }

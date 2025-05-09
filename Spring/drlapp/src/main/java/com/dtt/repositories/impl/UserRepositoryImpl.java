@@ -158,4 +158,13 @@ public class UserRepositoryImpl implements UserRepository {
         return u;
     }
 
+    @Override
+    public List<User> getAllStudents() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createNamedQuery("User.findAllStudent", User.class);
+        q.setParameter("role", User.Role.STUDENT);
+        
+        return q.getResultList();
+    }
+
 }

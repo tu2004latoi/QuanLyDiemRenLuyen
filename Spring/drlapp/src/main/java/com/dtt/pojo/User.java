@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
+    @NamedQuery(name = "User.findAllStudent", query = "SELECT u FROM User u WHERE u.role = :role"),
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email LIKE :email"),
     @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName LIKE :firstName"),
     @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName LIKE :lastName"),
@@ -75,7 +76,8 @@ public class User implements Serializable {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Admin admin;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<ActivityRegistrations> activityRegistrations = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
@@ -253,5 +255,17 @@ public class User implements Serializable {
 
     public enum Role {
         ADMIN, STAFF, STUDENT
+    }
+    
+    public int totalPoint(){
+        return point_1 + point_2 + point_3 + point_4;
+    }
+    
+    public String classify(int totalPoint){
+        if (totalPoint>=90) return "Xuất sắc";
+        else if (totalPoint>=80) return "Giỏi";
+        else if (totalPoint>=65) return "Khá";
+        else if (totalPoint>=50) return "Trung bình";
+        else return "Yếu";
     }
 }

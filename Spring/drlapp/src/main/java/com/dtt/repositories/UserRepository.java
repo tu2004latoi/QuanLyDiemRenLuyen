@@ -24,4 +24,5 @@ public interface UserRepository {
     List<User> getUsers(Map<String, String> params);
     long getCountUsers();
     User updatePointUser(User u);
+    List<User> getAllStudents();
 }

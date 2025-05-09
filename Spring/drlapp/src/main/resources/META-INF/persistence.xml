@@ -3,5 +3,6 @@
   <!-- Define Persistence Unit -->
   <persistence-unit name="my_persistence_unit">
     <class>com.dtt.configs.WebAppContextConfigs</class>
+    <class>com.dtt.pojo.Emails</class>
   </persistence-unit>
 </persistence>

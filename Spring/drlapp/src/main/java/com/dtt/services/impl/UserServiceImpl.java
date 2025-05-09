@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addOrUpdateUser(User u) {
-        if (!u.getFile().isEmpty()) {
+        if (u.getFile()!=null && !u.getFile().isEmpty()) {
             try {
                 Map res = cloudinary.uploader().upload(u.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
@@ -129,6 +129,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public long getCountUsers() {
         return this.userRepo.getCountUsers();
+    }
+
+    @Override
+    public User updatePointUser(User u) {
+        User user = this.userRepo.getUserById(u.getId());
+        user.setPoint_1(u.getPoint_1());
+        user.setPoint_2(u.getPoint_2());
+        user.setPoint_3(u.getPoint_3());
+        user.setPoint_4(u.getPoint_4());
+        
+        return this.userRepo.addOrUpdateUser(u);
     }
 
 }

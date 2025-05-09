@@ -23,4 +23,6 @@ public interface UserService extends UserDetailsService{
     List<User> getAllUsers();
     void deleteUserById(int id);
     long getCountUsers();
+    User updatePointUser(User u);
+    
 }

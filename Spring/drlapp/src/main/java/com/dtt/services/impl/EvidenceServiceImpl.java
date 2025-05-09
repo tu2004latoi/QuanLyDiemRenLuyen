@@ -31,7 +31,7 @@ public class EvidenceServiceImpl implements EvidenceService{
 
     @Override
     public Evidence addOrUpdateEvidence(Evidence e) {
-        if (!e.getFile().isEmpty()) {
+        if (e.getFile()!= null && !e.getFile().isEmpty()) {
             try {
                 Map res = cloudinary.uploader().upload(e.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Danh sách báo thiếu</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="base :: styles"></th:block>
+</head>
+<body th:replace="base :: layout(~{::content})">
+<th:block th:fragment="content">
+    <div class="container my-5">
+        <h2 class="text-center fw-bold text-primary mb-4">Danh sách báo thiếu</h2>
+        <form th:action="@{/missing-reports}" class="card shadow-sm p-4 mb-4">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Tên người dùng" name="nameUser">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Tên hoạt động" name="nameActivity">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Điểm tối thiểu" name="fromPoint">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" placeholder="Điểm tối đa" name="toPoint">
+                </div>
+                <div class="col-12 text-end mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Tìm kiếm
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!-- Card container for the table -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <table class="table table-hover table-bordered table-striped align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Người dùng báo thiếu</th>
+                            <th>Hoạt động</th>
+                            <th>Điều</th>
+                            <th>Điểm</th>
+                            <th>Thời gian báo thiếu</th>
+                            <th>Minh chứng</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="m : ${mr}">
+                            <td th:text="${m.id}"></td>
+                            <td th:text="${m.user.name}"></td>
+                            <td th:text="${m.activity.name}"></td>
+                            <td th:text="${m.activity.pointType.label}"></td>
+                            <td th:text="${m.point}"></td>
+                            <td th:text="${#temporals.format(m.dateReport, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td>
+                                <a th:href="@{${m.image}}" target="_blank">
+                                    <img th:src="@{${m.image}}"
+                                         alt="Minh chứng"
+                                         class="rounded shadow-sm"
+                                         style="width: 100px; height: 100px; object-fit: cover;">
+                                </a>
+                            </td>
+                            <td th:text="${m.status}"></td>
+                            <td>
+                                <div th:if="${m.status == T(com.dtt.pojo.MissingReport.ReportStatus).PENDING}">
+                                    <button class="btn btn-sm btn-primary"
+                                            th:onclick="'updateMissingReport(\''+@{/api/missing-reports}+'\',' + ${m.id} + ', \'confirm\')'">
+                                        <i class="fas fa-check"></i> Confirm
+                                    </button>
+                                    <button class="btn btn-sm btn-danger"
+                                            th:onclick="'updateMissingReport(\''+@{/api/missing-reports}+'\',' + ${m.id} + ', \'reject\')'">
+                                        <i class="fas fa-times"></i> Reject
+                                    </button>
+                                </div>
+
+                                <!-- Nếu đã APPROVED thì chỉ cho hiện nút Reject -->
+                                <div th:if="${m.status == T(com.dtt.pojo.MissingReport.ReportStatus).CONFIRMED}">
+                                    <button class="btn btn-sm btn-danger"
+                                            th:onclick="'updateMissingReport(\''+@{/api/missing-reports}+'\',' + ${m.id} + ', \'reject-after-confirm\')'">
+                                        <i class="fas fa-times"></i> Reject
+                                    </button>
+                                </div>
+
+                                <!-- Nếu đã REJECTED thì chỉ cho hiện nút Confirm -->
+                                <div th:if="${m.status == T(com.dtt.pojo.MissingReport.ReportStatus).REJECTED}">
+                                    <button class="btn btn-sm btn-primary"
+                                            th:onclick="'updateMissingReport(\''+@{/api/missing-reports}+'\',' + ${m.id} + ', \'confirm\')'">
+                                        <i class="fas fa-check"></i> Confirm
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</th:block>
+</body>
+</html>

@@ -4,8 +4,10 @@
  */
 package com.dtt.repositories.impl;
 
+import com.dtt.pojo.Email;
 import com.dtt.pojo.User;
 import com.dtt.repositories.UserRepository;
+import com.dtt.services.EmailService;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -30,6 +32,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+
+    @Autowired
+    private EmailService emailSer;
 
     @Override
     public User getUserByUsername(String username) {
@@ -76,12 +81,12 @@ public class UserRepositoryImpl implements UserRepository {
             if (firstName != null && !firstName.isEmpty()) {
                 predicates.add(b.like(root.get("firstName"), String.format("%%%s%%", firstName)));
             }
-            
+
             String lastName = params.get("lastName");
             if (lastName != null && !lastName.isEmpty()) {
                 predicates.add(b.like(root.get("lastName"), String.format("%%%s%%", lastName)));
             }
-            
+
             String email = params.get("email");
             if (email != null && !email.isEmpty()) {
                 predicates.add(b.like(root.get("email"), String.format("%%%s%%", email)));
@@ -89,21 +94,28 @@ public class UserRepositoryImpl implements UserRepository {
 
             q.where(predicates.toArray(new jakarta.persistence.criteria.Predicate[0]));
         }
-        
+
         Query query = s.createQuery(q);
-        
+
         return query.getResultList();
     }
 
     @Override
     public User addOrUpdateUser(User u) {
         Session s = this.factory.getObject().getCurrentSession();
-        if (u.getId()==null){
+        Email e = this.emailSer.getEmailByEmail(u.getEmail());
+        if (u.getId() == null) {
+            if (e == null) {
+                throw new IllegalArgumentException("Email này chưa được cấp!");
+            }
             s.persist(u);
         } else {
+            if (e == null) {
+                throw new IllegalArgumentException("Email này chưa được cấp!");
+            }
             s.merge(u);
         }
-        
+
         return u;
     }
 
@@ -136,6 +148,14 @@ public class UserRepositoryImpl implements UserRepository {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("FROM User", User.class);
         return q.getResultStream().count();
+    }
+
+    @Override
+    public User updatePointUser(User u) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.merge(u);
+        
+        return u;
     }
 
 }

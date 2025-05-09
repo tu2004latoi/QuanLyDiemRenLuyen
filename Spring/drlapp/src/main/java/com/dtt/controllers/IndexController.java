@@ -5,6 +5,7 @@
 package com.dtt.controllers;
 
 import com.dtt.services.ActivityService;
+import com.dtt.services.EmailService;
 import com.dtt.services.UserService;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +27,8 @@ public class IndexController {
     @Autowired
     private UserService userSer;
     
+    @Autowired
+    private EmailService emailSer;
     @RequestMapping("/")
     public String showDashboard(Model model) {
         Map<String, Object> stats = new HashMap<>();
@@ -33,6 +36,7 @@ public class IndexController {
         // Lấy dữ liệu từ service hoặc repository
         stats.put("totalUsers", userSer.getCountUsers());
         stats.put("totalActivities", activityService.getCountActivities());
+        stats.put("totalEmails", emailSer.getCountEmails());
 //        stats.put("totalPoints", trainingPointService.sumAllPoints());
 //        stats.put("totalReports", reportService.countAll());
 

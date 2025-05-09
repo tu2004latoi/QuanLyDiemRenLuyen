@@ -30,7 +30,7 @@ public class UserController {
 
     @Autowired
     private UserService userSer;
-    
+
     @Autowired
     private ActivityRegistrationService arSer;
 
@@ -76,12 +76,18 @@ public class UserController {
 
     @PostMapping("/users/add")
     public String addUser(@ModelAttribute("user") @Valid User u, Model model) {
-        this.userSer.addOrUpdateUser(u);
-        return "redirect:/users/list";
+        try {
+            this.userSer.addOrUpdateUser(u);
+            return "redirect:/users/list";
+        } catch (IllegalArgumentException ex) {
+            model.addAttribute("emailError", ex.getMessage());
+            model.addAttribute("user", u);
+            return "userDetails";
+        }
     }
-    
+
     @GetMapping("/users/activity-registrations")
-    public String activityRegistrationsView(Model model){
+    public String activityRegistrationsView(Model model) {
         model.addAttribute("ar", this.arSer.getAllActivityRegistrations());
         return "listUserRegister";
     }

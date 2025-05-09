@@ -6,6 +6,7 @@ package com.dtt.services;
 
 import com.dtt.pojo.Activity;
 import com.dtt.pojo.TrainingPoint;
+import com.dtt.pojo.User;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Service;
@@ -30,4 +31,10 @@ public interface TrainingPointService {
     List<TrainingPoint> getTrainingPoints(Map<String, String> params);
     
     TrainingPoint getTrainingPointByUserIdAndActivityId(int userId, int activityId);
+    
+    public void confirmTrainingPointById(int id, User confirmer) throws Exception;
+    
+    public void rejectTrainingPointById(int id, User confirmer) throws Exception;
+    
+    public void rejectAfterApprovedTrainingPointById(int id, User confirmer) throws Exception;
 }

@@ -23,6 +23,7 @@
                     <div class="mb-3">
                         <label class="form-label">Email</label>
                         <input type="email" th:field="*{email}" class="form-control" required />
+                        <div class="text-danger mt-1" th:if="${emailError}" th:text="${emailError}"></div>
                     </div>
 
                     <!-- Password -->

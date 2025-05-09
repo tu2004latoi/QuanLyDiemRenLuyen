@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Table(name = "missing_reports")
 @NamedQueries({
     @NamedQuery(name = "MissingReport.findAll", query = "SELECT mr FROM MissingReport mr"),
+    @NamedQuery(name = "MissingReport.findById", query = "SELECT mr FROM MissingReport mr WHERE mr.id = :id"),
     @NamedQuery(name = "MissingReport.findByUserId", query = "SELECT mr FROM MissingReport mr WHERE mr.user.id = :userId"),
     @NamedQuery(name = "MissingReport.findByActivityId", query = "SELECT mr FROM MissingReport mr WHERE mr.activity.id = :activityId"),
     @NamedQuery(name = "MissingReport.findByTrainingPointId", query = "SELECT mr FROM MissingReport mr WHERE mr.trainingPoint.id = :trainingPointId"),
@@ -52,7 +54,7 @@ public class MissingReport implements Serializable {
     @Column(name = "date_report")
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private Date dateReport;
+    private LocalDateTime dateReport;
 
     @Column(name = "image")
     private String image;
@@ -60,7 +62,7 @@ public class MissingReport implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ReportStatus status;
-    
+
     @Transient
     private MultipartFile file;
 
@@ -112,11 +114,11 @@ public class MissingReport implements Serializable {
         this.point = point;
     }
 
-    public Date getDateReport() {
+    public LocalDateTime getDateReport() {
         return dateReport;
     }
 
-    public void setDateReport(Date dateReport) {
+    public void setDateReport(LocalDateTime dateReport) {
         this.dateReport = dateReport;
     }
 

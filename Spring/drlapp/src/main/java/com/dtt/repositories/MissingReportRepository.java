@@ -5,6 +5,8 @@
 package com.dtt.repositories;
 
 import com.dtt.pojo.MissingReport;
+import java.util.List;
+import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,4 +16,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MissingReportRepository {
     MissingReport addOrUpdateMissingReport(MissingReport mr);
+    List<MissingReport> getMissingReports(Map<String, String> params);
+    MissingReport getMissingReportById(int id);
 }

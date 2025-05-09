@@ -74,14 +74,33 @@
                         <td th:text="${t.status}"></td>
                         <td th:text="${t.confirmedBy != null ? t.confirmedBy.name : 'Chưa xác nhận'}"></td>
                         <td>
-                            <button class="btn btn-sm btn-primary"
-                                    th:onclick="'updateTrainingPoint(\''+@{/api/training-points}+'\',' + ${t.id} + ', \'confirm\')'">
-                                <i class="fas fa-check"></i> Confirm
-                            </button>
-                            <button class="btn btn-sm btn-danger"
-                                    th:onclick="'updateTrainingPoint(\''+@{/api/training-points}+'\',' + ${t.id} + ', \'reject\')'">
-                                <i class="fas fa-times"></i> Reject
-                            </button>
+                            <!-- Nếu trạng thái là PENDING thì hiển thị Confirm và Reject -->
+                            <div th:if="${t.status == T(com.dtt.pojo.TrainingPoint.Status).PENDING}">
+                                <button class="btn btn-sm btn-primary"
+                                        th:onclick="'updateTrainingPoint(\''+@{/api/training-points}+'\',' + ${t.id} + ', \'confirm\')'">
+                                    <i class="fas fa-check"></i> Confirm
+                                </button>
+                                <button class="btn btn-sm btn-danger"
+                                        th:onclick="'updateTrainingPoint(\''+@{/api/training-points}+'\',' + ${t.id} + ', \'reject\')'">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                            </div>
+
+                            <!-- Nếu đã APPROVED thì chỉ cho hiện nút Reject -->
+                            <div th:if="${t.status == T(com.dtt.pojo.TrainingPoint.Status).CONFIRMED}">
+                                <button class="btn btn-sm btn-danger"
+                                        th:onclick="'updateTrainingPoint(\''+@{/api/training-points}+'\',' + ${t.id} + ', \'reject-after-approved\')'">
+                                    <i class="fas fa-times"></i> Reject
+                                </button>
+                            </div>
+
+                            <!-- Nếu đã REJECTED thì chỉ cho hiện nút Confirm -->
+                            <div th:if="${t.status == T(com.dtt.pojo.TrainingPoint.Status).REJECTED}">
+                                <button class="btn btn-sm btn-primary"
+                                        th:onclick="'updateTrainingPoint(\''+@{/api/training-points}+'\',' + ${t.id} + ', \'confirm\')'">
+                                    <i class="fas fa-check"></i> Confirm
+                                </button>
+                            </div>
 
                         </td>
                     </tr>

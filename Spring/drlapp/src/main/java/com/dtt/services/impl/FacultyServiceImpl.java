@@ -39,5 +39,10 @@ public class FacultyServiceImpl implements FacultyService{
     public void deleteFaculty(int id) {
         this.facultyRepo.deleteFaculty(id);
     }
+
+    @Override
+    public Faculty getFacultyByName(String name) {
+        return this.facultyRepo.getFacultyByName(name);
+    }
     
 }

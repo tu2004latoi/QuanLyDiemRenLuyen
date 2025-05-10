@@ -1,6 +1,7 @@
 package com.dtt.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -35,7 +36,11 @@ public class Faculty implements Serializable {
     @OneToMany(mappedBy = "faculty")
     @JsonIgnore
     private Set<Student> students;
-
+    
+    @JsonValue
+    public String toJson() {
+        return this.name;
+    }
     // Getter và Setter
     public Integer getId() {
         return id;

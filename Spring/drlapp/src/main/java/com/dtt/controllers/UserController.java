@@ -4,8 +4,12 @@
  */
 package com.dtt.controllers;
 
+import com.dtt.pojo.Faculty;
+import com.dtt.pojo.Student;
 import com.dtt.pojo.User;
 import com.dtt.services.ActivityRegistrationService;
+import com.dtt.services.FacultyService;
+import com.dtt.services.StudentService;
 import com.dtt.services.UserService;
 import com.dtt.services.impl.UserServiceImpl;
 import jakarta.annotation.PostConstruct;
@@ -33,6 +37,12 @@ public class UserController {
 
     @Autowired
     private ActivityRegistrationService arSer;
+
+    @Autowired
+    private StudentService stSer;
+
+    @Autowired
+    private FacultyService facSer;
 
     @GetMapping("/login")
     public String loginView() {
@@ -64,20 +74,35 @@ public class UserController {
     public String userDetails(Model model, @PathVariable("id") int id) {
         User u = userSer.getUserById(id);
         model.addAttribute("user", u);
+        model.addAttribute("faculty", this.facSer.getAllFaculties());
         return "userDetails";
     }
 
     @GetMapping("/users/add")
     public String manageUser(Model model) {
         User u = new User();
+
         model.addAttribute("user", u);
+        model.addAttribute("faculty", this.facSer.getAllFaculties());
         return "userDetails";
     }
 
     @PostMapping("/users/add")
-    public String addUser(@ModelAttribute("user") @Valid User u, Model model) {
+    public String addUser(@ModelAttribute("user") @Valid User u,
+            @RequestParam("className") String className,
+            @RequestParam("faculty") String faculty,
+            Model model) {
         try {
+            if (u.getRole() == User.Role.STUDENT) {
+                Student st = new Student();
+                st.setUser(u);
+                st.setClassName(className);
+                Faculty f = this.facSer.getFacultyByName(faculty);
+                st.setFaculty(f);
+                this.stSer.addOrUpdateStudent(st);
+            }
             this.userSer.addOrUpdateUser(u);
+            
             return "redirect:/users/list";
         } catch (IllegalArgumentException ex) {
             model.addAttribute("emailError", ex.getMessage());

@@ -18,4 +18,5 @@ public interface FacultyService {
     Faculty addOrUpdateFaculty(Faculty a);
     List<Faculty> getAllFaculties();
     void deleteFaculty(int id);
+    Faculty getFacultyByName(String name);
 }

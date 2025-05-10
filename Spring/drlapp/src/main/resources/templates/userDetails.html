@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Chỉnh sửa người dùng</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8">
+        <title>Chỉnh sửa người dùng</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <th:block th:replace="base :: styles"></th:block>
     <style>
         .form-floating label {
@@ -80,12 +80,26 @@
                         <!-- Vai trò -->
                         <div class="col-md-6 form-floating">
                             <select th:field="*{role}" class="form-select" id="roleSelect">
-                                <option value="ADMIN">ADMIN</option>
-                                <option value="STAFF">STAFF</option>
-                                <option value="STUDENT">STUDENT</option>
+                                <option value="ADMIN" th:selected="${user.role == 'ADMIN'}">ADMIN</option>
+                                <option value="STAFF" th:selected="${user.role == 'STAFF'}">STAFF</option>
+                                <option value="STUDENT" th:selected="${user.role == 'STUDENT'}">STUDENT</option>
                             </select>
                             <label for="roleSelect">Vai trò</label>
                         </div>
+
+                        <div class="col-md-6 form-floating d-none" id="classNameField">
+                            <input type="text" name="className" class="form-control" placeholder="Lớp" />
+                            <label>Lớp</label>
+                        </div>
+
+                        <!-- Chọn Khoa (chỉ hiện khi là STUDENT) -->
+                        <div class="col-md-6 form-floating d-none" id="facultyField">
+                            <select class="form-select" name="faculty">
+                                <option th:each="f : ${faculty}" th:value="${f.name}" th:text="${f.name}"></option>
+                            </select>
+                            <label>Khoa</label>
+                        </div>
+
 
                         <!-- Avatar -->
                         <div class="col-md-6">

@@ -1,5 +1,6 @@
 package com.dtt.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.Set;
     @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"),
     @NamedQuery(name = "Student.findById", query = "SELECT s FROM Student s WHERE s.id = :id"),
     @NamedQuery(name = "Student.findByStudentId", query = "SELECT s FROM Student s WHERE s.studentId = :studentId"),
+    @NamedQuery(name = "Student.findByUserId", query = "SELECT s FROM Student s WHERE s.user.id = :userId"),
     @NamedQuery(name = "Student.findByFaculty", query = "SELECT s FROM Student s WHERE s.faculty.id = :facultyId"),
     @NamedQuery(name = "Student.findByClass", query = "SELECT s FROM Student s WHERE s.className = :className")
 })
@@ -24,6 +26,7 @@ public class Student implements Serializable {
     @OneToOne
     @MapsId
     @JoinColumn(name = "id")
+    @JsonIgnore
     private User user;
 
     @Column(name = "student_id", nullable = false, unique = true)
@@ -37,9 +40,11 @@ public class Student implements Serializable {
     private Faculty faculty;
 
     @OneToMany(mappedBy = "student")
+    @JsonIgnore
     private Set<Comment> comments;
 
     @OneToMany(mappedBy = "student")
+    @JsonIgnore
     private Set<Like> likes;
     
     public Integer getId() {

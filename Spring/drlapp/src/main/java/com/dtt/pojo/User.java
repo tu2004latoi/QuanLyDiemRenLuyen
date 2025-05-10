@@ -81,6 +81,7 @@ public class User implements Serializable {
     private Set<ActivityRegistrations> activityRegistrations = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private Set<TrainingPoint> trainingPoints;
 
     public Set<ActivityRegistrations> getActivityRegistrations() {

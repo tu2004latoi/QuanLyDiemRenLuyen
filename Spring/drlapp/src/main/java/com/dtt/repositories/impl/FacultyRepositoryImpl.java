@@ -72,4 +72,13 @@ public class FacultyRepositoryImpl implements FacultyRepository{
             throw e;
         }
     }
+
+    @Override
+    public Faculty getFacultyByName(String name) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createNamedQuery("Faculty.findByName", Faculty.class);
+        q.setParameter("name", name);
+        
+        return (Faculty) q.getSingleResult();
+    }
 }

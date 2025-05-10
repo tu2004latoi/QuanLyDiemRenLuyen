@@ -2,14 +2,14 @@ import { Lock, User } from "lucide-react";
 import Button from "./ui/buttonLogin";
 import Input from "./ui/inputLogin";
 
-const Register = () => {
+const Login = () => {
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-200 to-blue-400 px-4">
+        <div className="flex items-center justify-center min-h-screen from-blue-200 to-blue-400 px-4">
             <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 space-y-6 animate-fade-in">
                 <div className="text-center">
                     <h1 className="text-2xl md:text-3xl font-bold text-blue-800 mb-1">Hệ thống quản lý </h1>
                     <h1 className="text-2xl md:text-3xl font-bold text-blue-800 mb-1">Điểm rèn luyện </h1>
-                    <p className="text-sm text-gray-500">Bạn chưa có tài khoản đăng nhập?</p>
+                    <p className="text-sm text-gray-500">Đăng nhập để bắt đầu sử dụng hệ thống</p>
                 </div>
 
                 <div className="space-y-4">
@@ -42,6 +42,6 @@ const Register = () => {
             </div>
         </div>
     );
-};
+}
 
-export default Register;
+export default Login;

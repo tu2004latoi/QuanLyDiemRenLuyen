@@ -25,4 +25,5 @@ public interface UserRepository {
     long getCountUsers();
     User updatePointUser(User u);
     List<User> getAllStudents();
+    boolean authenticate(String email, String password);
 }

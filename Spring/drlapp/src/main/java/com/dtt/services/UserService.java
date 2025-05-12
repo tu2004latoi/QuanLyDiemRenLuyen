@@ -26,4 +26,5 @@ public interface UserService extends UserDetailsService{
     User updatePointUser(User u);
     List<User> getAllStudents();
     public void flush();
+    boolean authenticate(String username, String password);
 }

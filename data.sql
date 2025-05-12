@@ -3,17 +3,26 @@ use drldb;
 INSERT INTO emails (email) VALUES
 ('admin@gmail.com'),
 ('staff1@gmail.com'),
-('staff2@gmail.com');
+('staff2@gmail.com'),
+('student1@gmail.com'),
+('student2@gmail.com'),
+('student3@gmail.com');
 
 INSERT INTO faculties (id, name) VALUES
 ('1', 'Khoa Công Nghệ Thông Tin'),
 ('2', 'Khoa Y Dược'),
 ('3', 'Khoa Kinh Tế');
 
+INSERT INTO class_room (id, name, faculty_id) VALUES
+(1, 'CS01', 1),
+(2, 'YD01', 2),
+(3, 'KT01', 3);
+
 INSERT INTO users (id, email, password, first_name, last_name, avatar, point_1, point_2, point_3, point_4, role) VALUES
 ('1', 'admin@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Admin', 'Pro', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'ADMIN'),
 ('2', 'staff1@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Staff', '1', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STAFF'),
-('3', 'staff2@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Staff', '2', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STAFF');
+('3', 'staff2@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Staff', '2', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STAFF'),
+('4', 'student1@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Kiều Văn', 'Minh', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STUDENT');
 
 INSERT INTO admins (id, department) VALUES
 ('1', 'Quản lý đào tạo');
@@ -21,6 +30,9 @@ INSERT INTO admins (id, department) VALUES
 INSERT INTO staff (id, faculty_id) VALUES
 ('2', '2'),
 ('3', '3');
+
+INSERT INTO students (id, student_id, class_room_id, faculty_id) VALUES
+('4','SV00001', '3','3');
 
 INSERT INTO activities (id, name, description, start_date, end_date, location, organizer_id, faculty_id, max_participants, current_participants, point_type, point_value, status, image, active) 
 VALUES 

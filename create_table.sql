@@ -9,6 +9,14 @@ CREATE TABLE faculties (
     description TEXT
 );
 
+-- Tạo bảng class
+CREATE TABLE class_room (
+	id INT AUTO_INCREMENT primary key,
+    name varchar(50) NOT NULL,
+    faculty_id int,
+    foreign key (faculty_id) references faculties(id) ON DELETE SET NULL
+);
+
 -- 18. Tạo bảng emails
 CREATE TABLE emails (
     email VARCHAR(50) PRIMARY KEY
@@ -50,10 +58,11 @@ CREATE TABLE staff (
 CREATE TABLE students (
     id INT PRIMARY KEY,
     student_id VARCHAR(50) UNIQUE NOT NULL,
-    class VARCHAR(50),
+    class_room_id int,
     faculty_id INT,
     FOREIGN KEY (id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (faculty_id) REFERENCES faculties(id) ON DELETE SET NULL
+    FOREIGN KEY (faculty_id) REFERENCES faculties(id) ON DELETE SET NULL,
+    foreign key (class_room_id) references class_room(id) ON DELETE SET NULL
 );
 
 -- 7. Tạo bảng activities

@@ -30,7 +30,6 @@ public class User implements Serializable {
     private String email;
 
     @Column(name = "password", nullable = false)
-    @JsonIgnore
     private String password;
 
     @Column(name = "first_name", nullable = false)
@@ -62,6 +61,7 @@ public class User implements Serializable {
     private boolean active;
 
     @Transient
+    @JsonIgnore
     private MultipartFile file;
 
     @OneToMany(mappedBy = "confirmedBy")
@@ -80,8 +80,8 @@ public class User implements Serializable {
     @JsonIgnore
     private Set<ActivityRegistrations> activityRegistrations = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
     @JsonIgnore
+    @OneToMany(mappedBy = "user")
     private Set<TrainingPoint> trainingPoints;
 
     public Set<ActivityRegistrations> getActivityRegistrations() {

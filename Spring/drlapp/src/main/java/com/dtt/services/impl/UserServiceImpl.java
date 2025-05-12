@@ -7,7 +7,6 @@ package com.dtt.services.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.dtt.pojo.User;
-import com.dtt.pojo.User.Role;
 import com.dtt.repositories.UserRepository;
 import com.dtt.secutiry.CustomUserDetails;
 import com.dtt.services.UserService;
@@ -160,4 +159,7 @@ public class UserServiceImpl implements UserService {
         entityManager.flush();
     }
 
+    public boolean authenticate(String username, String password) {
+        return this.userRepo.authenticate(username, password);
+    }
 }

@@ -21,6 +21,8 @@ const Login = () => {
 
     const [msg, setMsg] = useState(null); //Hiển thị lỗi ràng buộc khi đăng nhập
 
+    const [selectedRole, setSelectedRole] = useState("");
+
     const [loading, setLoading] = useState(false); //Biến hiển thị đang load dữ liệu
 
     const nav = useNavigate(); //Hàm điều hướng
@@ -35,12 +37,27 @@ const Login = () => {
         e.preventDefault();
         try {
             setLoading(true);
-            let res = await Apis.post(endpoints['login'], {
-                ...user
-            });
+
+            // Gửi request đăng nhập
+            let res = await Apis.post(endpoints['login'], { ...user });
             cookie.save('token', res.data.token);
+
+            // Lấy thông tin user
             let u = await authApis().get(endpoints['current-user']);
             console.info(u.data);
+
+            // Kiểm tra role
+            const roleMap = {
+                "ADMIN": "Quản Trị Viên",
+                "STAFF": "CTV sinh viên",
+                "STUDENT": "Sinh viên"
+            };
+
+            if (roleMap[u.data.role] !== selectedRole) {
+                setMsg(`Bạn không có quyền đăng nhập với vai trò "${selectedRole}".`);
+                cookie.remove('token'); // Xóa token nếu sai vai trò
+                return;
+            }
 
 
             dispatch({
@@ -65,6 +82,13 @@ const Login = () => {
 
             {msg && <Alert variant="danger">{msg}</Alert>}
             <Form onSubmit={login}>
+                <Form.Select className="mt-2 mb-2" value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)} required>
+                    <option value="">-- Chọn vai trò --</option>
+                    <option value="Sinh viên">Sinh viên</option>
+                    <option value="CTV sinh viên">CTV sinh viên</option>
+                    <option value="Quản Trị Viên">Quản Trị Viên</option>
+                </Form.Select>
+
                 {info.map(i => <Form.Control className="mt-2 mb-1" value={user[i.field]} onChange={e => setState(e.target.value, i.field)}
                     type={i.type} key={i.field} placeholder={i.title} required />)}
 

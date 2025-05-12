@@ -5,11 +5,14 @@ com\dtt\controllers\ApiStudentController.class
 com\dtt\pojo\Message.class
 com\dtt\repositories\MyActivityRepository.class
 com\dtt\services\ActivityRegistrationService.class
+com\dtt\repositories\impl\ClassRoomRepositoryImpl.class
+com\dtt\repositories\impl\StatisticsRepositoryImpl.class
 com\dtt\controllers\ApiEmailController.class
 com\dtt\repositories\impl\EvidenceRepositoryImpl.class
 com\dtt\services\StudentService.class
 com\dtt\pojo\MissingReport.class
 com\dtt\services\EmailService.class
+com\dtt\repositories\ClassRoomRepository.class
 com\dtt\pojo\Comment.class
 com\dtt\secutiry\CustomUserDetails.class
 com\dtt\repositories\impl\StaffRepositoryImpl.class
@@ -19,6 +22,7 @@ com\dtt\controllers\EmailController.class
 com\dtt\pojo\Staff.class
 com\dtt\services\FacultyService.class
 com\dtt\services\MissingReportService.class
+com\dtt\services\impl\StatisticsServiceImpl.class
 com\dtt\configs\HibernateConfigs.class
 com\dtt\pojo\Attendance$Status.class
 com\dtt\pojo\Report.class
@@ -31,11 +35,15 @@ com\dtt\controllers\ApiEvidenceController.class
 com\dtt\services\impl\StudentServiceImpl.class
 com\dtt\controllers\ApiExportController.class
 com\dtt\configs\SpringSecurityConfigs.class
+com\dtt\repositories\StatisticsRepository.class
 com\dtt\controllers\MyActivityController.class
 com\dtt\pojo\User$Role.class
 com\dtt\services\EvidenceService.class
 com\dtt\repositories\ActivityRegistrationRepository.class
+com\dtt\services\ClassRoomService.class
+com\dtt\controllers\StatisticsController.class
 com\dtt\controllers\ApiActivityController.class
+com\dtt\pojo\ClassRoom.class
 com\dtt\controllers\TrainingPointController.class
 com\dtt\pojo\Evidence.class
 com\dtt\pojo\Activity.class
@@ -46,6 +54,7 @@ com\dtt\controllers\ApiTrainingPointController$1.class
 com\dtt\pojo\NewsFeed.class
 com\dtt\repositories\MissingReportRepository.class
 com\dtt\repositories\NewsFeedRepository.class
+com\dtt\services\impl\ClassRoomServiceImpl.class
 com\dtt\services\impl\EmailServiceImpl.class
 com\dtt\services\impl\MyActivityServiceImpl.class
 com\dtt\controllers\IndexController.class
@@ -76,6 +85,7 @@ com\dtt\pojo\TrainingPoint$Status.class
 com\dtt\pojo\Evidence$VerifyStatus.class
 com\dtt\repositories\impl\ActivityRepositoryImpl.class
 com\dtt\formatters\FacultyFormatter.class
+com\dtt\controllers\ApiClassRoomController.class
 com\dtt\controllers\ActivityRegistrationController.class
 com\dtt\repositories\impl\MyActivityRepositoryImpl.class
 com\dtt\services\NewsFeedService.class
@@ -88,6 +98,7 @@ com\dtt\pojo\ActivityRegistrations.class
 com\dtt\pojo\Email.class
 com\dtt\repositories\EvidenceRepository.class
 com\dtt\services\impl\MissingReportServiceImpl.class
+com\dtt\services\StatisticsService.class
 com\dtt\controllers\UserController.class
 com\dtt\repositories\StudentRepository.class
 com\dtt\repositories\impl\TrainingPointRepositoryImpl.class

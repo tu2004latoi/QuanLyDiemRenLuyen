@@ -18,4 +18,5 @@ public interface StudentRepository {
     long count();
     Student getStudentByUserId(int id);
     List<Student> getAllStudents();
+    void deleteStudentById(int id);
 }

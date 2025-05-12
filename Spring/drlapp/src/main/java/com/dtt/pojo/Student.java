@@ -13,7 +13,7 @@ import java.util.Set;
     @NamedQuery(name = "Student.findByStudentId", query = "SELECT s FROM Student s WHERE s.studentId = :studentId"),
     @NamedQuery(name = "Student.findByUserId", query = "SELECT s FROM Student s WHERE s.user.id = :userId"),
     @NamedQuery(name = "Student.findByFaculty", query = "SELECT s FROM Student s WHERE s.faculty.id = :facultyId"),
-    @NamedQuery(name = "Student.findByClass", query = "SELECT s FROM Student s WHERE s.className = :className")
+    @NamedQuery(name = "Student.findByClassId", query = "SELECT s FROM Student s WHERE s.classRoom.id = :classRoomId")
 })
 
 public class Student implements Serializable {
@@ -32,8 +32,9 @@ public class Student implements Serializable {
     @Column(name = "student_id", nullable = false, unique = true)
     private String studentId;
 
-    @Column(name = "class")
-    private String className;
+    @ManyToOne
+    @JoinColumn(name = "class_room_id", referencedColumnName = "id")
+    private ClassRoom classRoom;
 
     @ManyToOne
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
@@ -71,12 +72,12 @@ public class Student implements Serializable {
         this.studentId = studentId;
     }
 
-    public String getClassName() {
-        return className;
+    public ClassRoom getClassRoom() {
+        return classRoom;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
+    public void setClassRoom(ClassRoom classRoom) {
+        this.classRoom = classRoom;
     }
 
     /**
@@ -119,5 +120,13 @@ public class Student implements Serializable {
      */
     public void setLikes(Set<Like> likes) {
         this.likes = likes;
+    }
+    
+    public int getTotalPoints(){
+        return user.totalPoint();
+    }
+    
+    public String getClassify(){
+        return user.classify(user.totalPoint());
     }
 }

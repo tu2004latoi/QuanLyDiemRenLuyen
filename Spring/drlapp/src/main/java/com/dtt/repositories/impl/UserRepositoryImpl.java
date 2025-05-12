@@ -101,6 +101,15 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         Query query = s.createQuery(q);
+        
+        if (params != null) {
+            int page = Integer.parseInt(params.getOrDefault("page", "1"));
+            int size = Integer.parseInt(params.getOrDefault("size", "8"));
+            int start = (page - 1) * size;
+
+            query.setMaxResults(size);
+            query.setFirstResult(start);
+        }
 
         return query.getResultList();
     }
@@ -109,17 +118,13 @@ public class UserRepositoryImpl implements UserRepository {
     public User addOrUpdateUser(User u) {
         Session s = this.factory.getObject().getCurrentSession();
         Email e = this.emailSer.getEmailByEmail(u.getEmail());
-
-        // Kiểm tra xem email có hợp lệ không
         if (e == null) {
             throw new IllegalArgumentException("Email này chưa được cấp!");
         }
-
-        // Nếu user chưa có ID (là đối tượng mới), sử dụng persist
         if (u.getId() == null) {
-            s.persist(u);  // Persist cho đối tượng mới
+            s.persist(u); 
         } else {
-            s.merge(u);    // Merge cho đối tượng đã tồn tại hoặc bị tách rời
+            s.merge(u); 
         }
 
         return u;

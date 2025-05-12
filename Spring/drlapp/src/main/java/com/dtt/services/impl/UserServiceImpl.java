@@ -11,6 +11,8 @@ import com.dtt.pojo.User.Role;
 import com.dtt.repositories.UserRepository;
 import com.dtt.secutiry.CustomUserDetails;
 import com.dtt.services.UserService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +27,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -32,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author MR TU
  */
 @Service("userDetailsService")
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -42,6 +46,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public User getUserByUsername(String username) {
@@ -97,7 +104,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addOrUpdateUser(User u) {
-        if (u.getFile()!=null && !u.getFile().isEmpty()) {
+        
+        if (u.getFile() != null && !u.getFile().isEmpty()) {
             try {
                 Map res = cloudinary.uploader().upload(u.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
@@ -110,8 +118,8 @@ public class UserServiceImpl implements UserService {
         if (u.getPassword() != null && !u.getPassword().isEmpty()) {
             u.setPassword(this.passwordEncoder.encode(u.getPassword()));
         } else if (u.getId() != null) {
-            User existingUser = this.userRepo.getUserById(u.getId());
-            u.setPassword(existingUser.getPassword());
+            User userSaved = this.getUserById(u.getId());
+            u.setPassword(userSaved.getPassword());
         }
         return this.userRepo.addOrUpdateUser(u);
     }
@@ -138,13 +146,18 @@ public class UserServiceImpl implements UserService {
         user.setPoint_2(u.getPoint_2());
         user.setPoint_3(u.getPoint_3());
         user.setPoint_4(u.getPoint_4());
-        
+
         return this.userRepo.addOrUpdateUser(u);
     }
 
     @Override
     public List<User> getAllStudents() {
         return this.userRepo.getAllStudents();
+    }
+
+    @Override
+    public void flush() {
+        entityManager.flush();
     }
 
 }

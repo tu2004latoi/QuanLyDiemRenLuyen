@@ -21,4 +21,5 @@ public interface ActivityService {
     List<Activity> getActivities(Map<String, String> params);
     Activity addOrUpdateActivity(Activity a);
     long getCountActivities();
+    long count(Map<String, String> params);
 }

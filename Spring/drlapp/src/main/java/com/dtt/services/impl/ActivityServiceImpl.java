@@ -69,4 +69,9 @@ public class ActivityServiceImpl implements ActivityService {
     public long getCountActivities() {
         return this.activityRepo.getCountActivities();
     }
+
+    @Override
+    public long count(Map<String, String> params) {
+        return this.activityRepo.count(params);
+    }
 }

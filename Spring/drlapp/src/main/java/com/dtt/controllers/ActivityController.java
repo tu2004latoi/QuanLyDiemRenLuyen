@@ -42,10 +42,23 @@ public class ActivityController {
 
     @Autowired
     private UserService userSer;
-    
-    @RequestMapping("/activities")
-    public String index(Model model, @RequestParam Map<String, String> params){
-        model.addAttribute("activities", this.activitySer.getActivities(params));
+
+    @GetMapping("/activities")
+    public String index(Model model, @RequestParam Map<String, String> params) {
+        int page = params.containsKey("page") ? Integer.parseInt(params.get("page")) : 1;
+        int pageSize = 6;
+
+        params.put("page", String.valueOf(page));
+        params.put("size", String.valueOf(pageSize));
+
+        List<Activity> activities = activitySer.getActivities(params);
+        long totalActivities = activitySer.count(params);
+        int totalPages = (int) Math.ceil((double) totalActivities / pageSize);
+
+        model.addAttribute("activities", activities);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("params", params);
         return "activities";
     }
 

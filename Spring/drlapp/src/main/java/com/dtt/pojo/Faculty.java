@@ -28,7 +28,6 @@ public class Faculty implements Serializable {
     private String description;
 
     // Quan hệ 1-N với Staff (một Faculty có thể có nhiều Staff)
-    
     @OneToMany(mappedBy = "faculty")
     @JsonIgnore
     private Set<Staff> staff;
@@ -36,11 +35,24 @@ public class Faculty implements Serializable {
     @OneToMany(mappedBy = "faculty")
     @JsonIgnore
     private Set<Student> students;
-    
+
+    @OneToMany(mappedBy = "faculty")
+    @JsonIgnore
+    private Set<ClassRoom> classes;
+
+    public Set<ClassRoom> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(Set<ClassRoom> classes) {
+        this.classes = classes;
+    }
+
     @JsonValue
     public String toJson() {
         return this.name;
     }
+
     // Getter và Setter
     public Integer getId() {
         return id;
@@ -84,10 +96,10 @@ public class Faculty implements Serializable {
 
     @Override
     public String toString() {
-        return "Faculty{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+        return "Faculty{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", description='" + description + '\''
+                + '}';
     }
 }

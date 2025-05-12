@@ -4,6 +4,7 @@
  */
 package com.dtt.services;
 
+import com.dtt.pojo.Student;
 import com.dtt.pojo.User;
 import com.itextpdf.text.DocumentException;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,6 +18,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface ExportService {
-    void exportCSV(List<User> users, HttpServletResponse response)throws IOException;
-    void exportPDF(List<User> users, HttpServletResponse response) throws IOException, DocumentException;
-        }
+    void exportCSV(List<Student> students, HttpServletResponse response) throws IOException;
+    void exportPDF(List<Student> students, HttpServletResponse response) throws IOException, DocumentException;
+}

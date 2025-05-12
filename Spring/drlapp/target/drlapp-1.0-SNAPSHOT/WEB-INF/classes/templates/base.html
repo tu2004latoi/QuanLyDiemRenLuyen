@@ -210,7 +210,7 @@
                             <a class="nav-link" th:href="@{/notifications}"><i class="fas fa-bell"></i>Thông báo</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/reports}"><i class="fas fa-chart-line"></i>Báo cáo</a>
+                            <a class="nav-link" th:href="@{/statistics}"><i class="fas fa-chart-line"></i>Thống kê</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/account}"><i class="fas fa-user-circle"></i>Tài khoản</a>
@@ -253,26 +253,5 @@
             </ul>
         </div>
     </footer>
-    <script>
-        function toggleClassField() {
-            const roleSelect = document.getElementById('roleSelect');
-            const classField = document.getElementById('classNameField');
-            const facultyField = document.getElementById('facultyField');
-
-            const isStudent = roleSelect.value === 'STUDENT';
-
-            // Thêm hoặc gỡ bỏ class 'd-none' tuỳ theo giá trị role
-            if (classField)
-                classField.classList.toggle('d-none', !isStudent);
-            if (facultyField)
-                facultyField.classList.toggle('d-none', !isStudent);
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const roleSelect = document.getElementById('roleSelect');
-            roleSelect.addEventListener('change', toggleClassField);
-            toggleClassField(); // Gọi ban đầu để đảm bảo đúng trạng thái
-        });
-    </script>
 </body>
 </html>

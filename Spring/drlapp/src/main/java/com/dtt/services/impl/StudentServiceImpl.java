@@ -5,10 +5,13 @@
 package com.dtt.services.impl;
 
 import com.dtt.pojo.Student;
+import com.dtt.pojo.User;
 import com.dtt.repositories.StudentRepository;
 import com.dtt.services.StudentService;
+import com.dtt.services.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,6 +22,12 @@ import org.springframework.stereotype.Service;
 public class StudentServiceImpl implements StudentService{
     @Autowired
     private StudentRepository stRepo;
+    
+    @Autowired
+    private UserService userSer;
+    
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public Student addOrUpdateStudent(Student st) {
@@ -52,6 +61,11 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public List<Student> getAllStudents() {
         return this.stRepo.getAllStudents();
+    }
+
+    @Override
+    public void deleteStudentById(int id) {
+        this.stRepo.deleteStudentById(id);
     }
     
     

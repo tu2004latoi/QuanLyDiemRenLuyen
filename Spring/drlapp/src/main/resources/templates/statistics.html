@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Thống kê</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="base :: styles"></th:block>
+</head>
+<body th:replace="base :: layout(~{::content})">
+<th:block th:fragment="content">
+    <div class="container py-5">
+        <h2 class="fw-bold text-primary">Thống kê</h2>
+        <!-- Form tìm kiếm -->
+        <form th:action="@{/statistics}" class="card shadow-sm p-4 mb-4">
+            <div class="row g-3">
+                <div class="col-md-6 form-floating" id="facultyField">
+                    <select class="form-select" id="facultySelect" name="faculty">
+                        <option value="">Chọn khoa</option>
+                        <option th:each="f : ${faculty}" th:value="${f.id}" th:text="${f.name}"></option>
+                    </select>
+                    <label for="facultySelect">Khoa</label>
+                </div>
+
+                <div class="col-md-6 form-floating d-none" id="classNameField">
+                    <select class="form-select" name="className" id="classSelect">
+                        <option value="">Chọn lớp</option>
+                    </select>
+                    <label for="classSelect">Lớp</label>
+                </div>
+
+
+                <div class="col-md-6 form-floating" id="classificationField">
+                    <select class="form-select" name="classification" id="classification">
+                        <option value="" selected>Chọn thành tích</option>
+                        <option value="Xuất sắc">Xuất sắc</option>
+                        <option value="Giỏi">Giỏi</option>
+                        <option value="Khá">Khá</option>
+                        <option value="Trung bình">Trung bình</option>
+                        <option value="Yếu">Yếu</option>
+                    </select>
+                    <label for="classificationSelect">Thành tích</label>
+                </div>
+
+                <div class="col-12 text-end mt-3">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Lọc
+                    </button>
+
+                    <div class="col-12 text-end mt-3">
+                        <button type="submit" class="btn btn-primary me-2">
+                            <i class="fas fa-search"></i> Lọc
+                        </button>
+
+                        <a th:href="@{/api/export/pdf(
+                           faculty=${param.faculty}, 
+                           className=${param.className}, 
+                           classification=${param.classification}
+                           )}" class="btn btn-danger me-2">
+                            <i class="fas fa-file-pdf"></i> Xuất PDF
+                        </a>
+
+                        <a th:href="@{/api/export/csv(
+                           faculty=${param.faculty}, 
+                           className=${param.className}, 
+                           classification=${param.classification}
+                           )}" class="btn btn-success">
+                            <i class="fas fa-file-csv"></i> Xuất CSV
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Bảng người dùng -->
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered align-middle shadow-sm">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Họ và tên</th>
+                        <th>Email</th>
+                        <th>Khoa</th>
+                        <th>Lớp</th>
+                        <th>Điểm điều 1</th>
+                        <th>Điểm điều 2</th>
+                        <th>Điểm điều 3</th>
+                        <th>Điểm điều 4</th>
+                        <th>Tổng điểm</th>
+                        <th>Thành tích</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="s : ${students}" class="text-center">
+                        <td th:text="${s.id}"></td>
+                        <td th:text="${s.user.name}"></td>
+                        <td th:text="${s.user.email}"></td>
+                        <td th:text="${s.faculty.name}"></td>
+                        <td th:text="${s.classRoom.name}"></td>
+                        <td th:text="${s.user.point_1}"></td>
+                        <td th:text="${s.user.point_2}"></td>
+                        <td th:text="${s.user.point_3}"></td>
+                        <td th:text="${s.user.point_4}"></td>
+                        <td th:text="${s.getTotalPoints()}"></td>
+                        <td th:text="${s.getClassify()}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const facultySelect = document.getElementById('facultySelect');
+            const classSelect = document.getElementById('classSelect');
+            const classField = document.getElementById('classNameField');
+
+            facultySelect.addEventListener('change', function () {
+                fetchClassesByFaculty();
+            });
+
+            function fetchClassesByFaculty() {
+                const facultyId = facultySelect.value;
+
+                if (!facultyId) {
+                    classSelect.innerHTML = '<option value="">Chọn lớp</option>';
+                    classField.classList.add('d-none');
+                    return;
+                }
+
+                const api = /*[[@{/api/users/faculty/}]]*/ '';
+
+                fetch(`${api}${facultyId}/classes`, {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                        .then(response => response.json())
+                        .then(data => {
+                            classSelect.innerHTML = '<option value="">Chọn lớp</option>';
+                            data.forEach(cls => {
+                                const option = document.createElement('option');
+                                option.value = cls.id;
+                                option.textContent = cls.name;
+                                classSelect.appendChild(option);
+                            });
+                            classField.classList.remove('d-none');
+                        })
+                        .catch(error => {
+                            console.error('Error fetching classes:', error);
+                            classField.classList.add('d-none');
+                        });
+            }
+        });
+    </script>
+</th:block>
+</body>
+</html>

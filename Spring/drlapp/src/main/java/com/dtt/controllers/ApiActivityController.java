@@ -15,6 +15,7 @@ import jakarta.ws.rs.core.MediaType;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -44,14 +46,14 @@ public class ApiActivityController {
 
     @Autowired
     private UserService userSer;
-    
+
     @Autowired
     private TrainingPointService trainingPointSer;
 
     //Toàn bộ hoạt động API
     @GetMapping("/activities")
-    public List<Activity> getAllActivities() {
-        return activityService.getAllActivities();
+    public List<Activity> getAllActivities(@RequestParam Map<String, String> params) {
+        return activityService.getActivities(params);
     }
 
     //Chi tiết 1 hoạt động API
@@ -77,8 +79,7 @@ public class ApiActivityController {
             String username = principal.getName();
             User user = userSer.getUserByUsername(username);
             arSer.registerToActivity(user.getId(), activityId);
-            
-            
+
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
             return new ResponseEntity<>("Lỗi hệ thống: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

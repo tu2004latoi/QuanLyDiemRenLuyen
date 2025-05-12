@@ -49,14 +49,15 @@ public class ActivityRepositoryImpl implements ActivityRepository {
     @Override
     public Activity addOrUpdateActivity(Activity a) {
         Session s = this.factory.getObject().getCurrentSession();
-        if (a.getId()==null){
+        if (a.getId() == null) {
             s.persist(a);
         } else {
             s.merge(a);
         }
-        
+
         return a;
     }
+
     @Override
     public List<Activity> getAllActivities() {
         Session s = this.factory.getObject().getCurrentSession();
@@ -106,12 +107,15 @@ public class ActivityRepositoryImpl implements ActivityRepository {
 
             String fromPoint = params.get("fromPoint");
             if (fromPoint != null && !fromPoint.isEmpty()) {
-                predicates.add(b.greaterThanOrEqualTo(root.get("pointValue"), fromPoint));
+                int from = Integer.parseInt(fromPoint);
+                predicates.add(b.greaterThanOrEqualTo(root.get("pointValue"), from));
             }
 
             String toPoint = params.get("toPoint");
             if (toPoint != null && !toPoint.isEmpty()) {
-                predicates.add(b.lessThanOrEqualTo(root.get("pointValue"), toPoint));
+                int to = Integer.parseInt(toPoint);
+                predicates.add(b.lessThanOrEqualTo(root.get("pointValue"), to));
+
             }
 
             q.where(predicates.toArray(new jakarta.persistence.criteria.Predicate[0]));
@@ -119,11 +123,12 @@ public class ActivityRepositoryImpl implements ActivityRepository {
 
         Query query = s.createQuery(q);
 
-        if (params != null && params.containsKey("page")) {
-            int page = Integer.parseInt(params.get("page"));
-            int start = (page - 1) * PAGE_SIZE;
+        if (params != null) {
+            int page = Integer.parseInt(params.getOrDefault("page", "1"));
+            int size = Integer.parseInt(params.getOrDefault("size", "6"));
+            int start = (page - 1) * size;
 
-            query.setMaxResults(PAGE_SIZE);
+            query.setMaxResults(size);
             query.setFirstResult(start);
         }
 
@@ -134,7 +139,51 @@ public class ActivityRepositoryImpl implements ActivityRepository {
     public long getCountActivities() {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("FROM Activity", Activity.class);
+
         return q.getResultStream().count();
+    }
+
+    @Override
+    public long count(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder builder = s.getCriteriaBuilder();
+        CriteriaQuery<Long> query = builder.createQuery(Long.class);
+        Root<Activity> root = query.from(Activity.class);
+
+        // Chỉ đếm số lượng bản ghi
+        query.select(builder.count(root));
+
+        // Nếu có tham số tìm kiếm, áp dụng điều kiện lọc
+        if (params != null) {
+            List<jakarta.persistence.criteria.Predicate> predicates = new ArrayList<>();
+
+            // Lọc theo từ khóa (tên hoạt động)
+            String kw = params.get("kw");
+            if (kw != null && !kw.isEmpty()) {
+                predicates.add(builder.like(root.get("name"), "%" + kw + "%"));
+            }
+
+            // Lọc theo điểm min
+            String fromPoint = params.get("fromPoint");
+            if (fromPoint != null && !fromPoint.isEmpty()) {
+                int from = Integer.parseInt(fromPoint);
+                predicates.add(builder.greaterThanOrEqualTo(root.get("pointValue"), from));
+            }
+
+            // Lọc theo điểm max
+            String toPoint = params.get("toPoint");
+            if (toPoint != null && !toPoint.isEmpty()) {
+                int to = Integer.parseInt(toPoint);
+                predicates.add(builder.lessThanOrEqualTo(root.get("pointValue"), to));
+            }
+
+            // Áp dụng tất cả các điều kiện lọc
+            query.where(predicates.toArray(new jakarta.persistence.criteria.Predicate[0]));
+        }
+
+        // Thực hiện truy vấn và trả về số lượng kết quả
+        return s.createQuery(query).getSingleResult();
+
     }
 
 }

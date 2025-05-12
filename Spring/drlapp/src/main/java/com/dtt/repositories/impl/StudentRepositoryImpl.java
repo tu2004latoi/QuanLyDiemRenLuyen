@@ -5,6 +5,7 @@
 package com.dtt.repositories.impl;
 
 import com.dtt.pojo.Student;
+import com.dtt.pojo.User;
 import com.dtt.repositories.StudentRepository;
 import java.util.List;
 import org.hibernate.Session;
@@ -20,19 +21,31 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class StudentRepositoryImpl implements StudentRepository{
+public class StudentRepositoryImpl implements StudentRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
 
     @Override
     public Student addOrUpdateStudent(Student st) {
         Session s = this.factory.getObject().getCurrentSession();
-        if (st.getId()==null){
+
+        // Nếu Student có ID thì cập nhật
+        if (st.getId() == null) {
+            // Nếu User đã có ID (đã tồn tại trong cơ sở dữ liệu), sử dụng merge
+            if (st.getUser() != null && st.getUser().getId() != null) {
+                st.setUser((User) s.merge(st.getUser())); // Đảm bảo User được merge vào session
+            }
+            // Sau đó persist Student (có thể tạo mới hoặc cập nhật nếu đã có ID)
             s.persist(st);
         } else {
-            s.merge(st);
+            // Nếu Student đã có ID, cập nhật (merge cả User và Student)
+            if (st.getUser() != null && st.getUser().getId() != null) {
+                st.setUser((User) s.merge(st.getUser())); // Đảm bảo User được merge vào session
+            }
+            s.merge(st); // Merge Student và các liên kết khác
         }
-        
+
         return st;
     }
 
@@ -40,7 +53,7 @@ public class StudentRepositoryImpl implements StudentRepository{
     public long count() {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("FROM Student", Student.class);
-        
+
         return q.getResultCount();
     }
 
@@ -48,17 +61,28 @@ public class StudentRepositoryImpl implements StudentRepository{
     public Student getStudentByUserId(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createNamedQuery("Student.findByUserId", Student.class);
-        q.setParameter("id", id);
-        
-        return (Student) q.getSingleResult();
+        q.setParameter("userId", id);
+
+        // Dùng getResultList() thay vì getSingleResult để tránh exception khi không tìm thấy kết quả
+        List<Student> result = q.getResultList();
+
+        // Nếu không tìm thấy, trả về null
+        return result.isEmpty() ? null : result.get(0);
     }
 
     @Override
     public List<Student> getAllStudents() {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("FROM Student", Student.class);
-        
+
         return q.getResultList();
     }
-    
+
+    @Override
+    public void deleteStudentById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Student st = this.getStudentByUserId(id);
+        s.remove(st);
+    }
+
 }

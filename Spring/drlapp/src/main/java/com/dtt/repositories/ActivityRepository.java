@@ -21,5 +21,6 @@ public interface ActivityRepository {
     List<Activity> getAllActivities();
     void deleteActivity(int id);
     long getCountActivities();
+    long count(Map<String, String> params);
 //    List<Activity> getActivitiesByStatus(String status);
 }

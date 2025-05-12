@@ -109,6 +109,7 @@ public class Activity implements Serializable {
     private Set<Attendance> attendances;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Set<ActivityRegistrations> registrations = new HashSet<>();
 
     @Transient

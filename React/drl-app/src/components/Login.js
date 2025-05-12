@@ -1,8 +1,10 @@
 import { Alert, Button, Form } from "react-bootstrap";
-import { useState } from "react";
-import Apis, { endpoints } from "../configs/Apis";
+import { useContext, useState } from "react";
+import Apis, { authApis, endpoints } from "../configs/Apis";
 import { useNavigate } from "react-router-dom";
 import MySpinner from "./layouts/MySpinner";
+import cookie from 'react-cookies';
+import { MyDispatcherContext } from "../configs/MyContexts";
 
 const Login = () => {
     const info = [{
@@ -27,6 +29,8 @@ const Login = () => {
         setUser({ ...user, [field]: value });
     };
 
+    const dispatch = useContext(MyDispatcherContext);
+
     const login = async (e) => { //Hàm đăng nhập
         e.preventDefault();
         try {
@@ -34,7 +38,16 @@ const Login = () => {
             let res = await Apis.post(endpoints['login'], {
                 ...user
             });
-            console.log("Token response:", res.data);
+            cookie.save('token', res.data.token);
+            let u = await authApis().get(endpoints['current-user']);
+            console.info(u.data);
+
+
+            dispatch({
+                "type": "login",
+                "payload": u.data
+            });
+            nav("/");
         } catch (ex) {
             console.error(ex);
         } finally {

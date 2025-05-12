@@ -4,13 +4,19 @@
  */
 package com.dtt.controllers;
 
+import com.dtt.pojo.Admin;
 import com.dtt.pojo.ClassRoom;
+import com.dtt.pojo.Department;
 import com.dtt.pojo.Faculty;
+import com.dtt.pojo.Staff;
 import com.dtt.pojo.Student;
 import com.dtt.pojo.User;
 import com.dtt.services.ActivityRegistrationService;
+import com.dtt.services.AdminService;
 import com.dtt.services.ClassRoomService;
+import com.dtt.services.DepartmentService;
 import com.dtt.services.FacultyService;
+import com.dtt.services.StaffService;
 import com.dtt.services.StudentService;
 import com.dtt.services.UserService;
 import com.dtt.services.impl.UserServiceImpl;
@@ -51,7 +57,16 @@ public class UserController {
 
     @Autowired
     private ClassRoomService classRoomSer;
+    
+    @Autowired
+    private StaffService staffSer;
 
+    @Autowired
+    private DepartmentService departmentSer;
+    
+    @Autowired
+    private AdminService adminSer;
+    
     @GetMapping("/login")
     public String loginView() {
         return "login";
@@ -84,6 +99,7 @@ public class UserController {
 
         model.addAttribute("user", u);
         model.addAttribute("faculties", this.facSer.getAllFaculties());
+        model.addAttribute("departments", this.departmentSer.getAllDepartments());
         return "userDetails";
     }
 
@@ -94,6 +110,7 @@ public class UserController {
         model.addAttribute("user", u);
         model.addAttribute("faculties", this.facSer.getAllFaculties());
         model.addAttribute("classes", this.classRoomSer.getAllClassRooms());
+        model.addAttribute("departments", this.departmentSer.getAllDepartments());
         return "userDetails";
     }
 
@@ -101,9 +118,12 @@ public class UserController {
     public String addUser(@ModelAttribute("user") @Valid User u,
             @RequestParam(value = "classRoom", required = false) Integer classRoomId,
             @RequestParam(value = "faculty", required = false) Integer facultyId,
+            @RequestParam(value = "department", required = false) Integer departmentId,
             Model model) {
         try {
             if (u.getRole() == User.Role.STUDENT) {
+                u.setStaff(null);
+                u.setAdmin(null);
                 this.userSer.addOrUpdateUser(u);
                 if (classRoomId == null || facultyId == null) {
                     throw new IllegalArgumentException("Lớp hoặc khoa không được để trống");
@@ -124,9 +144,46 @@ public class UserController {
                     u.getStudent().setFaculty(f);
                     this.stSer.addOrUpdateStudent(u.getStudent());
                 }
-            } else if (u.getRole() != User.Role.STUDENT) {
+            } else if (u.getRole() == User.Role.STAFF) {
+                u.setAdmin(null);
                 u.setStudent(null);
                 this.userSer.addOrUpdateUser(u);
+                if (facultyId == null) {
+                    throw new IllegalArgumentException("Khoa không được để trống");
+                }
+
+                Faculty f = this.facSer.getFacultyById(facultyId);
+
+                Staff staffSaved = this.staffSer.getStaffByUserId(u.getId());
+                if (staffSaved == null) {
+                    Staff s = new Staff();
+                    s.setUser(u);
+                    s.setFaculty(f);
+                    this.staffSer.addOrUpdateStaff(s);
+                } else {
+                    u.getStaff().setFaculty(f);
+                    this.staffSer.addOrUpdateStaff(u.getStaff());
+                }
+            } else {
+                u.setStudent(null);
+                u.setStaff(null);
+                this.userSer.addOrUpdateUser(u);
+                if (departmentId == null) {
+                    throw new IllegalArgumentException("Phòng không được để trống");
+                }
+
+                Department department = this.departmentSer.getDepartmentById(departmentId);
+
+                Admin adSaved = this.adminSer.getAdminByUserId(u.getId());
+                if (adSaved == null) {
+                    Admin ad = new Admin();
+                    ad.setUser(u);
+                    ad.setDepartment(department);
+                    this.adminSer.addOrUpdateAdmin(ad);
+                } else {
+                    u.getAdmin().setDepartment(department);
+                    this.adminSer.addOrUpdateAdmin(u.getAdmin());
+                }
             }
 
             return "redirect:/users/list";

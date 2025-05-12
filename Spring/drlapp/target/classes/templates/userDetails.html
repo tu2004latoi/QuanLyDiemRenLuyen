@@ -43,7 +43,7 @@
                         <div class="col-md-6 form-floating">
                             <input type="password" th:field="*{password}" class="form-control" autocomplete="current-password"
                                    placeholder="Mật khẩu"
-                                   th:disabled="${user.id!=null}"
+                                   th:readonly="${user.id!=null}"
                                    th:attr="placeholder=${user.id != null} ? 'Để trống nếu không đổi mật khẩu' : ''" />
                             <label>Mật khẩu</label>
                         </div>
@@ -88,18 +88,33 @@
                             <label for="roleSelect">Vai trò</label>
                         </div>
 
+                        <!-- Department (Chỉ hiện khi là ADMIN) -->
+                        <div class="col-md-6 form-floating"
+                             th:classappend="${user.role == 'ADMIN'} ? '' : ' d-none'" id="departmentField">
+                            <select class="form-select" name="department" id="departmentSelect">
+                                <option value="">Chọn phòng ban</option>
+                                <option th:each="d : ${departments}"
+                                        th:value="${d.id}"
+                                        th:text="${d.name}"
+                                        th:selected="${user.admin != null and user.admin.department != null and d.id == user.admin.department.id}">
+                                </option>
+                            </select>
+                            <label for="departmentSelect">Phòng ban</label>
+                        </div>
+
+
                         <!-- Khoa -->
                         <div class="col-md-6 form-floating" 
-                             th:classappend="${user.role == 'STUDENT'} ? '' : ' d-none'" 
+                             th:classappend="${user.role == 'STUDENT' || user.role == 'STAFF'} ? '' : ' d-none'" 
                              id="facultyField">
                             <select class="form-select" id="facultySelect" name="faculty">
                                 <option value="">Chọn khoa</option>
                                 <option th:each="f : ${faculties}"
                                         th:value="${f.id}"
                                         th:text="${f.name}"
-                                        th:selected="${user.student != null and user.student.faculty != null and f.id == user.student.faculty.id}">
+                                        th:selected="${(user.student != null and user.student.faculty != null and f.id == user.student.faculty.id) or
+                                        (user.staff != null and user.staff.faculty != null and f.id == user.staff.faculty.id)}">
                                 </option>
-
                             </select>
                             <label for="facultySelect">Khoa</label>
                         </div>
@@ -170,10 +185,16 @@
             const roleSelect = document.getElementById('roleSelect');
             const facultyField = document.getElementById('facultyField');
             const classField = document.getElementById('classNameField');
+            const departmentField = document.getElementById('departmentField');
+            
             const isStudent = roleSelect.value === 'STUDENT';
+            const isStaff = roleSelect.value === 'STAFF';
+            const isAdmin = roleSelect.value === 'ADMIN';
 
-            facultyField.classList.toggle('d-none', !isStudent);
+            facultyField.classList.toggle('d-none', !(isStudent || isStaff));
             classField.classList.toggle('d-none', !isStudent);
+            departmentField.classList.toggle('d-none', !isAdmin);
+
 
             if (!isStudent) {
                 document.getElementById('classSelect').innerHTML = '<option value="">Chọn lớp</option>';

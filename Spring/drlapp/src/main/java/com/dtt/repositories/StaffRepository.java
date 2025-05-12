@@ -4,6 +4,7 @@
  */
 package com.dtt.repositories;
 
+import com.dtt.pojo.Staff;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,5 +13,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StaffRepository {
-    
+    Staff getStaffByUserId(int id);
+    Staff addOrUpdateStaff(Staff s);
 }

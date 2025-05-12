@@ -21,7 +21,7 @@
                     <label for="facultySelect">Khoa</label>
                 </div>
 
-                <div class="col-md-6 form-floating d-none" id="classNameField">
+                <div class="col-md-6 form-floating" id="classNameField">
                     <select class="form-select" name="className" id="classSelect">
                         <option value="">Chọn lớp</option>
                     </select>
@@ -42,10 +42,6 @@
                 </div>
 
                 <div class="col-12 text-end mt-3">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-search"></i> Lọc
-                    </button>
-
                     <div class="col-12 text-end mt-3">
                         <button type="submit" class="btn btn-primary me-2">
                             <i class="fas fa-search"></i> Lọc
@@ -124,7 +120,6 @@
 
                 if (!facultyId) {
                     classSelect.innerHTML = '<option value="">Chọn lớp</option>';
-                    classField.classList.add('d-none');
                     return;
                 }
 

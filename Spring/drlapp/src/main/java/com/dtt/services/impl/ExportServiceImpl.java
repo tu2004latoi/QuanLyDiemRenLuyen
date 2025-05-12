@@ -68,9 +68,9 @@ public class ExportServiceImpl implements ExportService {
 
         BaseFont baseFont = BaseFont.createFont(
                 "C:\\Windows\\Fonts\\times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-        Font titleFont = new Font(baseFont, 13, Font.BOLD);
-        Font headerFont = new Font(baseFont, 12, Font.BOLD);
-        Font bodyFont = new Font(baseFont, 12);
+        Font titleFont = new Font(baseFont, 12, Font.BOLD);
+        Font headerFont = new Font(baseFont, 8, Font.BOLD);
+        Font bodyFont = new Font(baseFont, 8);
 
         Paragraph title = new Paragraph("Báo cáo điểm rèn luyện sinh viên", titleFont);
         title.setAlignment(Element.ALIGN_CENTER);

@@ -4,6 +4,7 @@
  */
 package com.dtt.services;
 
+import com.dtt.pojo.Staff;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,5 +13,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface StaffService {
-    
+    Staff getStaffByUserId(int id);
+    Staff addOrUpdateStaff(Staff s);
 }

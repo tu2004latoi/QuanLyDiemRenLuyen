@@ -24,8 +24,11 @@ INSERT INTO users (id, email, password, first_name, last_name, avatar, point_1, 
 ('3', 'staff2@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Staff', '2', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STAFF'),
 ('4', 'student1@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Kiều Văn', 'Minh', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STUDENT');
 
-INSERT INTO admins (id, department) VALUES
-('1', 'Quản lý đào tạo');
+insert into departments(id, name) values
+('1','Quản lý đào tạo');
+
+INSERT INTO admins (id, department_id) VALUES
+('1', '1');
 
 INSERT INTO staff (id, faculty_id) VALUES
 ('2', '2'),

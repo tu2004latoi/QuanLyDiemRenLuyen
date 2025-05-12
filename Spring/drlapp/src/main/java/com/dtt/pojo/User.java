@@ -72,10 +72,6 @@ public class User implements Serializable {
     @JsonIgnore
     private Set<Evidence> evidences;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Admin admin;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<ActivityRegistrations> activityRegistrations = new HashSet<>();
@@ -248,25 +244,34 @@ public class User implements Serializable {
         return firstName + " " + lastName;
     }
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Staff staff;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Student student;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Admin admin;
+
     public enum Role {
         ADMIN, STAFF, STUDENT
     }
-    
-    public int totalPoint(){
+
+    public int totalPoint() {
         return point_1 + point_2 + point_3 + point_4;
     }
-    
-    public String classify(int totalPoint){
-        if (totalPoint>=90) return "Xuất sắc";
-        else if (totalPoint>=80) return "Giỏi";
-        else if (totalPoint>=65) return "Khá";
-        else if (totalPoint>=50) return "Trung bình";
-        else return "Yếu";
+
+    public String classify(int totalPoint) {
+        if (totalPoint >= 90) {
+            return "Xuất sắc";
+        } else if (totalPoint >= 80) {
+            return "Giỏi";
+        } else if (totalPoint >= 65) {
+            return "Khá";
+        } else if (totalPoint >= 50) {
+            return "Trung bình";
+        } else {
+            return "Yếu";
+        }
     }
 }

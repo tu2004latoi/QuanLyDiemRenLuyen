@@ -17,6 +17,13 @@ CREATE TABLE class_room (
     foreign key (faculty_id) references faculties(id) ON DELETE SET NULL
 );
 
+-- tạo bảng department
+CREATE TABLE departments (
+	id INT auto_increment primary key,
+    name varchar(250) not null,
+    description text
+);
+
 -- 18. Tạo bảng emails
 CREATE TABLE emails (
     email VARCHAR(50) PRIMARY KEY
@@ -42,7 +49,8 @@ CREATE TABLE users (
 -- 4. Tạo bảng admins
 CREATE TABLE admins (
     id INT PRIMARY KEY,
-    department VARCHAR(255),
+    department_id int,
+    foreign key (department_id) references departments(id)  on delete set null,
     FOREIGN KEY (id) REFERENCES users(id) ON DELETE CASCADE
 );
 

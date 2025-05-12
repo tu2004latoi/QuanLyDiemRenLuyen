@@ -4,7 +4,10 @@
  */
 package com.dtt.services.impl;
 
+import com.dtt.pojo.Staff;
+import com.dtt.repositories.StaffRepository;
 import com.dtt.services.StaffService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,5 +16,17 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class StaffServiceImpl implements StaffService{
+    @Autowired
+    private StaffRepository staffRepo;
+
+    @Override
+    public Staff getStaffByUserId(int id) {
+        return this.staffRepo.getStaffByUserId(id);
+    }
+
+    @Override
+    public Staff addOrUpdateStaff(Staff s) {
+        return this.staffRepo.addOrUpdateStaff(s);
+    }
     
 }

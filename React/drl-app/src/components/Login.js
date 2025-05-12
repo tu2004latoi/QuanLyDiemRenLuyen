@@ -1,47 +1,68 @@
-import { Lock, User } from "lucide-react";
-import Button from "./ui/buttonLogin";
-import Input from "./ui/inputLogin";
+import { Alert, Button, Form } from "react-bootstrap";
+import { useState } from "react";
+import Apis, { endpoints } from "../configs/Apis";
+import { useNavigate } from "react-router-dom";
+import MySpinner from "./layouts/MySpinner";
 
 const Login = () => {
+    const info = [{
+        title: "Tên đăng nhập",
+        field: "email",
+        type: "email"
+    }, {
+        title: "Mật khẩu",
+        field: "password",
+        type: "password"
+    }];
+
+    const [user, setUser] = useState({}); //Biến set user
+
+    const [msg, setMsg] = useState(null); //Hiển thị lỗi ràng buộc khi đăng nhập
+
+    const [loading, setLoading] = useState(false); //Biến hiển thị đang load dữ liệu
+
+    const nav = useNavigate(); //Hàm điều hướng
+
+    const setState = (value, field) => { //Hàm set trạng thái user
+        setUser({ ...user, [field]: value });
+    };
+
+    const login = async (e) => { //Hàm đăng nhập
+        e.preventDefault();
+        try {
+            setLoading(true);
+            let res = await Apis.post(endpoints['login'], {
+                ...user
+            });
+            console.log("Token response:", res.data);
+        } catch (ex) {
+            console.error(ex);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <div className="flex items-center justify-center min-h-screen from-blue-200 to-blue-400 px-4">
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 space-y-6 animate-fade-in">
-                <div className="text-center">
-                    <h1 className="text-2xl md:text-3xl font-bold text-blue-800 mb-1">Hệ thống quản lý </h1>
-                    <h1 className="text-2xl md:text-3xl font-bold text-blue-800 mb-1">Điểm rèn luyện </h1>
-                    <p className="text-sm text-gray-500">Đăng nhập để bắt đầu sử dụng hệ thống</p>
-                </div>
-
-                <div className="space-y-4">
-                    <div className="relative">
-                        <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                        <Input
-                            placeholder="Tên đăng nhập"
-                            className="pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                        />
-                    </div>
-
-                    <div className="relative">
-                        <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-                        <Input
-                            type="password"
-                            placeholder="Mật khẩu"
-                            className="pl-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                        />
-                    </div>
-
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg shadow-md transition duration-200">
-                        Đăng nhập
-                    </Button>
-                </div>
-
-                <div className="flex justify-between text-sm text-gray-600 mt-2">
-                    <a href="/" className="hover:underline">Quên mật khẩu?</a>
-                    <a href="/register" className="text-blue-600 hover:underline">Đăng ký tài khoản</a>
-                </div>
+        <>
+            <div className="text-center">
+                <h1 className="text-2xl md:text-3xl font-bold text-blue-800 mb-1">Hệ thống quản lý </h1>
+                <h1 className="text-2xl md:text-3xl font-bold text-blue-800 mb-1">Điểm rèn luyện </h1>
+                <p className="text-sm text-gray-500">Đăng nhập để truy cập hệ thống!</p>
             </div>
-        </div>
+
+            {msg && <Alert variant="danger">{msg}</Alert>}
+            <Form onSubmit={login}>
+                {info.map(i => <Form.Control className="mt-2 mb-1" value={user[i.field]} onChange={e => setState(e.target.value, i.field)}
+                    type={i.type} key={i.field} placeholder={i.title} required />)}
+
+                {loading === true ? <MySpinner /> :
+                    <div className="flex items-center justify-center mt-2 mb-2">
+                        <Button type="submit" variant="success">Đăng nhập</Button>
+                    </div>
+                }
+            </Form>
+        </>
     );
-}
+};
 
 export default Login;

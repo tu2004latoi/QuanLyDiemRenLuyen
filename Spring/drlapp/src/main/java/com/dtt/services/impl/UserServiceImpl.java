@@ -7,7 +7,6 @@ package com.dtt.services.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.dtt.pojo.User;
-import com.dtt.pojo.User.Role;
 import com.dtt.repositories.UserRepository;
 import com.dtt.secutiry.CustomUserDetails;
 import com.dtt.services.UserService;
@@ -97,7 +96,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addOrUpdateUser(User u) {
-        if (u.getFile()!=null && !u.getFile().isEmpty()) {
+        if (u.getFile() != null && !u.getFile().isEmpty()) {
             try {
                 Map res = cloudinary.uploader().upload(u.getFile().getBytes(),
                         ObjectUtils.asMap("resource_type", "auto"));
@@ -138,7 +137,7 @@ public class UserServiceImpl implements UserService {
         user.setPoint_2(u.getPoint_2());
         user.setPoint_3(u.getPoint_3());
         user.setPoint_4(u.getPoint_4());
-        
+
         return this.userRepo.addOrUpdateUser(u);
     }
 
@@ -147,4 +146,8 @@ public class UserServiceImpl implements UserService {
         return this.userRepo.getAllStudents();
     }
 
+    @Override
+    public boolean authenticate(String username, String password) {
+        return this.userRepo.authenticate(username, password);
+    }
 }

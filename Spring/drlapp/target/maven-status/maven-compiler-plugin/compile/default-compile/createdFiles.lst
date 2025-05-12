@@ -73,12 +73,14 @@ com\dtt\repositories\impl\NewsFeedRepositoryImpl.class
 com\dtt\services\impl\TrainingPointServiceImpl$1.class
 com\dtt\repositories\impl\UserRepositoryImpl.class
 com\dtt\pojo\TrainingPoint$Status.class
+com\dtt\utils\JwtUtils.class
 com\dtt\pojo\Evidence$VerifyStatus.class
 com\dtt\repositories\impl\ActivityRepositoryImpl.class
 com\dtt\formatters\FacultyFormatter.class
 com\dtt\controllers\ActivityRegistrationController.class
 com\dtt\repositories\impl\MyActivityRepositoryImpl.class
 com\dtt\services\NewsFeedService.class
+com\dtt\filters\JwtFilter.class
 com\dtt\services\impl\ExportServiceImpl.class
 com\dtt\services\impl\StaffServiceImpl.class
 com\dtt\pojo\Attendance.class

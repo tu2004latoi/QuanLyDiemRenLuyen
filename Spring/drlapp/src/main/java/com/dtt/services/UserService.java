@@ -25,4 +25,5 @@ public interface UserService extends UserDetailsService{
     long getCountUsers();
     User updatePointUser(User u);
     List<User> getAllStudents();
+    boolean authenticate(String username, String password);
 }

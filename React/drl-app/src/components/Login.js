@@ -21,7 +21,7 @@ const Login = () => {
 
     const [msg, setMsg] = useState(null); //Hiển thị lỗi ràng buộc khi đăng nhập
 
-    const [selectedRole, setSelectedRole] = useState("");
+    const [selectedRole, setSelectedRole] = useState(""); //Biến set role
 
     const [loading, setLoading] = useState(false); //Biến hiển thị đang load dữ liệu
 

@@ -4,6 +4,8 @@
     <head>
         <meta charset="UTF-8">
         <title th:fragment="title">Trang chủ</title>
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
     <th:block th:fragment="styles">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
@@ -16,7 +18,7 @@
                 margin: 0;
                 padding: 0;
                 height: 100%;
-                font-family: 'Poppins', sans-serif;
+                font-family: 'Inter', sans-serif;
                 background-color: #f4f7fa;
             }
 
@@ -45,7 +47,7 @@
             .sidebar {
                 position: fixed;
                 top: 0;
-                left: -230px;
+                left: -250px;
                 width: 250px;
                 height: 100%;
                 background: linear-gradient(to bottom, #2c3e50, #34495e);
@@ -83,7 +85,7 @@
             }
 
             .avatar:hover {
-                transform: scale(1.1); /* Zoom effect khi hover vào avatar */
+                transform: scale(1.1);
             }
 
             .sidebar .nav-link {

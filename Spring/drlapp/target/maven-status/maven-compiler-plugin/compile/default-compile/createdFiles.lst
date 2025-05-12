@@ -1,4 +1,5 @@
 com\dtt\pojo\Activity$ActivityStatus.class
+com\dtt\controllers\ApiCommentController.class
 com\dtt\services\impl\FacultyServiceImpl.class
 com\dtt\configs\WebAppContextConfigs.class
 com\dtt\controllers\ApiStudentController.class
@@ -21,11 +22,14 @@ com\dtt\pojo\Like.class
 com\dtt\controllers\EmailController.class
 com\dtt\pojo\Staff.class
 com\dtt\services\FacultyService.class
+com\dtt\repositories\CommentRepository.class
 com\dtt\services\MissingReportService.class
 com\dtt\services\impl\StatisticsServiceImpl.class
 com\dtt\configs\HibernateConfigs.class
+com\dtt\controllers\ApiLikeController.class
 com\dtt\pojo\Attendance$Status.class
 com\dtt\pojo\Report.class
+com\dtt\services\impl\LikeServiceImpl.class
 com\dtt\repositories\impl\AdminRepositoryImpl.class
 com\dtt\repositories\StaffRepository.class
 com\dtt\controllers\BaseController.class
@@ -35,8 +39,10 @@ com\dtt\services\impl\ActivityServiceImpl.class
 com\dtt\controllers\ApiEvidenceController.class
 com\dtt\services\impl\StudentServiceImpl.class
 com\dtt\controllers\ApiExportController.class
+com\dtt\repositories\LikeRepository.class
 com\dtt\configs\SpringSecurityConfigs.class
 com\dtt\repositories\StatisticsRepository.class
+com\dtt\services\LikeService.class
 com\dtt\controllers\MyActivityController.class
 com\dtt\pojo\User$Role.class
 com\dtt\services\EvidenceService.class
@@ -67,6 +73,8 @@ com\dtt\pojo\ReportDetail.class
 com\dtt\configs\PasswordEncoderExample.class
 com\dtt\repositories\AdminRepository.class
 com\dtt\repositories\DepartmentRepository.class
+com\dtt\services\CommentService.class
+com\dtt\services\impl\CommentServiceImpl.class
 com\dtt\drlapp\JakartaRestConfiguration.class
 com\dtt\services\ExportService.class
 com\dtt\services\impl\UserServiceImpl.class
@@ -105,11 +113,14 @@ com\dtt\pojo\Attendance.class
 com\dtt\services\AdminService.class
 com\dtt\services\TrainingPointService.class
 com\dtt\controllers\ActivityController.class
+com\dtt\repositories\impl\CommentRepositoryImpl.class
 com\dtt\pojo\ActivityRegistrations.class
 com\dtt\pojo\Email.class
 com\dtt\repositories\EvidenceRepository.class
 com\dtt\services\impl\MissingReportServiceImpl.class
 com\dtt\services\StatisticsService.class
+com\dtt\controllers\CommentController.class
+com\dtt\repositories\impl\LikeRepositoryImpl.class
 com\dtt\controllers\UserController.class
 com\dtt\repositories\StudentRepository.class
 com\dtt\repositories\impl\DepartmentRepositoryImpl.class

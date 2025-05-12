@@ -80,6 +80,30 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     private Set<TrainingPoint> trainingPoints;
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<Comment> comments;
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Set<Like> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<Like> likes) {
+        this.likes = likes;
+    }
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<Like> likes;
+
     public Set<ActivityRegistrations> getActivityRegistrations() {
         return activityRegistrations;
     }

@@ -5,87 +5,78 @@
         <title>Thống kê</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <th:block th:replace="base :: styles"></th:block>
+
+    
 </head>
 <body th:replace="base :: layout(~{::content})">
 <th:block th:fragment="content">
     <div class="container py-5">
-        <h2 class="fw-bold text-primary">Thống kê</h2>
+        <h2 class="fw-bold text-primary mb-4"><i class="fas fa-chart-bar"></i> Thống kê</h2>
+
         <!-- Form tìm kiếm -->
-        <form th:action="@{/statistics}" class="card shadow-sm p-4 mb-4">
+        <form th:action="@{/statistics}" class="card shadow-sm p-4 mb-4 rounded-4 border-0 bg-light">
+            <h5 class="mb-3 text-primary"><i class="fas fa-filter"></i> Bộ lọc thống kê</h5>
             <div class="row g-3">
-                <div class="col-md-6 form-floating" id="facultyField">
-                    <select class="form-select" id="facultySelect" name="faculty">
+                <div class="col-md-4">
+                    <label for="facultySelect" class="form-label fw-semibold"><i class="fas fa-building"></i> Khoa</label>
+                    <select class="form-select rounded-pill" id="facultySelect" name="faculty">
                         <option value="">Chọn khoa</option>
                         <option th:each="f : ${faculty}" th:value="${f.id}" th:text="${f.name}"></option>
                     </select>
-                    <label for="facultySelect">Khoa</label>
                 </div>
 
-                <div class="col-md-6 form-floating" id="classNameField">
-                    <select class="form-select" name="className" id="classSelect">
+                <div class="col-md-4" id="classNameField">
+                    <label for="classSelect" class="form-label fw-semibold"><i class="fas fa-users"></i> Lớp</label>
+                    <select class="form-select rounded-pill" name="className" id="classSelect">
                         <option value="">Chọn lớp</option>
                     </select>
-                    <label for="classSelect">Lớp</label>
                 </div>
 
-
-                <div class="col-md-6 form-floating" id="classificationField">
-                    <select class="form-select" name="classification" id="classification">
-                        <option value="" selected>Chọn thành tích</option>
+                <div class="col-md-4">
+                    <label for="classificationSelect" class="form-label fw-semibold"><i class="fas fa-medal"></i> Thành tích</label>
+                    <select class="form-select rounded-pill" name="classification" id="classificationSelect">
+                        <option value="">Chọn thành tích</option>
                         <option value="Xuất sắc">Xuất sắc</option>
                         <option value="Giỏi">Giỏi</option>
                         <option value="Khá">Khá</option>
                         <option value="Trung bình">Trung bình</option>
                         <option value="Yếu">Yếu</option>
                     </select>
-                    <label for="classificationSelect">Thành tích</label>
                 </div>
 
                 <div class="col-12 text-end mt-3">
-                    <div class="col-12 text-end mt-3">
-                        <button type="submit" class="btn btn-primary me-2">
-                            <i class="fas fa-search"></i> Lọc
-                        </button>
-
-                        <a th:href="@{/api/export/pdf(
-                           faculty=${param.faculty}, 
-                           className=${param.className}, 
-                           classification=${param.classification}
-                           )}" class="btn btn-danger me-2">
-                            <i class="fas fa-file-pdf"></i> Xuất PDF
-                        </a>
-
-                        <a th:href="@{/api/export/csv(
-                           faculty=${param.faculty}, 
-                           className=${param.className}, 
-                           classification=${param.classification}
-                           )}" class="btn btn-success">
-                            <i class="fas fa-file-csv"></i> Xuất CSV
-                        </a>
-                    </div>
+                    <button type="submit" class="btn btn-primary rounded-pill me-2">
+                        <i class="fas fa-search"></i> Lọc
+                    </button>
+                    <a th:href="@{/api/export/pdf(faculty=${param.faculty}, className=${param.className}, classification=${param.classification})}" class="btn btn-danger rounded-pill me-2">
+                        <i class="fas fa-file-pdf"></i> PDF
+                    </a>
+                    <a th:href="@{/api/export/csv(faculty=${param.faculty}, className=${param.className}, classification=${param.classification})}" class="btn btn-success rounded-pill">
+                        <i class="fas fa-file-csv"></i> CSV
+                    </a>
                 </div>
             </div>
         </form>
 
         <!-- Bảng người dùng -->
-        <div class="table-responsive">
-            <table class="table table-hover table-bordered align-middle shadow-sm">
+        <div class="table-responsive mb-4">
+            <table class="table table-striped table-bordered table-hover rounded-4 overflow-hidden shadow-sm">
                 <thead class="table-primary text-center">
                     <tr>
-                        <th>ID</th>
+                        <th>#</th>
                         <th>Họ và tên</th>
                         <th>Email</th>
                         <th>Khoa</th>
                         <th>Lớp</th>
-                        <th>Điểm điều 1</th>
-                        <th>Điểm điều 2</th>
-                        <th>Điểm điều 3</th>
-                        <th>Điểm điều 4</th>
-                        <th>Tổng điểm</th>
+                        <th>Điểm 1</th>
+                        <th>Điểm 2</th>
+                        <th>Điểm 3</th>
+                        <th>Điểm 4</th>
+                        <th>Tổng</th>
                         <th>Thành tích</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="align-middle">
                     <tr th:each="s : ${students}" class="text-center">
                         <td th:text="${s.id}"></td>
                         <td th:text="${s.user.name}"></td>
@@ -102,11 +93,52 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Biểu đồ -->
+        <div class="card shadow-sm p-4 mb-4 rounded-4 border-0">
+            <h5 class="mb-3 text-primary text-center"><i class="fas fa-chart-pie"></i> Biểu đồ phân bố thành tích</h5>
+            <div class="text-center">
+                <canvas id="achievementChart" width="400" height="200"></canvas>
+            </div>
+        </div>
     </div>
 
     <script th:src="@{/js/main.js}"></script>
     <script th:inline="javascript">
         document.addEventListener('DOMContentLoaded', function () {
+            // Biểu đồ
+            const ctx = document.getElementById('achievementChart').getContext('2d');
+            const achievementData = /*[[${achievementCounts}]]*/ {};
+            const labels = Object.keys(achievementData);
+            const dataValues = Object.values(achievementData);
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                            label: 'Số lượng',
+                            data: dataValues,
+                            backgroundColor: ['#4CAF50', '#2196F3', '#FFC107', '#FF5722', '#9C27B0'],
+                            borderColor: '#ffffff',
+                            borderWidth: 1
+                        }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Phân bố thành tích sinh viên'
+                        }
+                    }
+                }
+            });
+
+            // Xử lý chọn lớp theo khoa
             const facultySelect = document.getElementById('facultySelect');
             const classSelect = document.getElementById('classSelect');
             const classField = document.getElementById('classNameField');
@@ -117,14 +149,12 @@
 
             function fetchClassesByFaculty() {
                 const facultyId = facultySelect.value;
-
                 if (!facultyId) {
                     classSelect.innerHTML = '<option value="">Chọn lớp</option>';
                     return;
                 }
 
                 const api = /*[[@{/api/users/faculty/}]]*/ '';
-
                 fetch(`${api}${facultyId}/classes`, {
                     method: 'GET',
                     credentials: 'include'
@@ -147,6 +177,7 @@
             }
         });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </th:block>
 </body>
 </html>

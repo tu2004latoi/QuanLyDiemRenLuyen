@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -74,4 +75,30 @@ public class ActivityServiceImpl implements ActivityService {
     public long count(Map<String, String> params) {
         return this.activityRepo.count(params);
     }
+
+    @Override
+    @Transactional
+    public Activity getActivityWithLikes(int activityId) {
+        // Lấy Activity từ database
+        Activity activity = activityRepo.getActivityById(activityId);
+
+        if (activity != null) {
+            activity.getLikes().size();
+        }
+
+        return activity;
+    }
+
+    @Override
+    @Transactional
+    public Activity getActivityWithComments(int activityId) {
+        Activity activity = activityRepo.getActivityById(activityId);
+
+        if (activity != null) {
+            activity.getComments().size();
+        }
+
+        return activity;
+    }
+
 }

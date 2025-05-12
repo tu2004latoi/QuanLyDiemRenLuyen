@@ -3,6 +3,7 @@ package com.dtt.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -10,8 +11,9 @@ import java.util.Date;
 @NamedQueries({
     @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c"),
     @NamedQuery(name = "Comment.findById", query = "SELECT c FROM Comment c WHERE c.id = :id"),
-    @NamedQuery(name = "Comment.findByStudent", query = "SELECT c FROM Comment c WHERE c.student = :student"),
+    @NamedQuery(name = "Comment.findByUserId", query = "SELECT c FROM Comment c WHERE c.user.id = :userId"),
     @NamedQuery(name = "Comment.findByActivity", query = "SELECT c FROM Comment c WHERE c.activity = :activity"),
+    @NamedQuery(name = "Comment.findByUserIdAndActivityId", query = "SELECT c FROM Comment c WHERE c.user.id = :userId AND c.activity.id = :activityId"),
     @NamedQuery(name = "Comment.findByContent", query = "SELECT c FROM Comment c WHERE c.content = :content"),
     @NamedQuery(name = "Comment.findByCreatedAt", query = "SELECT c FROM Comment c WHERE c.createdAt = :createdAt")
 })
@@ -23,8 +25,8 @@ public class Comment implements Serializable {
     private Integer id;  // Thay đổi từ String thành Integer
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
@@ -34,7 +36,7 @@ public class Comment implements Serializable {
     private String content;
 
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     // Getters and setters
     public Integer getId() {
@@ -45,12 +47,12 @@ public class Comment implements Serializable {
         this.id = id;
     }
 
-    public Student getStudent() {
-        return student;
+    public User getUser() {
+        return user;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Activity getActivity() {
@@ -68,23 +70,23 @@ public class Comment implements Serializable {
     public void setContent(String content) {
         this.content = content;
     }
-    
-    public Date getCreatedAt() {
+
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
     @Override
     public String toString() {
-        return "Comment{" +
-                "id=" + id +
-                ", student=" + student +
-                ", activity=" + activity +
-                ", content='" + content + '\'' +
-                ", createdAt=" + createdAt +
-                '}';
+        return "Comment{"
+                + "id=" + id
+                + ", student=" + user
+                + ", activity=" + activity
+                + ", content='" + content + '\''
+                + ", createdAt=" + createdAt
+                + '}';
     }
 }

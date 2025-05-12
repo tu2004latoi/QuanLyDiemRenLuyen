@@ -3,6 +3,7 @@ package com.dtt.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -10,9 +11,11 @@ import java.util.Date;
 @NamedQueries({
     @NamedQuery(name = "Like.findAll", query = "SELECT l FROM Like l"),
     @NamedQuery(name = "Like.findById", query = "SELECT l FROM Like l WHERE l.id = :id"),
-    @NamedQuery(name = "Like.findByStudent", query = "SELECT l FROM Like l WHERE l.student.id = :studentId"),
-    @NamedQuery(name = "Like.findByActivity", query = "SELECT l FROM Like l WHERE l.activity.id = :activityId"),
+    @NamedQuery(name = "Like.findByUserId", query = "SELECT l FROM Like l WHERE l.user.id = :userId"),
+    @NamedQuery(name = "Like.findByActivityId", query = "SELECT l FROM Like l WHERE l.activity.id = :activityId"),
+    @NamedQuery(name = "Like.findByUserIdAndActivityId", query = "SELECT l FROM Like l WHERE l.user.id = :userId AND l.activity.id = :activityId"),
     @NamedQuery(name = "Like.findByCreatedAt", query = "SELECT l FROM Like l WHERE l.createdAt = :createdAt")
+
 })
 
 public class Like implements Serializable {
@@ -23,15 +26,15 @@ public class Like implements Serializable {
     private Integer id;  // Thay đổi từ String thành Integer
 
     @ManyToOne
-    @JoinColumn(name = "student_id")
-    private Student student;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "activity_id")
     private Activity activity;
 
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     // Getter và Setter
     public Integer getId() {
@@ -42,12 +45,12 @@ public class Like implements Serializable {
         this.id = id;
     }
 
-    public Student getStudent() {
-        return student;
+    public User getUser() {
+        return user;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Activity getActivity() {
@@ -58,21 +61,21 @@ public class Like implements Serializable {
         this.activity = activity;
     }
 
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
     @Override
     public String toString() {
-        return "Like{" +
-                "id=" + id +
-                ", student=" + student +
-                ", activity=" + activity +
-                ", createdAt=" + createdAt +
-                '}';
+        return "Like{"
+                + "id=" + id
+                + ", student=" + user
+                + ", activity=" + activity
+                + ", createdAt=" + createdAt
+                + '}';
     }
 }

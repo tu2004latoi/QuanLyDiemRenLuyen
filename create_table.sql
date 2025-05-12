@@ -181,21 +181,21 @@ CREATE TABLE news_feed (
 -- 14. Tạo bảng comments
 CREATE TABLE comments (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT,
+    user_id INT,
     activity_id INT,
     content TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE CASCADE
 );
 
 -- 15. Tạo bảng likes
 CREATE TABLE likes (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT,
+    user_id INT,
     activity_id INT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE CASCADE
 );
 

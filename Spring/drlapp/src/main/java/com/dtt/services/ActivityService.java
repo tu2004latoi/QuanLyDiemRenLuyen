@@ -22,4 +22,6 @@ public interface ActivityService {
     Activity addOrUpdateActivity(Activity a);
     long getCountActivities();
     long count(Map<String, String> params);
+    public Activity getActivityWithLikes(int activityId);
+    public Activity getActivityWithComments(int activityId);
 }

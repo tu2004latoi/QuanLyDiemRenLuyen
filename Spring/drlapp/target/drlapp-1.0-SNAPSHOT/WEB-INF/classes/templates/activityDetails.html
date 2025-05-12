@@ -17,11 +17,11 @@
             <div class="row g-0">
                 <!-- Hình ảnh hoạt động -->
                 <div class="col-md-5">
-                    <img class="img-fluid rounded-start w-100 h-100" 
+                    <img class="img-fluid rounded-start w-100" 
                          th:if="${activity.image != null}" 
                          th:src="@{${activity.image}}" 
                          alt="Ảnh hoạt động" 
-                         style="object-fit: cover; height: 100%;">
+                         style="object-fit: cover;">
                 </div>
 
                 <!-- Thông tin chi tiết -->
@@ -67,7 +67,64 @@
         </div>
     </div>
 
+    <!-- Phần Like và Bình luận -->
+    <div class="mt-5">
+        <!-- Like -->
+        <div class="mb-3">
+            <button class="btn btn-outline-primary" id="likeBtn" th:onclick="'toggleLike(' + ${activity.id} + ')'">
+                <i class="fas fa-thumbs-up"></i> Thích <span id="likeCount" th:text="${likeCount}">0</span>
+            </button>
+        </div>
+
+        <!-- Bình luận -->
+        <div class="card">
+            <div class="card-header">Bình luận</div>
+            <div class="card-body">
+                <!-- Danh sách bình luận -->
+                <div id="comments">
+                    <div th:each="comment : ${sortedComments}">
+                        <div class="d-flex justify-content-between">
+                            <strong th:text="${comment.user.name}">Người dùng</strong>
+                            <small th:text="${#temporals.format(comment.createdAt, 'dd/MM/yyyy HH:mm')}"></small>
+                        </div>
+                        <p th:text="${comment.content}">Nội dung</p>
+                        <hr>
+                    </div>
+                </div>
+
+                <!-- Form bình luận -->
+                <form id="commentForm" th:action="@{/activities/{id}/comments(id=${activity.id})}" method="post">
+                    <div class="mb-3">
+                        <label for="commentContent" class="form-label">Viết bình luận:</label>
+                        <textarea class="form-control" id="commentContent" name="content" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Gửi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script th:src="@{/js/main.js}"></script>
+    <script th:inline="javascript">
+        function toggleLike(activityId) {
+            const api = /*[[@{/api/activities/}]]*/ '';
+            fetch(`${api}${activityId}/like`, {
+                method: 'POST',
+                credentials: 'include'
+            }).then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Không thể thực hiện hành động like');
+                }
+            }).then(data => {
+                document.getElementById('likeCount').innerText = data.likes;
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('Có lỗi xảy ra trong khi like.');
+            });
+        }
+    </script>
 </th:block>
 </body>
 </html>

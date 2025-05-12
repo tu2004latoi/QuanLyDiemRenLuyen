@@ -12,20 +12,41 @@
         <h2 class="text-center fw-bold text-primary mb-4">Danh sách báo thiếu</h2>
         <form th:action="@{/missing-reports}" class="card shadow-sm p-4 mb-4">
             <div class="row g-3">
+                <!-- Tên người dùng -->
                 <div class="col-md-4">
-                    <input type="text" class="form-control" placeholder="Tên người dùng" name="nameUser">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="fas fa-user"></i></span>
+                        <input type="text" class="form-control" placeholder="Tên người dùng" name="nameUser">
+                    </div>
                 </div>
+
+                <!-- Tên hoạt động -->
                 <div class="col-md-4">
-                    <input type="text" class="form-control" placeholder="Tên hoạt động" name="nameActivity">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="fas fa-running"></i></span>
+                        <input type="text" class="form-control" placeholder="Tên hoạt động" name="nameActivity">
+                    </div>
                 </div>
+
+                <!-- Điểm tối thiểu -->
                 <div class="col-md-4">
-                    <input type="text" class="form-control" placeholder="Điểm tối thiểu" name="fromPoint">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="fas fa-sort-amount-down-alt"></i></span>
+                        <input type="number" class="form-control" placeholder="Điểm tối thiểu" name="fromPoint" min="0">
+                    </div>
                 </div>
+
+                <!-- Điểm tối đa -->
                 <div class="col-md-4">
-                    <input type="text" class="form-control" placeholder="Điểm tối đa" name="toPoint">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="fas fa-sort-amount-up-alt"></i></span>
+                        <input type="number" class="form-control" placeholder="Điểm tối đa" name="toPoint" min="0">
+                    </div>
                 </div>
+
+                <!-- Nút tìm kiếm -->
                 <div class="col-12 text-end mt-3">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary rounded-pill px-4">
                         <i class="fas fa-search"></i> Tìm kiếm
                     </button>
                 </div>

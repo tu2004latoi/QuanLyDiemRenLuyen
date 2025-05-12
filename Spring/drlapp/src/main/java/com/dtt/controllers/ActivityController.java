@@ -5,6 +5,7 @@
 package com.dtt.controllers;
 
 import com.dtt.pojo.Activity;
+import com.dtt.pojo.Comment;
 import com.dtt.pojo.Faculty;
 import com.dtt.pojo.User;
 import com.dtt.secutiry.CustomUserDetails;
@@ -12,8 +13,12 @@ import com.dtt.services.ActivityService;
 import com.dtt.services.FacultyService;
 import com.dtt.services.UserService;
 import jakarta.validation.Valid;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -87,7 +92,12 @@ public class ActivityController {
     @GetMapping("/activities/{id}")
     public String activityDetails(Model model, @PathVariable("id") int id) {
         Activity a = activitySer.getActivityById(id);
+        List<Comment> sortedComments = a.getComments().stream()
+                .sorted(Comparator.comparing(Comment::getCreatedAt).reversed())
+                .collect(Collectors.toList());
         model.addAttribute("activity", a);
+        model.addAttribute("sortedComments", sortedComments);
+        model.addAttribute("likeCount", a.getLikes().size());
         return "activityDetails";
     }
 

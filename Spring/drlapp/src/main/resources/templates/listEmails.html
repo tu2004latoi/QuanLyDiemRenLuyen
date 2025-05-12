@@ -19,11 +19,17 @@
         <!-- Form tìm kiếm -->
         <form th:action="@{/emails}" class="card shadow-sm p-4 mb-4">
             <div class="row g-3">
+                <!-- Trường nhập Email -->
                 <div class="col-md-4">
-                    <input type="text" class="form-control" placeholder="Email" name="email">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="fas fa-envelope"></i></span>
+                        <input type="text" class="form-control rounded-end" placeholder="Email" name="email">
+                    </div>
                 </div>
+
+                <!-- Nút tìm kiếm -->
                 <div class="col-12 text-end mt-3">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary rounded-pill px-4">
                         <i class="fas fa-search"></i> Tìm kiếm
                     </button>
                 </div>

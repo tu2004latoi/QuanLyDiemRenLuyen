@@ -39,14 +39,6 @@ public class Student implements Serializable {
     @ManyToOne
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
     private Faculty faculty;
-
-    @OneToMany(mappedBy = "student")
-    @JsonIgnore
-    private Set<Comment> comments;
-
-    @OneToMany(mappedBy = "student")
-    @JsonIgnore
-    private Set<Like> likes;
     
     public Integer getId() {
         return id;
@@ -92,34 +84,6 @@ public class Student implements Serializable {
      */
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
-    }
-
-    /**
-     * @return the comments
-     */
-    public Set<Comment> getComments() {
-        return comments;
-    }
-
-    /**
-     * @param comments the comments to set
-     */
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
-    }
-
-    /**
-     * @return the likes
-     */
-    public Set<Like> getLikes() {
-        return likes;
-    }
-
-    /**
-     * @param likes the likes to set
-     */
-    public void setLikes(Set<Like> likes) {
-        this.likes = likes;
     }
     
     public int getTotalPoints(){

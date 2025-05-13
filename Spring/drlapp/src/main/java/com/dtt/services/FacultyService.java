@@ -6,6 +6,7 @@ package com.dtt.services;
 
 import com.dtt.pojo.Faculty;
 import java.util.List;
+import java.util.Map;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,4 +20,5 @@ public interface FacultyService {
     List<Faculty> getAllFaculties();
     void deleteFaculty(int id);
     Faculty getFacultyByName(String name);
+    List<Faculty> getFaculties(Map<String, String> params);
 }

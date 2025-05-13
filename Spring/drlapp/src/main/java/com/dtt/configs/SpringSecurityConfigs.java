@@ -59,9 +59,16 @@ public class SpringSecurityConfigs {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(c -> c.disable()).authorizeHttpRequests(requests
                 -> requests
-                        .requestMatchers("/", "/home", "/activities", "/activities/**", "/add", "/users").hasRole("ADMIN")
-                        .requestMatchers("/register", "/api/users").permitAll()
-                        .requestMatchers("/js/**").hasRole("ADMIN")
+                        .requestMatchers("/", "/home", "/activities"
+                                , "/activities/**", "/add", "/users", "/emails"
+                                , "/emails/**", "/missing-reports", "/users/**"
+                                , "/classes/**", "faculties/**").hasRole("ADMIN")
+                        .requestMatchers("/training-points", "/statistics").hasAnyRole("ADMIN", "STAFF")
+                        .requestMatchers("/register", "/missing-reports/**", "/my-activities"
+                                , "/users/register", "/users/update", "/faculties", "/classes").permitAll()
+                        .requestMatchers("/js/**", "api/classes/**", "/api/faculties/**").hasRole("ADMIN")
+                        .requestMatchers("/api/missing-reports/create").permitAll()
+                        .requestMatchers("/api/export", "/api/missing-reports/**").hasAnyRole("ADMIN", "STAFF")
                         .requestMatchers("/api/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login")

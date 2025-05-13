@@ -6,6 +6,7 @@ package com.dtt.repositories;
 
 import com.dtt.pojo.Faculty;
 import java.util.List;
+import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -19,4 +20,5 @@ public interface FacultyRepository {
     List<Faculty> getAllFaculties();
     void deleteFaculty(int id);
     Faculty getFacultyByName(String name);
+    List<Faculty> getFaculties(Map<String, String> params);
 }

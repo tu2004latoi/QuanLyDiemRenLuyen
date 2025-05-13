@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Quản lý Email</title>
+    <th:block th:replace="base :: styles"></th:block>
+</head>
+<body th:replace="base :: layout(~{::content})">
+<th:block th:fragment="content">
+    <section class="container my-5">
+        <div class="card shadow-lg p-4 rounded-4">
+            <h2 class="text-center text-primary fw-bold mb-4">
+                <i class="bi bi-calendar-plus"></i> Thêm Khoa
+            </h2>
+            <form method="post" th:action="@{/faculties/add}" th:object="${faculty}">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold" for="email">Khoa</label>
+                        <input type="text" class="form-control" id="faculty" placeholder="Khoa" th:field="*{name}" />
+                    </div>
+
+                <!-- Submit button -->
+                <div class="d-flex justify-content-end mt-4">
+                    <button class="btn btn-success btn-lg px-4" type="submit">
+                        <i class="bi bi-plus-circle"></i>
+                        <span>Thêm Khoa</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+    <script th:src="@{/js/main.js}"></script>
+</th:block>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Quản lý khoa</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="base :: styles"></th:block>
+</head>
+<body th:replace="base :: layout(~{::content})">
+<th:block th:fragment="content">
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-primary">Danh sách khoa</h2>
+            <a th:href="@{/faculties/add}" class="btn btn-success">
+                <i class="fas fa-user-plus"></i> Thêm khoa
+            </a>
+        </div>
+
+        <!-- Form tìm kiếm -->
+        <form th:action="@{/faculties}" class="card shadow-sm p-4 mb-4">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="fas fa-user"></i></span>
+                        <input type="text" class="form-control" placeholder="Lớp" name="className">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="fas fa-user"></i></span>
+                        <input type="text" class="form-control" placeholder="Khoa" name="facultyName">
+                    </div>
+                </div>
+                <!-- Nút tìm kiếm -->
+                <div class="col-12 text-end mt-3">
+                    <button type="submit" class="btn btn-primary rounded-pill px-4">
+                        <i class="fas fa-search"></i> Tìm kiếm
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Bảng người dùng -->
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered align-middle shadow-sm">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Lớp</th>
+                        <th>Khoa</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="c : ${classess}" class="text-center">
+                        <td th:text="${c.id}"></td>
+                        <td th:text="${c.name}"></td>
+                        <td th:text="${c.faculty.name}"></td>
+                        <td>
+                            <button class="btn btn-sm btn-danger"
+                                    th:onclick="'deleteClassess(\''+@{/api/classess}+'\',' + ${c.id} + ')'">
+                                <i class="fas fa-trash-alt"></i> Xóa
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</th:block>
+</body>
+</html>

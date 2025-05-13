@@ -8,6 +8,7 @@ import com.dtt.pojo.ClassRoom;
 import com.dtt.repositories.ClassRoomRepository;
 import com.dtt.services.ClassRoomService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,21 @@ public class ClassRoomServiceImpl implements ClassRoomService{
     @Override
     public ClassRoom getClassRoomById(int id) {
         return this.classRepo.getClassRoomById(id);
+    }
+
+    @Override
+    public List<ClassRoom> getClasses(Map<String, String> params) {
+        return this.classRepo.getClasses(params);
+    }
+
+    @Override
+    public void deleteClassroom(ClassRoom c) {
+        this.classRepo.deleteClassroom(c);
+    }
+
+    @Override
+    public ClassRoom addOrUpdate(ClassRoom c) {
+        return this.classRepo.addOrUpdate(c);
     }
     
 }

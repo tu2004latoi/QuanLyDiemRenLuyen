@@ -71,14 +71,6 @@ public class ApiUserController {
         return "redirect:/users";
     }
 
-    @DeleteMapping("/users/activity-registration/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String destroyActivityRegistration(@PathVariable("id") int id) {
-        this.arSer.deleteActivityRegistrationById(id);
-
-        return "redirect:/user/activity-registration";
-    }
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User u) {
         if (u.getEmail() == null || u.getPassword() == null) {

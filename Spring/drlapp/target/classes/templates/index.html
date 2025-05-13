@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" />
-    <title>Trang chủ CTSV</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Trang chủ CTSV</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Base styles -->
+        <!-- Base styles -->
     <th:block th:replace="base :: styles"></th:block>
 
     <!-- Bootstrap & Icons -->
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap-icons.css}" />
 
-    <!-- Google Font -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- Custom Style -->
+    <!-- Custom CSS -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
+            background-color: #f9fafb;
+            color: #1f2937;
         }
 
         h2, h5 {
@@ -46,68 +47,100 @@
         }
 
         .btn-icon {
+            font-size: 1rem;
             font-weight: 600;
-            font-size: 1.05rem;
-            padding: 0.9rem 1.2rem;
+            padding: 1rem 1.2rem;
             border-radius: 1.2rem;
-            transition: all 0.25s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 0.6rem;
+            transition: all 0.25s ease;
         }
 
         .btn-icon:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         #chat-box {
-            border-radius: 1.2rem;
+            border-radius: 1rem;
             background: #ffffff;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+            padding: 1.2rem;
             height: 300px;
             overflow-y: auto;
-            padding: 1.2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
         }
 
-        .text-muted {
-            font-size: 0.9rem;
+        .section-title {
+            border-left: 6px solid #4f46e5;
+            padding-left: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Màu nút bổ sung */
+        .btn-outline-cyan {
+            color: #0891b2;
+            border-color: #0891b2;
+        }
+
+        .btn-outline-cyan:hover {
+            background-color: #0891b2;
+            color: #fff;
+        }
+
+        .btn-outline-purple {
+            color: #7c3aed;
+            border-color: #7c3aed;
+        }
+
+        .btn-outline-purple:hover {
+            background-color: #7c3aed;
+            color: #fff;
+        }
+
+        @media (max-width: 767px) {
+            .btn-icon {
+                font-size: 0.95rem;
+                padding: 0.8rem 1rem;
+            }
         }
     </style>
 </head>
 
 <body th:replace="base :: layout(~{::content})">
 <th:block th:fragment="content">
-    <div class="container my-5">
-        <h2 class="text-center mb-5 text-primary">🎓 Bảng điều khiển - Chuyên viên CTSV</h2>
+    <div class="container py-5">
+        <h2 class="text-center text-primary mb-5">🎓 Bảng điều khiển - Chuyên viên CTSV</h2>
 
         <!-- Thống kê nhanh -->
-        <div class="row row-cols-1 row-cols-md-3 g-4 text-center mb-5 justify-content-center">
+        <div class="section-title"><h5>📊 Thống kê hệ thống</h5></div>
+        <div class="row row-cols-1 row-cols-md-3 g-4 mb-5 text-center">
             <div class="col">
                 <div class="card card-stat h-100">
                     <div class="stat-icon"><i class="bi bi-envelope-paper-fill"></i></div>
                     <h6 class="text-muted">Email</h6>
-                    <p class="fs-3 text-success fw-bold" th:text="${stats.totalEmails}">--</p>
+                    <p class="fs-3 fw-bold text-success" th:text="${stats.totalEmails}">--</p>
                 </div>
             </div>
             <div class="col">
                 <div class="card card-stat h-100">
                     <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
                     <h6 class="text-muted">Người dùng</h6>
-                    <p class="fs-3 text-success fw-bold" th:text="${stats.totalUsers}">--</p>
+                    <p class="fs-3 fw-bold text-success" th:text="${stats.totalUsers}">--</p>
                 </div>
             </div>
             <div class="col">
                 <div class="card card-stat h-100">
                     <div class="stat-icon"><i class="bi bi-bar-chart-line-fill"></i></div>
                     <h6 class="text-muted">Hoạt động</h6>
-                    <p class="fs-3 text-success fw-bold" th:text="${stats.totalActivities}">--</p>
+                    <p class="fs-3 fw-bold text-success" th:text="${stats.totalActivities}">--</p>
                 </div>
             </div>
         </div>
 
         <!-- Menu chức năng -->
+        <div class="section-title"><h5>🧭 Menu chức năng</h5></div>
         <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
             <div class="col">
                 <a th:href="@{/emails}" class="btn btn-outline-danger btn-icon w-100">
@@ -139,14 +172,24 @@
                     <i class="bi bi-exclamation-triangle-fill"></i> Xử lý báo thiếu hoạt động
                 </a>
             </div>
+            <div class="col">
+                <a th:href="@{/faculties}" class="btn btn-outline-cyan btn-icon w-100">
+                    <i class="bi bi-building"></i> Quản lý khoa
+                </a>
+            </div>
+            <div class="col">
+                <a th:href="@{/classes}" class="btn btn-outline-purple btn-icon w-100">
+                    <i class="bi bi-journal-bookmark-fill"></i> Quản lý lớp
+                </a>
+            </div>
         </div>
 
         <!-- Chat hỗ trợ -->
-        <div class="mt-5">
-            <h5 class="fw-bold mb-3"><i class="bi bi-chat-dots text-primary"></i> Hỗ trợ trực tuyến (Firebase Chat)</h5>
-            <div id="chat-box">
-                <p class="text-muted fst-italic">Đang kết nối tới hệ thống chat...</p>
-            </div>
+        <div class="section-title">
+            <h5><i class="bi bi-chat-dots text-primary"></i> Hỗ trợ trực tuyến (Firebase Chat)</h5>
+        </div>
+        <div id="chat-box">
+            <p class="text-muted fst-italic">Đang kết nối tới hệ thống chat...</p>
         </div>
     </div>
 

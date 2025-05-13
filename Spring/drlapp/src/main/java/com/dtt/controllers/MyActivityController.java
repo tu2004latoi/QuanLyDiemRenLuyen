@@ -40,25 +40,13 @@ public class MyActivityController {
     @Autowired
     private EvidenceService evidenceSer;
     
-    @Autowired
-    private UserService userSer;
-    
-    @Autowired
-    private ActivityService activitySer;
-    
-    @Autowired
-    private ActivityRegistrationService arSer;
-
-    @Autowired
-    private TrainingPointService tpSer;
-    
     @GetMapping("/my-activities")
     public String listMyActivitiesView(Model model) {
         List<ActivityRegistrations> myActivities = this.maSer.getListMyActivities();
         Map<Integer, Evidence> evidenceMap = new HashMap<>();
         for (ActivityRegistrations ar : myActivities) {
-            int userId = ar.getUser().getId();
-            int activityId = ar.getActivity().getId();
+//            int userId = ar.getUser().getId();
+//            int activityId = ar.getActivity().getId();
             try {
                 Evidence e = this.evidenceSer.getEvidenceByActivityRegistration(ar);
                 if (e != null) {
@@ -73,38 +61,5 @@ public class MyActivityController {
 
         return "myActivity";
     }
-    
-    @PostMapping("/training-points/create")
-    public String createTrainingPoint(@RequestParam("arId") Integer arId,
-            @RequestParam("userId") Integer userId,
-            @RequestParam("activityId") Integer activityId,
-            @RequestParam("point") Integer point,
-            @RequestParam("file") MultipartFile file) {
-        
-        ActivityRegistrations ar = this.arSer.getActivityRegistrationById(arId);
-        User u = this.userSer.getUserById(userId);
-        Activity a = this.activitySer.getActivityById(activityId);
-        TrainingPoint t = new TrainingPoint();
-        t.setUser(u);
-        t.setActivity(a);
-        t.setPoint(point);
-        t.setDateAwarded(LocalDateTime.now());
-        t.setConfirmedBy(null);
-        t.setStatus(TrainingPoint.Status.PENDING);
-
-        this.tpSer.addOrUpdateTrainingPoint(t);
-        
-        Evidence e = new Evidence();
-        e.setActivityRegistration(ar);
-        e.setUser(u);
-        e.setTrainingPoint(t);
-        e.setFile(file);
-        e.setUploadDate(LocalDateTime.now());
-        e.setVerifyStatus(Evidence.VerifyStatus.PENDING);
-        
-        this.evidenceSer.addOrUpdateEvidence(e);
-        return "redirect:/my-activities";
-    }
-    
-    
+     
 }

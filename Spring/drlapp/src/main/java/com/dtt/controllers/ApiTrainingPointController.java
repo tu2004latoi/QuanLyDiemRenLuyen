@@ -14,12 +14,18 @@ import com.dtt.pojo.User;
 import com.dtt.services.EvidenceService;
 import com.dtt.services.TrainingPointService;
 import com.dtt.services.UserService;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,6 +51,43 @@ public class ApiTrainingPointController {
     @Autowired
     private EvidenceService evidenceSer;
 
+    @GetMapping("/training-points")
+    public ResponseEntity<?> getAllTrainingPoint() {
+        List<TrainingPoint> listTrainingPoints = this.tpSer.getAllTrainingPoints();
+        List<Map<String, Object>> listData = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        for (TrainingPoint tp : listTrainingPoints) {
+            Map<String, Object> data = Map.of(
+                    "id", tp.getId(),
+                    "userId", tp.getUser().getId(),
+                    "activitityId", tp.getActivity().getId(),
+                    "point", tp.getPoint(),
+                    "dataAwarded", tp.getDateAwarded().format(formatter),
+                    "status", tp.getStatus()
+            );
+            listData.add(data);
+        }
+
+        return ResponseEntity.ok(listData);
+    }
+
+    @GetMapping("training-points/{id}")
+    public ResponseEntity<?> getTrainingPoint(@PathVariable("id") int id) {
+        TrainingPoint tp = this.tpSer.getTrainingPointById(id);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        Map<String, Object> data = Map.of(
+                "id", tp.getId(),
+                "userId", tp.getUser().getId(),
+                "activitityId", tp.getActivity().getId(),
+                "point", tp.getPoint(),
+                "dataAwarded", tp.getDateAwarded().format(formatter),
+                "status", tp.getStatus()
+        );
+        
+        return ResponseEntity.ok(data);
+    }
+
     @DeleteMapping("/training-points/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String destroyTrainingPoint(@PathVariable("id") int id) {
@@ -62,7 +105,7 @@ public class ApiTrainingPointController {
         }
 
         this.tpSer.confirmTrainingPointById(id, u);
-        
+
         return ResponseEntity.ok("Successfully");
     }
 
@@ -75,11 +118,11 @@ public class ApiTrainingPointController {
             return new ResponseEntity<>("User not authenticated", HttpStatus.UNAUTHORIZED);
         }
 
-       this.tpSer.rejectTrainingPointById(id, u);
-        
+        this.tpSer.rejectTrainingPointById(id, u);
+
         return ResponseEntity.ok("Successfully");
     }
-    
+
     @PatchMapping("/training-points/reject-after-approved/{id}")
     public ResponseEntity<?> rejectAfterApproved(@PathVariable("id") int id) {
         TrainingPoint t = this.tpSer.getTrainingPointById(id);
@@ -88,7 +131,7 @@ public class ApiTrainingPointController {
         }
 
         t.setStatus(TrainingPoint.Status.REJECTED);
-        
+
         Evidence e = this.evidenceSer.getEvidenceByTrainingPointId(id);
         e.setVerifyStatus(Evidence.VerifyStatus.REJECTED);
 

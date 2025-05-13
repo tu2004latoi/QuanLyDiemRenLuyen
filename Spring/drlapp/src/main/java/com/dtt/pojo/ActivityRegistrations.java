@@ -1,8 +1,10 @@
 package com.dtt.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "activity_registrations")
@@ -41,6 +43,8 @@ public class ActivityRegistrations implements Serializable {
     private Activity activity;
 
     @Column(name = "registration_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registrationDate;
 
     public ActivityRegistrations() {

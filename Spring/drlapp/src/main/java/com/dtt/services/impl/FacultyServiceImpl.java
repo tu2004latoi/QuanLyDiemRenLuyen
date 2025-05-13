@@ -8,6 +8,7 @@ import com.dtt.pojo.Faculty;
 import com.dtt.repositories.FacultyRepository;
 import com.dtt.services.FacultyService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +44,11 @@ public class FacultyServiceImpl implements FacultyService{
     @Override
     public Faculty getFacultyByName(String name) {
         return this.facultyRepo.getFacultyByName(name);
+    }
+
+    @Override
+    public List<Faculty> getFaculties(Map<String, String> params) {
+        return this.facultyRepo.getFaculties(params);
     }
     
 }

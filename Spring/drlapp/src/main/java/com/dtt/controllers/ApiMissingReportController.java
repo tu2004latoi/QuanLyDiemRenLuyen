@@ -4,20 +4,27 @@
  */
 package com.dtt.controllers;
 
+import com.dtt.pojo.Activity;
 import com.dtt.pojo.MissingReport;
 import com.dtt.pojo.TrainingPoint;
 import com.dtt.pojo.User;
+import com.dtt.services.ActivityService;
 import com.dtt.services.MissingReportService;
 import com.dtt.services.TrainingPointService;
 import com.dtt.services.UserService;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -34,6 +41,9 @@ public class ApiMissingReportController {
     
     @Autowired
     private UserService userSer;
+    
+    @Autowired
+    private ActivityService activitySer;
     
     @PatchMapping("/missing-reports/confirm/{id}")
     public ResponseEntity<?> comfirmMissingReport(@PathVariable("id") int id) throws Exception{
@@ -72,5 +82,28 @@ public class ApiMissingReportController {
         this.mrSer.addOrUpdateMissingReport(mr);
         
         return ResponseEntity.ok("Successfully");
+    }
+    
+     @PostMapping("/missing-reports/create")
+    public  ResponseEntity<?> createMissingReport(@RequestParam("userId") int userId,
+            @RequestParam("activityId") int activityId,
+            @RequestParam("point") int point,
+            @RequestParam("file") MultipartFile file,
+            RedirectAttributes redirectAttributes){
+        
+        User u = this.userSer.getUserById(userId);
+        Activity a = this.activitySer.getActivityById(activityId);
+        TrainingPoint t = this.tpSer.getTrainingPointByUserIdAndActivityId(userId, activityId);
+        MissingReport mr = new MissingReport();
+        mr.setUser(u);
+        mr.setActivity(a);
+        mr.setPoint(point);
+        mr.setTrainingPoint(t);
+        mr.setFile(file);
+        mr.setDateReport(LocalDateTime.now());
+        mr.setStatus(MissingReport.ReportStatus.PENDING);
+        
+        this.mrSer.addOrUpdateMissingReport(mr);
+        return ResponseEntity.ok("Successfuly to create");
     }
 }

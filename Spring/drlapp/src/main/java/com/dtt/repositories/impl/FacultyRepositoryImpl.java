@@ -8,7 +8,12 @@ import com.dtt.pojo.Faculty;
 import com.dtt.repositories.FacultyRepository;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -80,5 +85,29 @@ public class FacultyRepositoryImpl implements FacultyRepository{
         q.setParameter("name", name);
         
         return (Faculty) q.getSingleResult();
+    }
+
+    @Override
+    public List<Faculty> getFaculties(Map<String, String> params) {
+        Session s = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = s.getCriteriaBuilder();
+        CriteriaQuery<Faculty> q = b.createQuery(Faculty.class);
+        Root<Faculty> root = q.from(Faculty.class);
+        q.select(root);
+
+        if (params != null) {
+            List<jakarta.persistence.criteria.Predicate> predicates = new ArrayList<>();
+
+            String faculty = params.get("name");
+            if (faculty != null && !faculty.isEmpty()) {
+                predicates.add(b.like(root.get("name"), String.format("%%%s%%", faculty)));
+            }
+
+            q.where(predicates.toArray(new jakarta.persistence.criteria.Predicate[0]));
+        }
+
+        Query query = s.createQuery(q);
+
+        return query.getResultList();
     }
 }

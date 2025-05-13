@@ -52,9 +52,11 @@ public class TrainingPoint implements Serializable {
     private Status status;
 
     @OneToMany(mappedBy = "trainingPoint")
+    @JsonIgnore
     private Set<Evidence> evidences;
 
     @OneToMany(mappedBy = "trainingPoint")
+    @JsonIgnore
     private Set<ReportDetail> reportDetails;
 
     public enum Status {

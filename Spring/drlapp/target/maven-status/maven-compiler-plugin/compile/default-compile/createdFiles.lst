@@ -9,6 +9,7 @@ com\dtt\services\ActivityRegistrationService.class
 com\dtt\repositories\impl\ClassRoomRepositoryImpl.class
 com\dtt\repositories\impl\StatisticsRepositoryImpl.class
 com\dtt\controllers\ApiEmailController.class
+com\dtt\controllers\ClassroomController.class
 com\dtt\repositories\impl\EvidenceRepositoryImpl.class
 com\dtt\services\StudentService.class
 com\dtt\pojo\MissingReport.class
@@ -79,6 +80,7 @@ com\dtt\drlapp\JakartaRestConfiguration.class
 com\dtt\services\ExportService.class
 com\dtt\services\impl\UserServiceImpl.class
 com\dtt\pojo\TrainingPoint.class
+com\dtt\controllers\ApiActivityRegistrationController.class
 com\dtt\repositories\impl\ActivityRegistrationRepositoryImpl.class
 com\dtt\controllers\MissingReportController.class
 com\dtt\pojo\Department.class
@@ -96,6 +98,7 @@ com\dtt\repositories\TrainingPointRepository.class
 com\dtt\repositories\impl\NewsFeedRepositoryImpl.class
 com\dtt\services\impl\TrainingPointServiceImpl$1.class
 com\dtt\repositories\impl\UserRepositoryImpl.class
+com\dtt\controllers\FacultyController.class
 com\dtt\pojo\TrainingPoint$Status.class
 com\dtt\utils\JwtUtils.class
 com\dtt\pojo\Evidence$VerifyStatus.class

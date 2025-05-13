@@ -19,6 +19,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -65,7 +66,11 @@ public class ApiActivityController {
     //Xóa 1 hoạt động
     @DeleteMapping("/activities/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public String destroy(@PathVariable("id") int id) {
+    public String destroy(@PathVariable("id") int id, Principal principal) {
+        User u = userSer.getUserByUsername(principal.getName());
+        if (u.getRole() == User.Role.STUDENT){
+            throw new AccessDeniedException("Sinh viên không được phép xóa");
+        }
         this.activityService.deleteActivity(id);
 
         return "redirect:/activities";
@@ -88,7 +93,11 @@ public class ApiActivityController {
 
     //Thêm 1 hoạt động
     @PostMapping(path = "/activities", consumes = MediaType.MULTIPART_FORM_DATA)
-    public ResponseEntity<Activity> addAcitivity(@ModelAttribute Activity a) {
+    public ResponseEntity<Activity> addAcitivity(@ModelAttribute Activity a, Principal principal) {
+        User u = userSer.getUserByUsername(principal.getName());
+        if (u.getRole() == User.Role.STUDENT){
+            throw new AccessDeniedException("Sinh viên không được phép thêm hoạt động");
+        }
         Activity saved = this.activityService.addOrUpdateActivity(a);
         return new ResponseEntity<>(saved, HttpStatus.CREATED);
     }

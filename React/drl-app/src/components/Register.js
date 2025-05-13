@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import Apis, { endpoints } from "../configs/Apis";
 import { useNavigate } from "react-router-dom";
 import MySpinner from "./layouts/MySpinner";
+import { useEffect } from "react";
 
 const Register = () => {
     const info = [{
@@ -54,6 +55,8 @@ const Register = () => {
 
             form.append("avatar", avatar.current.files[0]);
             form.append("role", "STUDENT");
+            form.append("facultyId", user.facultyId);
+            form.append("classRoomId", user.classRoomId);
             try {
                 setLoading(true);
                 await Apis.post(endpoints['register'], form, {
@@ -73,6 +76,32 @@ const Register = () => {
         }
     };
 
+    const [faculties, setFaculties] = useState([]);
+    const [classes, setClasses] = useState([]);
+    useEffect(() => {
+        const loadFaculties = async () => {
+            try {
+                let res = await Apis.get(endpoints['faculties']);
+                console.log("FACULTIES:", res.data);
+                setFaculties(res.data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        loadFaculties();
+    }, []);
+
+    const loadClasses = async (facultyId) => {
+        try {
+            let res = await Apis.get(endpoints['classes'](facultyId));
+            setClasses(res.data);
+            setUser(prev => ({ ...prev, classRoomId: "", facultyId: facultyId }));
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     return (
         <>
             <div className="text-center">
@@ -85,6 +114,18 @@ const Register = () => {
             <Form onSubmit={register}>
                 {info.map(i => <Form.Control className="mt-2 mb-1" value={user[i.field]} onChange={e => setState(e.target.value, i.field)}
                     type={i.type} key={i.field} placeholder={i.title} required />)}
+
+                <Form.Select className="mt-2 mb-1" required
+                    onChange={e => { const facultyId = e.target.value; setState(facultyId, "facultyId"); loadClasses(facultyId); }} value={user.facultyId || ""}>
+                    <option value="">-- Chọn khoa --</option>
+                    {faculties.map(f => (<option key={f.id} value={f.id}>{f.name}</option>))}
+                </Form.Select>
+
+                <Form.Select className="mt-2 mb-1" required
+                    onChange={e => setState(e.target.value, "classRoomId")} value={user.classRoomId || ""}>
+                    <option value="">-- Chọn lớp --</option>
+                    {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                </Form.Select>
 
                 <Form.Control ref={avatar} className="mt-2 mb-1" type="file" placeholder="Ảnh đại diện" />
 

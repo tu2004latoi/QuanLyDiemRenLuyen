@@ -6,9 +6,13 @@ package com.dtt.services.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.dtt.pojo.Student;
 import com.dtt.pojo.User;
+import com.dtt.repositories.ClassRoomRepository;
+import com.dtt.repositories.FacultyRepository;
 import com.dtt.repositories.UserRepository;
 import com.dtt.secutiry.CustomUserDetails;
+import com.dtt.services.StudentService;
 import com.dtt.services.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -41,13 +45,22 @@ public class UserServiceImpl implements UserService {
     private Cloudinary cloudinary;
 
     @Autowired
-    private UserRepository userRepo;
-
-    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private FacultyRepository facultyRepo;
+
+    @Autowired
+    private ClassRoomRepository classRepo;
+
+    @Autowired
+    private StudentService studentSer;
+
+    @Autowired
+    private UserRepository userRepo;
 
     @Override
     public User getUserByUsername(String username) {
@@ -86,9 +99,22 @@ public class UserServiceImpl implements UserService {
                         ObjectUtils.asMap("resource_type", "auto"));
                 u.setAvatar(res.get("secure_url").toString());
             } catch (IOException ex) {
+                ex.printStackTrace(); // Ghi log nếu lỗi
             }
         }
-        return this.userRepo.register(u);
+
+        // GỌI DUY NHẤT 1 LẦN
+        User savedUser = this.userRepo.register(u);
+
+        if (u.getRole() == User.Role.STUDENT) {
+            Student s = new Student();
+            s.setUser(savedUser);
+            s.setFaculty(facultyRepo.getFacultyById(Integer.parseInt(params.get("facultyId"))));
+            s.setClassRoom(classRepo.getClassRoomById(Integer.parseInt(params.get("classRoomId"))));
+            studentSer.addOrUpdateStudent(s);
+        }
+
+        return savedUser; // Trả về user đã lưu
     }
 
     @Override
@@ -103,7 +129,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User addOrUpdateUser(User u) {
-        
+
         if (u.getFile() != null && !u.getFile().isEmpty()) {
             try {
                 Map res = cloudinary.uploader().upload(u.getFile().getBytes(),

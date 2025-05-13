@@ -47,8 +47,7 @@ public class Faculty implements Serializable {
     public void setClasses(Set<ClassRoom> classes) {
         this.classes = classes;
     }
-
-    @JsonValue
+    
     public String toJson() {
         return this.name;
     }

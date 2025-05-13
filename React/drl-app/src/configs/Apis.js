@@ -7,7 +7,9 @@ export const endpoints = {
     'activities': '/activities',
     'register': '/users',
     'login': '/login',
-    'current-user': '/secure/profile'
+    'current-user': '/secure/profile',
+    'faculties': "/faculties",
+    'classes': (facultyId) => `/users/faculty/${facultyId}/classes`
 }
 
 export const authApis = () => {

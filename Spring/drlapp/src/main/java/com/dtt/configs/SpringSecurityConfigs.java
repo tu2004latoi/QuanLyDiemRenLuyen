@@ -66,7 +66,8 @@ public class SpringSecurityConfigs {
                         .requestMatchers("/training-points", "/statistics").hasAnyRole("ADMIN", "STAFF")
                         .requestMatchers("/register", "/missing-reports/**", "/my-activities"
                                 , "/users/register", "/users/update", "/faculties", "/classes").permitAll()
-                        .requestMatchers("/js/**", "api/classes/**", "/api/faculties/**").hasRole("ADMIN")
+                        .requestMatchers("/api/faculties/**").permitAll()
+                        .requestMatchers("/js/**", "api/classes/**").hasRole("ADMIN")
                         .requestMatchers("/api/missing-reports/create").permitAll()
                         .requestMatchers("/api/export", "/api/missing-reports/**").hasAnyRole("ADMIN", "STAFF")
                         .requestMatchers("/api/**").permitAll()

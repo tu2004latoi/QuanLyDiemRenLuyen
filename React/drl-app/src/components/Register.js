@@ -116,9 +116,17 @@ const Register = () => {
                     type={i.type} key={i.field} placeholder={i.title} required />)}
 
                 <Form.Select className="mt-2 mb-1" required
-                    onChange={e => { const facultyId = e.target.value; setState(facultyId, "facultyId"); loadClasses(facultyId); }} value={user.facultyId || ""}>
+                    onChange={e => {
+                        const facultyId = e.target.value;
+                        setState(facultyId, "facultyId");
+                        loadClasses(facultyId);
+                    }}
+                    value={user.facultyId || ""}
+                >
                     <option value="">-- Chọn khoa --</option>
-                    {faculties.map(f => (<option key={f.id} value={f.id}>{f.name}</option>))}
+                    {Array.isArray(faculties) && faculties.map(f => (
+                        <option key={f.id} value={f.id}>{f.name}</option>
+                    ))}
                 </Form.Select>
 
                 <Form.Select className="mt-2 mb-1" required

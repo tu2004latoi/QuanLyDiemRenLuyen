@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Apis, { endpoints } from "../configs/Apis";
+import { FaArrowLeft, FaClipboardList, FaEdit, FaThumbsUp, FaTrash } from "react-icons/fa";
 
 const ActivityDetail = () => {
     const { activityId } = useParams(); // Lấy activityId từ URL
@@ -59,40 +60,131 @@ const ActivityDetail = () => {
     }
 
     return (
-        <div className="activity-details">
-            <h1>{activity.name}</h1>
-            <p>ID: {activity.id}</p>
-            <p>Mô tả: {activity.description}</p>
-            <p>Địa điểm: {activity.location}</p>
-            <p>Loại điểm: {activity.pointType}</p>
-            <p>
-                Bắt đầu: {new Date(activity.startDate).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })}
-            </p>
-            <p>
-                Kết thúc: {new Date(activity.endDate).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })}
-            </p>
-            <p>Trạng thái: {activity.status}</p>
-            <p>Điểm: {activity.pointValue}</p>
-            <p>Khoa tổ chức: {activity.faculty}</p>
-            <p>Người tổ chức: {activity.organizer}</p>
-            <p>Lượt thích: {likeCount}</p>
+        <div className="p-6 max-w-7xl mx-auto space-y-6">
+            {/* Thông tin hoạt động */}
+            <div className="flex flex-col md:flex-row bg-white rounded-2xl shadow p-6 gap-6">
+                {/* Ảnh bên trái */}
+                <div className="md:w-2/5 w-full">
+                    <img
+                        src={activity.image}
+                        alt={activity.name}
+                        className="w-full h-full rounded-xl object-cover"
+                    />
+                </div>
 
-            <h2>Bình luận</h2>
-            {commentLoading ? (
-                <p>Đang tải bình luận...</p>
-            ) : comments.length === 0 ? (
-                <p>Chưa có bình luận nào.</p>
-            ) : (
-                <ul>
+                {/* Thông tin bên phải */}
+                <div className="md:w-3/5 space-y-1">
+                    <h1 className="text-2xl font-bold mb-2">{activity.name}</h1>
+                    <p className="mb-1"><span className="font-semibold">ID:</span> {activity.id}</p>
+                    <p className="mb-1"><span className="font-semibold">Mô tả:</span> {activity.description}</p>
+                    <p className="mb-1"><span className="font-semibold">Địa điểm:</span> {activity.location}</p>
+                    <p className="mb-1"><span className="font-semibold">Loại điểm:</span> {activity.pointType}</p>
+                    <p className="mb-1">
+                        <span className="font-semibold">Bắt đầu:</span>{" "}
+                        {new Date(activity.startDate).toLocaleString("vi-VN", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                        })}
+                    </p>
+                    <p className="mb-1">
+                        <span className="font-semibold">Kết thúc:</span>{" "}
+                        {new Date(activity.endDate).toLocaleString("vi-VN", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                        })}
+                    </p>
+                    <p className="mb-1"><span className="font-semibold">Trạng thái:</span> {activity.status}</p>
+                    <p className="mb-1"><span className="font-semibold">Điểm:</span> {activity.pointValue}</p>
+                    <p className="mb-1"><span className="font-semibold">Khoa tổ chức:</span> {activity.faculty}</p>
+                    <p className="mb-1"><span className="font-semibold">Người tổ chức:</span> {activity.organizer}</p>
+                    <p className="mb-1"><span className="font-semibold">Lượt thích:</span> {likeCount}</p>
+                </div>
+            </div>
+
+            {/* Nút hành động */}
+            <div className="flex justify-between flex-wrap gap-2">
+                <div className="flex gap-2">
+                    <button
+                        onClick={() => window.history.back()}
+                        className="flex items-center gap-2 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-xl">
+                        <FaArrowLeft /> Quay lại
+                    </button>
+
+                    <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl">
+                        <FaThumbsUp /> Thích ({likeCount})
+                    </button>
+                </div>
+
+                <div className="flex gap-2">
+                    <button className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl">
+                        <FaClipboardList /> Đăng ký
+                    </button>
+                    <button className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl">
+                        <FaEdit /> Sửa
+                    </button>
+                    <button className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl">
+                        <FaTrash /> Xóa
+                    </button>
+                </div>
+            </div>
+
+            {/* Bình luận */}
+            <div className="bg-white rounded-2xl shadow p-6 space-y-4">
+                <h2 className="text-xl font-semibold">Bình luận</h2>
+
+                <div className="space-y-0 px-4">
                     {comments.map((cmt) => (
-                        <li key={cmt.id}>
-                            <strong>{cmt.user?.name || "Ẩn danh"}:</strong> {cmt.content}
-                        </li>
+                        <div key={cmt.id} className="flex items-start gap-2 pt-2">
+                            {/* Avatar */}
+                            <div className="flex-shrink-0">
+                                <img
+                                    src={cmt.user?.avatar || "/default-avatar.png"}
+                                    alt={cmt.user?.name || "Ẩn danh"}
+                                    className="w-10 h-10 rounded-full object-cover border-2 border-black"
+                                />
+                            </div>
+
+                            {/* Nội dung bình luận với nền xám nhẹ */}
+                            <div className="flex-1 text-sm">
+                                <div className="bg-gray-100 p-2 rounded-md">
+                                    <p className="font-bold text-base mb-1">{cmt.user?.name || "Ẩn danh"}</p>
+                                    <p className="text-gray-700 text-sm leading-tight">{cmt.content}</p>
+                                </div>
+                            </div>
+                        </div>
                     ))}
-                </ul>
-            )}
+                </div>
+
+
+
+
+
+
+
+                {/* Nhập bình luận */}
+                <form className="space-y-2">
+                    <textarea
+                        placeholder="Nhập bình luận của bạn..."
+                        className="w-full p-3 border rounded-lg resize-none"
+                        rows={3}
+                    />
+                    <button
+                        type="submit"
+                        className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl"
+                    >
+                        Gửi bình luận
+                    </button>
+                </form>
+            </div>
         </div>
     );
+
 };
 
 export default ActivityDetail;

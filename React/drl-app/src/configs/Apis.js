@@ -5,6 +5,7 @@ const BASE_URL = 'http://localhost:8080/drlapp/api';
 
 export const endpoints = {
     'activities': '/activities',
+    'activityDetail': (activityId) => `/activities/${activityId}`,
     'register': '/users',
     'login': '/login',
     'current-user': '/secure/profile',

@@ -10,7 +10,8 @@ import { MyDispatcherContext, MyUserContext } from "./configs/MyContexts";
 import { useEffect, useReducer } from "react";
 import MyUserReducer from "./components/reducers/MyUserReducer";
 import cookie from "react-cookies";
-import Apis, { authApis, endpoints } from "./configs/Apis";
+import { authApis, endpoints } from "./configs/Apis";
+import ActivityDetail from "./components/ActivityDetails";
 
 const App = () => {
   const [user, dispatch] = useReducer(MyUserReducer, null);
@@ -46,6 +47,7 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/activitydetails/:activityId" element={<ActivityDetail />} />
             </Routes>
           </Container>
 

@@ -7,6 +7,7 @@ package com.dtt.services.impl;
 import com.dtt.pojo.Comment;
 import com.dtt.repositories.CommentRepository;
 import com.dtt.services.CommentService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,11 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public Comment getCommentByUserIdAndActivityId(int userId, int activityId) {
         return this.cmtRepo.getCommentByUserIdAndActivityId(userId, activityId);
+    }
+
+    @Override
+    public List<Comment> getCommentsByActivityId(int activityId) {
+        return cmtRepo.getCommentsByActivityId(activityId);
     }
     
 }

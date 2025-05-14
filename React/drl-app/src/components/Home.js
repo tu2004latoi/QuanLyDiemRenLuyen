@@ -50,7 +50,7 @@ const Home = () => {
                             Kết thúc: {new Date(a.endDate).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })}
                         </p>
                         <p className="text-sm text-gray-600 mb-4">Điểm: {a.pointValue}</p>
-                        <div className="flex-grow"></div> {/* Dùng div này để đẩy button xuống cuối cùng */}
+                        <div className="flex-grow"></div>
                         <button onClick={() => goToActivityDetail(a.id)} className="w-full text-center text-blue-600 border border-blue-500 rounded-md py-2 hover:bg-blue-50 transition">
                             Chi tiết
                         </button>

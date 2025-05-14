@@ -5,6 +5,7 @@
 package com.dtt.services;
 
 import com.dtt.pojo.Comment;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +18,5 @@ public interface CommentService {
     long count();
     Comment getCommentById(int id);
     Comment getCommentByUserIdAndActivityId(int userId, int activityId);
+    List<Comment> getCommentsByActivityId(int activityId);
 }

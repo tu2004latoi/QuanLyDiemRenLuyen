@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,20 +33,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ApiLikeController {
+
     @Autowired
     private UserService userSer;
-    
+
     @Autowired
     private ActivityService activitySer;
-    
+
     @Autowired
     private LikeService likeSer;
-    
+
     @GetMapping("/activities/{activityId}/like")
-    public List<Like> ActivityLikesView(@PathVariable("activityId") int activityId){
+    public List<Like> ActivityLikesView(@PathVariable("activityId") int activityId) {
         return this.likeSer.getLikesByActivityId(activityId);
     }
-    
+
+    @GetMapping("/activities/{id}/likes/count") //Đếm tổng like của 1 activity
+    public ResponseEntity<Long> countLikesForActivity(@PathVariable("id") int activityId) {
+        long count = likeSer.countByActivityId(activityId);
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
+
     @PostMapping("/activities/{activityId}/like")
     public ResponseEntity<?> toggleLike(@PathVariable("activityId") int activityId, Principal principal) {
         // Lấy user hiện tại từ session

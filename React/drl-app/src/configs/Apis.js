@@ -10,7 +10,9 @@ export const endpoints = {
     'login': '/login',
     'current-user': '/secure/profile',
     'faculties': "/faculties",
-    'classes': (facultyId) => `/users/faculty/${facultyId}/classes`
+    'classes': (facultyId) => `/users/faculty/${facultyId}/classes`,
+    'likeCount': (activityId) => `/activities/${activityId}/likes/count`,
+    'comments': (activityId) => `/activities/${activityId}/comments`
 }
 
 export const authApis = () => {

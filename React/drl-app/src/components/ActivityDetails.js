@@ -6,6 +6,9 @@ const ActivityDetail = () => {
     const { activityId } = useParams(); // Lấy activityId từ URL
     const [activity, setActivity] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [likeCount, setLikeCount] = useState(0);
+    const [comments, setComments] = useState([]);
+    const [commentLoading, setCommentLoading] = useState(true);
 
     const loadActivityDetail = async () => {
         try {
@@ -20,8 +23,31 @@ const ActivityDetail = () => {
         }
     };
 
+    const loadLikeCount = async () => {
+        try {
+            let res = await Apis.get(endpoints['likeCount'](activityId));
+            setLikeCount(res.data);
+        } catch (ex) {
+            console.error("Lỗi khi lấy lượt like:", ex);
+        }
+    };
+
+    const loadComments = async () => {
+        try {
+            setCommentLoading(true);
+            let res = await Apis.get(endpoints['comments'](activityId));
+            setComments(res.data);
+        } catch (ex) {
+            console.error("Lỗi khi tải bình luận:", ex);
+        } finally {
+            setCommentLoading(false);
+        }
+    };
+
     useEffect(() => {
         loadActivityDetail();
+        loadLikeCount();
+        loadComments(); // gọi luôn khi activityId thay đổi
     }, [activityId]);
 
     if (loading) {
@@ -36,14 +62,35 @@ const ActivityDetail = () => {
         <div className="activity-details">
             <h1>{activity.name}</h1>
             <p>ID: {activity.id}</p>
-            <p>Điểm: {activity.pointValue}</p>
+            <p>Mô tả: {activity.description}</p>
+            <p>Địa điểm: {activity.location}</p>
+            <p>Loại điểm: {activity.pointType}</p>
             <p>
                 Bắt đầu: {new Date(activity.startDate).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })}
             </p>
             <p>
                 Kết thúc: {new Date(activity.endDate).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })}
             </p>
-            {/* Thêm thông tin chi tiết khác của hoạt động tại đây */}
+            <p>Trạng thái: {activity.status}</p>
+            <p>Điểm: {activity.pointValue}</p>
+            <p>Khoa tổ chức: {activity.faculty}</p>
+            <p>Người tổ chức: {activity.organizer}</p>
+            <p>Lượt thích: {likeCount}</p>
+
+            <h2>Bình luận</h2>
+            {commentLoading ? (
+                <p>Đang tải bình luận...</p>
+            ) : comments.length === 0 ? (
+                <p>Chưa có bình luận nào.</p>
+            ) : (
+                <ul>
+                    {comments.map((cmt) => (
+                        <li key={cmt.id}>
+                            <strong>{cmt.user?.name || "Ẩn danh"}:</strong> {cmt.content}
+                        </li>
+                    ))}
+                </ul>
+            )}
         </div>
     );
 };

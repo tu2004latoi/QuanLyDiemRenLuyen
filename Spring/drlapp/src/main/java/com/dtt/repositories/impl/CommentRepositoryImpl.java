@@ -68,4 +68,13 @@ public class CommentRepositoryImpl implements CommentRepository {
         return result.isEmpty() ? null : result.get(0);
     }
 
+    @Override
+    public List<Comment> getCommentsByActivityId(int activityId) { //Lấy tất cả comment của 1 activity
+    Session s = this.factory.getObject().getCurrentSession();
+    Query<Comment> q = s.createQuery("FROM Comment c WHERE c.activity.id = :activityId", Comment.class);
+    q.setParameter("activityId", activityId);
+
+    return q.getResultList();
+}
+
 }

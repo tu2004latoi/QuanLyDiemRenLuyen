@@ -12,7 +12,11 @@ import com.dtt.services.CommentService;
 import com.dtt.services.UserService;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,20 +31,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RestController
 @RequestMapping("/api")
 public class ApiCommentController {
+
     @Autowired
     private UserService userSer;
-    
+
     @Autowired
     private ActivityService activitySer;
-    
+
     @Autowired
     private CommentService cmtSer;
-    
+
     @PostMapping("/activities/{activityId}/comments")
     public String postComment(@PathVariable("activityId") int activityId,
-                              @RequestParam("content") String content,
-                              Principal principal,
-                              RedirectAttributes redirectAttributes) {
+            @RequestParam("content") String content,
+            Principal principal,
+            RedirectAttributes redirectAttributes) {
         User user = this.userSer.getUserByUsername(principal.getName());
         Activity activity = this.activitySer.getActivityWithComments(activityId);
 
@@ -56,5 +61,11 @@ public class ApiCommentController {
 
         redirectAttributes.addFlashAttribute("success", "Bình luận đã được gửi!");
         return "redirect:/activities/" + activityId;
+    }
+
+    @GetMapping("/activities/{id}/comments")
+    public ResponseEntity<List<Comment>> getCommentsForActivity(@PathVariable("id") int activityId) {
+        List<Comment> comments = cmtSer.getCommentsByActivityId(activityId);
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 }

@@ -1,7 +1,8 @@
 use drldb;
 
 INSERT INTO emails (email) VALUES
-('admin@gmail.com'),
+('admin1@gmail.com'),
+('admin2@gmail.com'),
 ('staff1@gmail.com'),
 ('staff2@gmail.com'),
 ('student1@gmail.com'),
@@ -19,10 +20,11 @@ INSERT INTO class_room (id, name, faculty_id) VALUES
 (3, 'KT01', 3);
 
 INSERT INTO users (id, email, password, first_name, last_name, avatar, point_1, point_2, point_3, point_4, role) VALUES
-('1', 'admin@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Admin', 'Pro', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'ADMIN'),
-('2', 'staff1@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Staff', '1', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STAFF'),
-('3', 'staff2@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Staff', '2', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STAFF'),
-('4', 'student1@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Kiều Văn', 'Minh', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STUDENT');
+('1', 'admin1@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Admin', 'Pro1', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'ADMIN'),
+('2', 'admin2@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Admin', 'Pro2', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'ADMIN'),
+('3', 'staff1@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Staff', '1', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STAFF'),
+('4', 'staff2@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Staff', '2', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STAFF'),
+('5', 'student1@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Kiều Văn', 'Minh', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STUDENT');
 
 insert into departments(id, name) values
 ('1','Quản lý đào tạo');

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Apis, { endpoints } from "../configs/Apis";
 import { FaArrowLeft, FaClipboardList, FaEdit, FaThumbsUp, FaTrash } from "react-icons/fa";
+import { MyUserContext } from "../configs/MyContexts";
+import { useContext } from "react";
 
 const ActivityDetail = () => {
     const { activityId } = useParams(); // Lấy activityId từ URL
@@ -10,8 +12,9 @@ const ActivityDetail = () => {
     const [likeCount, setLikeCount] = useState(0);
     const [comments, setComments] = useState([]);
     const [commentLoading, setCommentLoading] = useState(true);
+    const user = useContext(MyUserContext);
 
-    const loadActivityDetail = async () => {
+    const loadActivityDetail = async () => { //Tải thông tin chi tiết activity
         try {
             setLoading(true);
             let res = await Apis.get(endpoints['activityDetail'](activityId));
@@ -24,7 +27,7 @@ const ActivityDetail = () => {
         }
     };
 
-    const loadLikeCount = async () => {
+    const loadLikeCount = async () => { //Đếm tổng lượt like
         try {
             let res = await Apis.get(endpoints['likeCount'](activityId));
             setLikeCount(res.data);
@@ -33,7 +36,7 @@ const ActivityDetail = () => {
         }
     };
 
-    const loadComments = async () => {
+    const loadComments = async () => { //Tải các bình luận
         try {
             setCommentLoading(true);
             let res = await Apis.get(endpoints['comments'](activityId));
@@ -42,6 +45,35 @@ const ActivityDetail = () => {
             console.error("Lỗi khi tải bình luận:", ex);
         } finally {
             setCommentLoading(false);
+        }
+    };
+
+    const handleRegister = async () => { //Đăng ký activity
+        if (!user) {
+            alert("Vui lòng đăng nhập để đăng ký hoạt động!");
+            return;
+        }
+
+        const confirm = window.confirm(`Bạn có muốn đăng ký hoạt động "${activity.name}" không?`);
+        if (!confirm) return;
+
+        try {
+            let res = await Apis.post(endpoints.activityRegister, {
+                userId: user.id,
+                activityId: parseInt(activityId),
+            });
+
+            alert(`Đăng ký hoạt động "${activity.name}" thành công!`);
+            loadActivityDetail(); // cập nhật lại dữ liệu
+        } catch (err) {
+            console.error(err);
+            const msg = err.response?.data;
+
+            if (typeof msg === "string" && msg.includes("đã đăng ký")) {
+                alert("Bạn đã đăng ký hoạt động này rồi!");
+            } else {
+                alert("Đăng ký thất bại: " + (msg || "Lỗi không xác định"));
+            }
         }
     };
 
@@ -60,7 +92,11 @@ const ActivityDetail = () => {
     }
 
     return (
-        <div className="p-6 max-w-7xl mx-auto space-y-6">
+        <div className="p-6 max-w-7xl mx-auto space-y-6 mb-20">
+            <div className="max-w-6xl mx-auto px-4 py-6 text-center border-b border-gray-300">
+                <h1 className="text-4xl font-extrabold text-blue-700 drop-shadow-lg">OPEN UNIVERSITY TRAINING POINT</h1>
+                <p className="text-xl font-semibold text-gray-700 mt-1 drop-shadow-md">THÔN TIN CHI TIẾT HOẠT ĐỘNG</p>
+            </div>
             {/* Thông tin hoạt động */}
             <div className="flex flex-col md:flex-row bg-white rounded-2xl shadow p-6 gap-6">
                 {/* Ảnh bên trái */}
@@ -81,23 +117,11 @@ const ActivityDetail = () => {
                     <p className="mb-1"><span className="font-semibold">Loại điểm:</span> {activity.pointType}</p>
                     <p className="mb-1">
                         <span className="font-semibold">Bắt đầu:</span>{" "}
-                        {new Date(activity.startDate).toLocaleString("vi-VN", {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            day: "2-digit",
-                            month: "2-digit",
-                            year: "numeric",
-                        })}
+                        {new Date(activity.startDate).toLocaleString("vi-VN", { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "2-digit", year: "numeric", })}
                     </p>
                     <p className="mb-1">
                         <span className="font-semibold">Kết thúc:</span>{" "}
-                        {new Date(activity.endDate).toLocaleString("vi-VN", {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            day: "2-digit",
-                            month: "2-digit",
-                            year: "numeric",
-                        })}
+                        {new Date(activity.endDate).toLocaleString("vi-VN", { hour: "2-digit", minute: "2-digit", day: "2-digit", month: "2-digit", year: "numeric", })}
                     </p>
                     <p className="mb-1"><span className="font-semibold">Trạng thái:</span> {activity.status}</p>
                     <p className="mb-1"><span className="font-semibold">Điểm:</span> {activity.pointValue}</p>
@@ -122,15 +146,19 @@ const ActivityDetail = () => {
                 </div>
 
                 <div className="flex gap-2">
-                    <button className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl">
+                    <button onClick={handleRegister} className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl">
                         <FaClipboardList /> Đăng ký
                     </button>
-                    <button className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl">
-                        <FaEdit /> Sửa
-                    </button>
-                    <button className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl">
-                        <FaTrash /> Xóa
-                    </button>
+                    {user?.role === "STAFF" && (
+                        <>
+                            <button className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl">
+                                <FaEdit /> Sửa
+                            </button>
+                            <button className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl">
+                                <FaTrash /> Xóa
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
 

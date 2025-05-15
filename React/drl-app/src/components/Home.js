@@ -122,8 +122,8 @@ const Home = () => {
         <>
             {/* Tiêu đề chính */}
             <div className="max-w-6xl mx-auto px-4 py-6 text-center border-b border-gray-300">
-                <h1 className="text-4xl font-extrabold text-blue-700">OU TRAINING POINT</h1>
-                <p className="text-xl font-semibold text-gray-700 mt-1">DANH SÁCH CÁC HOẠT ĐỘNG</p>
+                <h1 className="text-4xl font-extrabold text-blue-700 drop-shadow-lg">OPEN UNIVERSITY TRAINING POINT</h1>
+                <p className="text-xl font-semibold text-gray-700 mt-1 drop-shadow-md">DANH SÁCH CÁC HOẠT ĐỘNG</p>
             </div>
 
             {/* Thanh điều khiển gồm Dropdown và Form tìm kiếm */}

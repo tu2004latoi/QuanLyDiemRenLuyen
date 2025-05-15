@@ -5,7 +5,7 @@ const Footer = () => {
         <footer className="bg-gray-800 text-white py-2 fixed bottom-0 left-0 w-full">
             <div className="flex flex-col md:flex-row justify-between items-center max-w-full mx-0 px-4">
                 <p className="mb-2 md:mb-0 text-sm font-semibold">
-                    2025 Phòng Công tác Sinh viên - Đại học ABC
+                    &copy; 2025 Phòng Công tác Sinh viên - ĐẠI HỌC MỞ TPHCM
                 </p>
                 <ul className="flex flex-row space-x-6 mb-2 md:mb-0 text-sm font-semibold">
                     <li>

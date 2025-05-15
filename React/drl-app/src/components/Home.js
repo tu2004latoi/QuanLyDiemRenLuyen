@@ -19,42 +19,47 @@ const Home = () => {
 
 
 
-    const loadActivities = async () => { //Lấy tất cả activity
+    const loadActivities = async () => {
         try {
             setLoading(true);
             let url = `${endpoints['activities']}?page=${page}&pageSize=${PAGE_SIZE}`;
 
-            let faculId = q.get('faculId'); //Lấy tất cả các faculty
+            let faculId = q.get('faculId');
             if (faculId) {
                 url += `&facultyId=${faculId}`;
             }
 
-            let kw = q.get('kw'); //Tìm kiếm hoạt động theo kw
+            let kw = q.get('kw');
             if (kw) {
                 url += `&kw=${kw}`;
+            }
+
+            let fromPoint = q.get('fromPoint');
+            if (fromPoint) {
+                url += `&fromPoint=${fromPoint}`;
+            }
+
+            let toPoint = q.get('toPoint');
+            if (toPoint) {
+                url += `&toPoint=${toPoint}`;
             }
 
             let res = await Apis.get(url);
             let newActivities = res.data;
 
-            // Gộp dữ liệu
             if (page === 1)
                 setActivities(newActivities);
             else
                 setActivities(prev => [...prev, ...newActivities]);
 
-            // Kiểm tra có còn dữ liệu hay không
-            if (newActivities.length < PAGE_SIZE)
-                setHasMore(false);
-            else
-                setHasMore(true);
-
+            setHasMore(newActivities.length >= PAGE_SIZE);
         } catch (ex) {
             console.error(ex);
         } finally {
             setLoading(false);
         }
     };
+
 
     const loadFacul = async () => { //Lấy tất cả các khoa
         let res = await Apis.get(endpoints['faculties']);
@@ -100,6 +105,8 @@ const Home = () => {
     useEffect(() => {
         setPage(1);
         setActivities([]);
+        setFromPoint(q.get('fromPoint') || '');
+        setToPoint(q.get('toPoint') || '');
         setHasMore(true); // reset lại trạng thái có thể load thêm
     }, [q])
 
@@ -138,15 +145,16 @@ const Home = () => {
 
                 {/* Form tìm kiếm */}
 
-                <form onSubmit={search} className="flex w-full md:w-auto items-center gap-2">
-                    <input value={fromPoint} onChange={e => setFromPoint(e.target.value)} type="number" min="0" placeholder="Điểm MIN" className="border border-gray-300 rounded-md px-4 py-2 w-25 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                    <input value={toPoint} onChange={e => setToPoint(e.target.value)} type="number" min="0" placeholder="Điểm MAX" className="border border-gray-300 rounded-md px-4 py-2 w-25 focus:outline-none focus:ring-2 focus:ring-blue-400" />
-                    <input value={kw} onChange={e => setKw(e.target.value)} type="text" placeholder="Tìm hoạt động" className="border border-gray-300 rounded-md px-4 py-2 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                <form onSubmit={search} className="flex w-full md:w-auto items-center gap-2 justify-end">
+                    <input value={fromPoint} onChange={e => setFromPoint(e.target.value)} type="number" min="0" placeholder="Điểm MIN" className="border border-gray-300 rounded-md px-3 py-2 min-w-[100px] focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    <input value={toPoint} onChange={e => setToPoint(e.target.value)} type="number" min="0" placeholder="Điểm MAX" className="border border-gray-300 rounded-md px-3 py-2 min-w-[100px] focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    <input value={kw} onChange={e => setKw(e.target.value)} type="text" placeholder="Tìm hoạt động" className="border border-gray-300 rounded-md px-4 py-2 w-48 md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-400" />
                     <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition flex items-center gap-2">
                         <FaSearch />
                         Tìm
                     </button>
                 </form>
+
             </div>
 
             {/* Thông báo nếu không có hoạt động */}

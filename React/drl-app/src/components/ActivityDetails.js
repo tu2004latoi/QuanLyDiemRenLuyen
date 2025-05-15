@@ -161,12 +161,6 @@ const ActivityDetail = () => {
                     ))}
                 </div>
 
-
-
-
-
-
-
                 {/* Nhập bình luận */}
                 <form className="space-y-2">
                     <textarea

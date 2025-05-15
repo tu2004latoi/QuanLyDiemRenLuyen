@@ -1,19 +1,30 @@
 import { useEffect, useState } from "react";
 import MySpinner from "./layouts/MySpinner";
 import Apis, { endpoints } from "../configs/Apis";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Button, Col, Form, NavDropdown, Row } from "react-bootstrap";
 
 const Home = () => {
     const [activities, setActivities] = useState([]);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const [faculity, setFaculity] = useState([]);
+    const [kw, setKw] = useState();
+    const [q] = useSearchParams();
 
 
-    const loadActivities = async () => {
+
+    const loadActivities = async () => { //Lấy tất cả activity
         try {
             setLoading(true);
             let url = `${endpoints['activities']}?page=${page}`;
+
+            let faculId = q.get('faculId');
+            if (faculId) {
+                url = `${url}&facultyId=${faculId}`;
+            }
+
             let res = await Apis.get(url);
             setActivities(res.data);
 
@@ -25,16 +36,42 @@ const Home = () => {
         }
     };
 
+    const loadFacul = async () => {
+        let res = await Apis.get(endpoints['faculties']);
+        setFaculity(res.data);
+    }
+
     useEffect(() => {
         loadActivities();
-    }, [page]);
+        loadFacul();
+    }, [page, q]);
 
-    const goToActivityDetail = (activityId) => {
-        navigate(`/activitydetails/${activityId}`); // Điều hướng đến ActivityDetails.js với activityId
+    const search = (e) => {
+        e.preventDefault(); //Chặn nạp trang mặc định
+        navigate(`/?kw=${kw}`);
+    }
+
+    const goToActivityDetail = (activityId) => { // Điều hướng đến ActivityDetails.js với activityId
+        navigate(`/activitydetails/${activityId}`); 
     }
 
     return (
         <>
+            <Form onSubmit={search}>
+                <Row>
+                    <Col>
+                        <Form.Control value={kw} onChange={e => setKw(e.target.value)} type="text" placeholder="Tìm hoạt động" />
+                    </Col>
+                    <Col>
+                        <Button type="submit">Tìm</Button>
+                    </Col>
+                </Row>
+            </Form>
+
+            <NavDropdown title="Khoa" id="basic-nav-dropdown">
+                {faculity.map(f => <Link key={f.id} to={`/?faculId=${f.id}`} className="dropdown-item">{f.name}</Link>)}
+            </NavDropdown>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 py-8 mb-20">
                 {activities.map(a => (
                     <div key={a.id} className="bg-white rounded-2xl shadow p-4 border border-gray-200 transition-transform duration-300 hover:scale-105 flex flex-col">

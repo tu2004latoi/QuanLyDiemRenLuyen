@@ -100,6 +100,12 @@ public class ActivityRepositoryImpl implements ActivityRepository {
         if (params != null) {
             List<jakarta.persistence.criteria.Predicate> predicates = new ArrayList<>();
 
+            // Lọc theo khoa
+            String facultyId = params.get("facultyId");
+            if (facultyId != null && !facultyId.isEmpty()) {
+                predicates.add(b.equal(root.get("faculty").get("id"), Integer.parseInt(facultyId)));
+            }
+
             String kw = params.get("kw");
             if (kw != null && !kw.isEmpty()) {
                 predicates.add(b.like(root.get("name"), String.format("%%%s%%", kw)));
@@ -156,6 +162,12 @@ public class ActivityRepositoryImpl implements ActivityRepository {
         // Nếu có tham số tìm kiếm, áp dụng điều kiện lọc
         if (params != null) {
             List<jakarta.persistence.criteria.Predicate> predicates = new ArrayList<>();
+
+            // Lọc theo khoa
+            String facultyId = params.get("facultyId");
+            if (facultyId != null && !facultyId.isEmpty()) {
+                predicates.add(builder.equal(root.get("faculty").get("id"), Integer.parseInt(facultyId)));
+            }
 
             // Lọc theo từ khóa (tên hoạt động)
             String kw = params.get("kw");

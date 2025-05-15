@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import MySpinner from "./layouts/MySpinner";
 import Apis, { endpoints } from "../configs/Apis";
+import { FaFilter, FaSearch } from "react-icons/fa";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { Alert, Button, Col, Form, NavDropdown, Row } from "react-bootstrap";
 
 const Home = () => {
     const [activities, setActivities] = useState([]);
@@ -12,6 +12,8 @@ const Home = () => {
     const navigate = useNavigate();
     const [faculty, setFaculty] = useState([]);
     const [kw, setKw] = useState();
+    const [fromPoint, setFromPoint] = useState('');
+    const [toPoint, setToPoint] = useState('');
     const [q] = useSearchParams();
     const PAGE_SIZE = 5;
 
@@ -66,8 +68,24 @@ const Home = () => {
 
     const search = (e) => {
         e.preventDefault(); //Chặn nạp trang mặc định
-        navigate(`/?kw=${kw}`);
-    }
+        let query = `/?`;
+
+        if (kw && kw.trim() !== '') {
+            query += `kw=${kw.trim()}&`;
+        }
+
+        if (fromPoint !== '') {
+            query += `fromPoint=${fromPoint}&`;
+        }
+
+        if (toPoint !== '') {
+            query += `toPoint=${toPoint}&`;
+        }
+
+        navigate(query.slice(0, -1)); // loại bỏ dấu & cuối cùng
+        // reset input keyword (tuỳ bạn có muốn)
+        setKw('');
+    };
 
     const goToActivityDetail = (activityId) => { // Điều hướng đến ActivityDetails.js với activityId
         navigate(`/activitydetails/${activityId}`);
@@ -88,28 +106,64 @@ const Home = () => {
 
     return (
         <>
-            <Form onSubmit={search}>
-                <Row>
-                    <Col>
-                        <Form.Control value={kw} onChange={e => setKw(e.target.value)} type="text" placeholder="Tìm hoạt động" />
-                    </Col>
-                    <Col>
-                        <Button type="submit">Tìm</Button>
-                    </Col>
-                </Row>
-            </Form>
+            {/* Tiêu đề chính */}
+            <div className="max-w-6xl mx-auto px-4 py-6 text-center border-b border-gray-300">
+                <h1 className="text-4xl font-extrabold text-blue-700">OU TRAINING POINT</h1>
+                <p className="text-xl font-semibold text-gray-700 mt-1">DANH SÁCH CÁC HOẠT ĐỘNG</p>
+            </div>
 
-            {activities.length === 0 && <Alert variant="info" className="mt-2">Không có hoạt động nào!</Alert>}
-            <NavDropdown title="Khoa" id="basic-nav-dropdown">
-                {faculty.map(f => <Link key={f.id} to={`/?faculId=${f.id}`} className="dropdown-item">{f.name}</Link>)}
-            </NavDropdown>
+            {/* Thanh điều khiển gồm Dropdown và Form tìm kiếm */}
+            <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4 relative">
+                {/* Dropdown Khoa */}
+                <div className="relative max-w-xs">
+                    <details className="group">
+                        <summary className="cursor-pointer select-none bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition flex items-center gap-2 whitespace-nowrap">
+                            <FaFilter className="text-white" />
+                            Lọc theo khoa
+                        </summary>
+
+                        {/* Menu dropdown */}
+                        <ul className="absolute left-0 bg-white border border-gray-200 shadow-md mt-2 rounded-md z-50 max-h-64 overflow-auto w-60 px-2">
+                            {faculty.map(f => (
+                                <li key={f.id}>
+                                    <Link to={`/?faculId=${f.id}`} className="block px-4 py-2 hover:bg-gray-100 text-gray-800 no-underline whitespace-nowrap" style={{ textAlign: 'justify' }}>
+                                        {f.name}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </details>
+                </div>
+
+
+                {/* Form tìm kiếm */}
+
+                <form onSubmit={search} className="flex w-full md:w-auto items-center gap-2">
+                    <input value={fromPoint} onChange={e => setFromPoint(e.target.value)} type="number" min="0" placeholder="Điểm MIN" className="border border-gray-300 rounded-md px-4 py-2 w-25 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    <input value={toPoint} onChange={e => setToPoint(e.target.value)} type="number" min="0" placeholder="Điểm MAX" className="border border-gray-300 rounded-md px-4 py-2 w-25 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    <input value={kw} onChange={e => setKw(e.target.value)} type="text" placeholder="Tìm hoạt động" className="border border-gray-300 rounded-md px-4 py-2 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-400" />
+                    <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition flex items-center gap-2">
+                        <FaSearch />
+                        Tìm
+                    </button>
+                </form>
+            </div>
+
+            {/* Thông báo nếu không có hoạt động */}
+            {activities.length === 0 && (
+                <div className="max-w-6xl mx-auto px-4">
+                    <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-md mb-4">
+                        Không có hoạt động nào!
+                    </div>
+                </div>
+            )}
+
+            {/* Danh sách hoạt động */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 py-8">
                 {activities.map(a => (
                     <div key={a.id} className="bg-white rounded-2xl shadow p-4 border border-gray-200 transition-transform duration-300 hover:scale-105 flex flex-col">
                         <img src={a.image} alt={a.name} className="w-full h-40 object-cover rounded-xl mb-4" />
-                        <h3 className="text-lg font-bold text-blue-600 mb-1">
-                            {a.name}
-                        </h3>
+                        <h3 className="text-lg font-bold text-blue-600 mb-1">{a.name}</h3>
                         <p className="text-sm text-gray-600 mb-1">ID: {a.id}</p>
                         <p className="text-sm text-gray-600 mb-1">
                             Bắt đầu: {new Date(a.startDate).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })}
@@ -127,12 +181,16 @@ const Home = () => {
                 ))}
             </div>
 
+            {/* Nút xem thêm */}
             {hasMore && (
                 <div className="text-center">
-                    <Button onClick={loadMore} className="btn btn-primary mt-2 mb-20">Xem thêm...</Button>
+                    <button onClick={loadMore} className="bg-blue-600 text-white px-6 py-2 rounded-md mt-2 mb-20 hover:bg-blue-700 transition">
+                        Xem thêm...
+                    </button>
                 </div>
             )}
 
+            {/* Spinner khi đang loading */}
             {loading && <MySpinner />}
         </>
     )

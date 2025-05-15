@@ -7,32 +7,45 @@ import { Alert, Button, Col, Form, NavDropdown, Row } from "react-bootstrap";
 const Home = () => {
     const [activities, setActivities] = useState([]);
     const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const [faculty, setFaculty] = useState([]);
     const [kw, setKw] = useState();
     const [q] = useSearchParams();
+    const PAGE_SIZE = 5;
 
 
 
     const loadActivities = async () => { //Lấy tất cả activity
         try {
             setLoading(true);
-            let url = `${endpoints['activities']}?page=${page}`;
+            let url = `${endpoints['activities']}?page=${page}&pageSize=${PAGE_SIZE}`;
 
-            let faculId = q.get('faculId');
+            let faculId = q.get('faculId'); //Lấy tất cả các faculty
             if (faculId) {
-                url = `${url}&facultyId=${faculId}`;
+                url += `&facultyId=${faculId}`;
             }
 
-            let kw = q.get('kw');
+            let kw = q.get('kw'); //Tìm kiếm hoạt động theo kw
             if (kw) {
-                url = `${url}&kw=${kw}`;
+                url += `&kw=${kw}`;
             }
 
             let res = await Apis.get(url);
-            setActivities(res.data);
+            let newActivities = res.data;
 
+            // Gộp dữ liệu
+            if (page === 1)
+                setActivities(newActivities);
+            else
+                setActivities(prev => [...prev, ...newActivities]);
+
+            // Kiểm tra có còn dữ liệu hay không
+            if (newActivities.length < PAGE_SIZE)
+                setHasMore(false);
+            else
+                setHasMore(true);
 
         } catch (ex) {
             console.error(ex);
@@ -41,15 +54,15 @@ const Home = () => {
         }
     };
 
-    const loadFacul = async () => {
+    const loadFacul = async () => { //Lấy tất cả các khoa
         let res = await Apis.get(endpoints['faculties']);
         setFaculty(res.data);
     }
 
-    useEffect(() => {
-        loadActivities();
-        loadFacul();
-    }, [page, q]);
+    const loadMore = () => { //Phân trang
+        if (!loading && page > 0)
+            setPage(page + 1);
+    }
 
     const search = (e) => {
         e.preventDefault(); //Chặn nạp trang mặc định
@@ -59,6 +72,19 @@ const Home = () => {
     const goToActivityDetail = (activityId) => { // Điều hướng đến ActivityDetails.js với activityId
         navigate(`/activitydetails/${activityId}`);
     }
+
+    useEffect(() => {
+        if (page > 0)
+            loadActivities();
+        loadFacul();
+    }, [page, q]);
+
+    useEffect(() => {
+        setPage(1);
+        setActivities([]);
+        setHasMore(true); // reset lại trạng thái có thể load thêm
+    }, [q])
+
 
     return (
         <>
@@ -101,10 +127,11 @@ const Home = () => {
                 ))}
             </div>
 
-            <div className="text-center">
-                <Button className="btn btn-primary mt-2 mb-20">Xem thêm...</Button>
-            </div>
-
+            {hasMore && (
+                <div className="text-center">
+                    <Button onClick={loadMore} className="btn btn-primary mt-2 mb-20">Xem thêm...</Button>
+                </div>
+            )}
 
             {loading && <MySpinner />}
         </>

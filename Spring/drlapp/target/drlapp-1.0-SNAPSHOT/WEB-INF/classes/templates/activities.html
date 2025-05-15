@@ -107,7 +107,7 @@
                         <p class="card-text text-muted small mb-2">
                             <i class="bi bi-calendar-event"></i> <b>Bắt đầu:</b> <span th:text="${#dates.format(a.startDate, 'dd/MM/yyyy HH:mm')}"></span><br>
                             <i class="bi bi-calendar-check"></i> <b>Kết thúc:</b> <span th:text="${#dates.format(a.endDate, 'dd/MM/yyyy HH:mm')}"></span><br>
-                            <i class="bi bi-star-fill text-warning"></i> <b>Điểm:</b> <span th:text="${a.pointValue}"></span>
+                            <i class="bi bi-star-fill text-warning"></i> <b>Điểm:</b> <span th:text="${a.pointValue}"></span><br>
                             <i class="bi bi-star-fill text-warning"></i> <b>Trạng thái</b> <span th:text="${a.status.label}"></span>
                         </p>
                         <a th:href="@{'/activities/' + ${a.id}}" class="btn btn-outline-primary btn-sm w-100 mt-2">

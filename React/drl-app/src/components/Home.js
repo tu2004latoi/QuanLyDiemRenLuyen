@@ -96,6 +96,13 @@ const Home = () => {
         navigate(`/activitydetails/${activityId}`);
     }
 
+    const handleSelect = (e) => { // Đóng dropdown bằng cách tìm phần tử cha <details> và xóa thuộc tính "open"
+        const details = e.target.closest('details');
+        if (details) {
+            details.removeAttribute('open');
+        }
+    };
+
     useEffect(() => {
         if (page > 0)
             loadActivities();
@@ -128,23 +135,19 @@ const Home = () => {
                             <FaFilter className="text-white" />
                             Lọc theo khoa
                         </summary>
-
                         {/* Menu dropdown */}
                         <ul className="absolute left-0 bg-white border border-gray-200 shadow-md mt-2 rounded-md z-50 max-h-64 overflow-auto w-60 px-2">
-                            {faculty.map(f => (
-                                <li key={f.id}>
-                                    <Link to={`/?faculId=${f.id}`} className="block px-4 py-2 hover:bg-gray-100 text-gray-800 no-underline whitespace-nowrap" style={{ textAlign: 'justify' }}>
-                                        {f.name}
-                                    </Link>
-                                </li>
+                            {faculty.map(f => (<li key={f.id}>
+                                <Link to={`/?faculId=${f.id}`} onClick={handleSelect} className="block px-4 py-2 hover:bg-gray-100 text-gray-800 no-underline whitespace-nowrap" style={{ textAlign: 'justify' }}>
+                                    {f.name}
+                                </Link>
+                            </li>
                             ))}
                         </ul>
                     </details>
                 </div>
 
-
                 {/* Form tìm kiếm */}
-
                 <form onSubmit={search} className="flex w-full md:w-auto items-center gap-2 justify-end">
                     <input value={fromPoint} onChange={e => setFromPoint(e.target.value)} type="number" min="0" placeholder="Điểm MIN" className="border border-gray-300 rounded-md px-3 py-2 min-w-[100px] focus:outline-none focus:ring-2 focus:ring-blue-400" />
                     <input value={toPoint} onChange={e => setToPoint(e.target.value)} type="number" min="0" placeholder="Điểm MAX" className="border border-gray-300 rounded-md px-3 py-2 min-w-[100px] focus:outline-none focus:ring-2 focus:ring-blue-400" />
@@ -167,7 +170,7 @@ const Home = () => {
             )}
 
             {/* Danh sách hoạt động */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 py-8">
+            <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 py-8 ${!hasMore ? 'mb-20' : ''}`}>
                 {activities.map(a => (
                     <div key={a.id} className="bg-white rounded-2xl shadow p-4 border border-gray-200 transition-transform duration-300 hover:scale-105 flex flex-col">
                         <img src={a.image} alt={a.name} className="w-full h-40 object-cover rounded-xl mb-4" />
@@ -197,6 +200,7 @@ const Home = () => {
                     </button>
                 </div>
             )}
+
 
             {/* Spinner khi đang loading */}
             {loading && <MySpinner />}

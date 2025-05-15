@@ -92,8 +92,8 @@ public class ApiActivityController {
             }
             
             if (a.getCurrentParticipants() == a.getMaxParticipants()){
-                redirectAttributes.addFlashAttribute("message", "Hoạt động đã đủ số người đăng ký");
-                return new ResponseEntity<>("Hoạt động đã đủ số người đăng ký", HttpStatus.BAD_REQUEST);
+                redirectAttributes.addFlashAttribute("message", "Hoạt động đã đủ số người đăng ký!");
+                return new ResponseEntity<>("Hoạt động đã đủ số người đăng ký!", HttpStatus.BAD_REQUEST);
             }
             
             arSer.registerToActivity(user.getId(), activityId);

@@ -12,7 +12,8 @@ export const endpoints = {
     'faculties': "/faculties",
     'classes': (facultyId) => `/users/faculty/${facultyId}/classes`,
     'likeCount': (activityId) => `/activities/${activityId}/likes/count`,
-    'comments': (activityId) => `/activities/${activityId}/comments`
+    'comments': (activityId) => `/activities/${activityId}/comments`,
+    'activityRegister': "/users/activity-registration",
 }
 
 export const authApis = () => {

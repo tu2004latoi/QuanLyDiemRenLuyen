@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import MySpinner from "./layouts/MySpinner";
 import Apis, { endpoints } from "../configs/Apis";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { Button, Col, Form, NavDropdown, Row } from "react-bootstrap";
+import { Alert, Button, Col, Form, NavDropdown, Row } from "react-bootstrap";
 
 const Home = () => {
     const [activities, setActivities] = useState([]);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const [faculity, setFaculity] = useState([]);
+    const [faculty, setFaculty] = useState([]);
     const [kw, setKw] = useState();
     const [q] = useSearchParams();
 
@@ -25,6 +25,11 @@ const Home = () => {
                 url = `${url}&facultyId=${faculId}`;
             }
 
+            let kw = q.get('kw');
+            if (kw) {
+                url = `${url}&kw=${kw}`;
+            }
+
             let res = await Apis.get(url);
             setActivities(res.data);
 
@@ -38,7 +43,7 @@ const Home = () => {
 
     const loadFacul = async () => {
         let res = await Apis.get(endpoints['faculties']);
-        setFaculity(res.data);
+        setFaculty(res.data);
     }
 
     useEffect(() => {
@@ -52,7 +57,7 @@ const Home = () => {
     }
 
     const goToActivityDetail = (activityId) => { // Điều hướng đến ActivityDetails.js với activityId
-        navigate(`/activitydetails/${activityId}`); 
+        navigate(`/activitydetails/${activityId}`);
     }
 
     return (
@@ -68,11 +73,11 @@ const Home = () => {
                 </Row>
             </Form>
 
+            {activities.length === 0 && <Alert variant="info" className="mt-2">Không có hoạt động nào!</Alert>}
             <NavDropdown title="Khoa" id="basic-nav-dropdown">
-                {faculity.map(f => <Link key={f.id} to={`/?faculId=${f.id}`} className="dropdown-item">{f.name}</Link>)}
+                {faculty.map(f => <Link key={f.id} to={`/?faculId=${f.id}`} className="dropdown-item">{f.name}</Link>)}
             </NavDropdown>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 py-8 mb-20">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 py-8">
                 {activities.map(a => (
                     <div key={a.id} className="bg-white rounded-2xl shadow p-4 border border-gray-200 transition-transform duration-300 hover:scale-105 flex flex-col">
                         <img src={a.image} alt={a.name} className="w-full h-40 object-cover rounded-xl mb-4" />
@@ -86,7 +91,8 @@ const Home = () => {
                         <p className="text-sm text-gray-600 mb-1">
                             Kết thúc: {new Date(a.endDate).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' })}
                         </p>
-                        <p className="text-sm text-gray-600 mb-4">Điểm: {a.pointValue}</p>
+                        <p className="text-sm text-gray-600 mb-1">Điểm: {a.pointValue}</p>
+                        <p className="text-sm text-gray-600 mb-4">Tổ chức: {a.faculty}</p>
                         <div className="flex-grow"></div>
                         <button onClick={() => goToActivityDetail(a.id)} className="w-full text-center text-blue-600 border border-blue-500 rounded-md py-2 hover:bg-blue-50 transition">
                             Chi tiết
@@ -94,6 +100,11 @@ const Home = () => {
                     </div>
                 ))}
             </div>
+
+            <div className="text-center">
+                <Button className="btn btn-primary mt-2 mb-20">Xem thêm...</Button>
+            </div>
+
 
             {loading && <MySpinner />}
         </>

@@ -64,34 +64,36 @@ const Header = () => {
                                 </Link>
                             </>
                         )}
-                    </nav>
-                </div>
 
-                {/* Sidebar Footer: Avatar + Logout or Login/Register */}
-                <div className="flex flex-col space-y-2 mt-6">
-                    {user === null ? (
-                        <>
-                            <Link to="/login" className="flex items-center space-x-2 font-bold text-red-600 hover:bg-red-600 hover:text-white px-4 py-2 rounded transition">
-                                <FaSignInAlt />
-                                <span>Đăng nhập</span>
-                            </Link>
-                            <Link to="/register" className="flex items-center space-x-2 font-bold text-green-600 hover:bg-green-600 hover:text-white px-4 py-2 rounded transition">
-                                <FaUserPlus />
-                                <span>Đăng ký</span>
-                            </Link>
-                        </>
-                    ) : (
-                        <>
-                            <div className="flex flex-col items-center space-y-1">
-                                <img src={user.avatar} alt="avatar" className="w-14 h-14 rounded-full border border-black shadow border-4" />
-                                <span className="text-xl font-semibold">Chào {user.firstName}</span>
-                            </div>
-                            <button className="flex items-center space-x-2 font-bold text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded transition" onClick={() => dispatch({ type: "logout" })}>
-                                <FaSignInAlt /> {/* Add an icon for the logout button */}
-                                <span>Đăng xuất</span>
-                            </button>
-                        </>
-                    )}
+                        {/* Đăng nhập & đăng ký */}
+                        {user === null ? (
+                            <>
+                                <Link to="/login" className="flex items-center gap-2 font-semibold text-green-600 hover:bg-green-200 hover:text-green-800 px-4 py-2 rounded-xl shadow transition-transform hover:translate-x-1 no-underline whitespace-nowrap">
+                                    <FaSignInAlt />
+                                    <span>Đăng nhập</span>
+                                </Link>
+
+                                <Link to="/register" className="flex items-center gap-2 font-semibold text-yellow-500 hover:bg-yellow-200 hover:text-yellow-800 px-4 py-2 rounded-xl shadow transition-transform hover:translate-x-1 no-underline whitespace-nowrap">
+                                    <FaUserPlus />
+                                    <span>Đăng ký</span>
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                <div className="flex flex-col items-center space-y-1 mt-4">
+                                    <img src={user.avatar} alt="avatar" className="w-20 h-20 rounded-full border-4 border-gray-500 shadow" />
+                                    <span className="text-xl font-semibold">Chào {user.firstName}</span>
+                                    <span className="text-sm text-gray-600 capitalize">
+                                        {user.role === "STUDENT" ? "SINH VIÊN" : user.role === "STAFF" ? "CTV SINH VIÊN" : user.role === "ADMIN" ? "QUẢN TRỊ VIÊN" : user.role}
+                                    </span>
+                                </div>
+                                <button className="flex items-center space-x-2 font-bold text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded transition mt-3" onClick={() => dispatch({ type: "logout" })}>
+                                    <FaSignInAlt />
+                                    <span>Đăng xuất</span>
+                                </button>
+                            </>
+                        )}
+                    </nav>
                 </div>
             </div>
         </div>

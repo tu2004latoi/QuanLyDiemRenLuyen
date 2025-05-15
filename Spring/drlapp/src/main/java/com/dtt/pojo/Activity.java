@@ -285,7 +285,21 @@ public class Activity implements Serializable {
 
     // Enum đại diện cho status
     public enum ActivityStatus {
-        UPCOMING, ONGOING, COMPLETED, CANCELLED
+        UPCOMING("Sắp diễn ra"), 
+        ONGOING("Đang diễn ra"), 
+        COMPLETED("Đã kết thúc"), 
+        CANCELLED("Đã hủy");
+        
+        private final String label;
+
+        ActivityStatus(String label) {
+            this.label = label;
+        }
+        
+        public String getLabel(){
+            return label;
+        }
+        
     }
 
     public enum PointType {

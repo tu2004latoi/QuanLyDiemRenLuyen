@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -187,5 +188,13 @@ public class UserServiceImpl implements UserService {
 
     public boolean authenticate(String username, String password) {
         return this.userRepo.authenticate(username, password);
+    }
+
+    @Override
+    public List<User> getUsersExcept(String username) {
+        return this.userRepo.getAllUsers()
+        .stream()
+        .filter(u -> !u.getEmail().equals(username))
+        .collect(Collectors.toList());
     }
 }

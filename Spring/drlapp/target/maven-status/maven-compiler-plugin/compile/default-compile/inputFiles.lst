@@ -1,135 +1,137 @@
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\configs\DispatcherServletInit.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\configs\HibernateConfigs.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\configs\PasswordEncoderExample.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\configs\SecurityWebApplicationInitializer.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\configs\SpringSecurityConfigs.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\configs\ThymeleafConfig.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\configs\WebAppContextConfigs.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ActivityController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ActivityRegistrationController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiActivityController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiActivityRegistrationController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiClassRoomController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiCommentController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiEmailController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiEvidenceController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiExportController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiFacultyController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiLikeController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiMissingReportController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiMyActivityController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiStudentController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiTrainingPointController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiUserController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\BaseController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ClassroomController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\CommentController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\EmailController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\FacultyController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\IndexController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\MissingReportController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\MyActivityController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\StatisticsController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\TrainingPointController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\UserController.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\drlapp\JakartaRestConfiguration.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\drlapp\resources\JakartaEE11Resource.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\filters\JwtFilter.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\formatters\FacultyFormatter.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Activity.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\ActivityRegistrations.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Admin.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Attendance.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\ChatService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\ClassRoom.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Comment.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Department.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Email.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Evidence.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Faculty.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Like.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Message.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\MissingReport.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\NewsFeed.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Report.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\ReportDetail.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Staff.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Student.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\TrainingPoint.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\User.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\ActivityRegistrationRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\ActivityRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\AdminRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\ClassRoomRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\CommentRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\DepartmentRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\EmailRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\EvidenceRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\FacultyRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\ActivityRegistrationRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\ActivityRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\AdminRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\ClassRoomRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\CommentRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\DepartmentRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\EmailRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\EvidenceRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\FacultyRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\LikeRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\MissingReportRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\MyActivityRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\NewsFeedRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\StaffRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\StatisticsRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\StudentRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\TrainingPointRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\UserRepositoryImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\LikeRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\MissingReportRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\MyActivityRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\NewsFeedRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\StaffRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\StatisticsRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\StudentRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\TrainingPointRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\UserRepository.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\security\CustomUserDetails.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\ActivityRegistrationService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\ActivityService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\AdminService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\ClassRoomService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\CommentService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\DepartmentService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\EmailService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\EvidenceService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\ExportService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\FacultyService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\ActivityRegistrationServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\ActivityServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\AdminServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\ClassRoomServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\CommentServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\DepartmentServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\EmailServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\EvidenceServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\ExportServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\FacultyServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\LikeServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\MissingReportServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\MyActivityServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\NewsFeedServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\StaffServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\StatisticsServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\StudentServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\TrainingPointServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\UserServiceImpl.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\LikeService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\MissingReportService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\MyActivityService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\NewsFeedService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\StaffService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\StatisticsService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\StudentService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\TrainingPointService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\UserService.java
-D:\Phat_Trien_Web\BTL\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\utils\JwtUtils.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\configs\DispatcherServletInit.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\configs\HibernateConfigs.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\configs\PasswordEncoderExample.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\configs\SecurityWebApplicationInitializer.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\configs\SpringSecurityConfigs.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\configs\ThymeleafConfig.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\configs\WebAppContextConfigs.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ActivityController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ActivityRegistrationController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiActivityController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiActivityRegistrationController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiClassRoomController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiCommentController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiEmailController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiEvidenceController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiExportController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiFacultyController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiLikeController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiMissingReportController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiMyActivityController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiStudentController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiTrainingPointController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiUserController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\BaseController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ClassroomController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\CommentController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\EmailController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\FacultyController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\IndexController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\MessageController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\MissingReportController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\MyActivityController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\StatisticsController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\TrainingPointController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\UserController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\drlapp\JakartaRestConfiguration.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\drlapp\resources\JakartaEE11Resource.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\filters\JwtFilter.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\formatters\FacultyFormatter.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Activity.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\ActivityRegistrations.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Admin.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Attendance.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\ChatService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\ClassRoom.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Comment.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Department.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Email.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Evidence.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Faculty.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Like.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Message.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\MissingReport.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\NewsFeed.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Report.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\ReportDetail.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Staff.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Student.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\TrainingPoint.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\User.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\ActivityRegistrationRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\ActivityRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\AdminRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\ClassRoomRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\CommentRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\DepartmentRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\EmailRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\EvidenceRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\FacultyRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\ActivityRegistrationRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\ActivityRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\AdminRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\ClassRoomRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\CommentRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\DepartmentRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\EmailRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\EvidenceRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\FacultyRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\LikeRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\MissingReportRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\MyActivityRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\NewsFeedRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\StaffRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\StatisticsRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\StudentRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\TrainingPointRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\UserRepositoryImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\LikeRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\MissingReportRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\MyActivityRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\NewsFeedRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\StaffRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\StatisticsRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\StudentRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\TrainingPointRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\UserRepository.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\scheduler\ActivityStatusScheduler.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\security\CustomUserDetails.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\ActivityRegistrationService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\ActivityService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\AdminService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\ClassRoomService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\CommentService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\DepartmentService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\EmailService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\EvidenceService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\ExportService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\FacultyService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\ActivityRegistrationServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\ActivityServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\AdminServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\ClassRoomServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\CommentServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\DepartmentServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\EmailServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\EvidenceServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\ExportServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\FacultyServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\LikeServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\MissingReportServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\MyActivityServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\NewsFeedServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\StaffServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\StatisticsServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\StudentServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\TrainingPointServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\UserServiceImpl.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\LikeService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\MissingReportService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\MyActivityService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\NewsFeedService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\StaffService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\StatisticsService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\StudentService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\TrainingPointService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\UserService.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\utils\JwtUtils.java

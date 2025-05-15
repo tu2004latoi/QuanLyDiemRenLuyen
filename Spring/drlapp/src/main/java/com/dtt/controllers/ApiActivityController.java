@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -68,7 +69,7 @@ public class ApiActivityController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String destroy(@PathVariable("id") int id, Principal principal) {
         User u = userSer.getUserByUsername(principal.getName());
-        if (u.getRole() == User.Role.STUDENT){
+        if (u.getRole() == User.Role.STUDENT) {
             throw new AccessDeniedException("Sinh viên không được phép xóa");
         }
         this.activityService.deleteActivity(id);
@@ -79,10 +80,22 @@ public class ApiActivityController {
     //Đăng ký hoạt động
     @PostMapping("/activities/{id}")
     public ResponseEntity<String> registerActivity(@PathVariable(value = "id") Integer activityId,
-            Principal principal) {
+            Principal principal, RedirectAttributes redirectAttributes) {
         try {
             String username = principal.getName();
             User user = userSer.getUserByUsername(username);
+            Activity a = this.activityService.getActivityById(activityId);
+            if (a.getStatus() != Activity.ActivityStatus.UPCOMING
+                    && a.getStatus() != Activity.ActivityStatus.ONGOING) {
+                redirectAttributes.addFlashAttribute("message", "Hoạt động không còn mở đăng ký!");
+                return new ResponseEntity<>("Hoạt động không còn mở đăng ký!", HttpStatus.BAD_REQUEST);
+            }
+            
+            if (a.getCurrentParticipants() == a.getMaxParticipants()){
+                redirectAttributes.addFlashAttribute("message", "Hoạt động đã đủ số người đăng ký");
+                return new ResponseEntity<>("Hoạt động đã đủ số người đăng ký", HttpStatus.BAD_REQUEST);
+            }
+            
             arSer.registerToActivity(user.getId(), activityId);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -95,7 +108,7 @@ public class ApiActivityController {
     @PostMapping(path = "/activities", consumes = MediaType.MULTIPART_FORM_DATA)
     public ResponseEntity<Activity> addAcitivity(@ModelAttribute Activity a, Principal principal) {
         User u = userSer.getUserByUsername(principal.getName());
-        if (u.getRole() == User.Role.STUDENT){
+        if (u.getRole() == User.Role.STUDENT) {
             throw new AccessDeniedException("Sinh viên không được phép thêm hoạt động");
         }
         Activity saved = this.activityService.addOrUpdateActivity(a);

@@ -75,9 +75,11 @@ com\dtt\configs\PasswordEncoderExample.class
 com\dtt\repositories\AdminRepository.class
 com\dtt\repositories\DepartmentRepository.class
 com\dtt\services\CommentService.class
+com\dtt\scheduler\ActivityStatusScheduler.class
 com\dtt\services\impl\CommentServiceImpl.class
 com\dtt\drlapp\JakartaRestConfiguration.class
 com\dtt\services\ExportService.class
+com\dtt\controllers\MessageController.class
 com\dtt\services\impl\UserServiceImpl.class
 com\dtt\pojo\TrainingPoint.class
 com\dtt\controllers\ApiActivityRegistrationController.class

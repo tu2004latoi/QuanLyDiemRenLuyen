@@ -12,6 +12,8 @@
         <div class="text-center mb-4">
             <h2 class="fw-bold text-primary" th:text="${activity.name}">Tên hoạt động</h2>
         </div>
+        
+        <div th:if="${message}" class="alert alert-success" th:text="${message}"></div>
 
         <div class="card shadow-lg rounded">
             <div class="row g-0">
@@ -29,7 +31,7 @@
                     <div class="card-body">
                         <h5 class="card-title mb-3">Thông tin chi tiết</h5>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><strong>ID:</strong> <span th:text="${activity.id}"></span></li>
+                            <li class="list-group-item"><strong>Tên hoạt động</strong> <span th:text="${activity.name}"></span></li>
                             <li class="list-group-item"><strong>Mô tả:</strong> <span th:text="${activity.description}"></span></li>
                             <li class="list-group-item"><strong>Ngày bắt đầu:</strong> <span th:text="${#dates.format(activity.startDate, 'dd/MM/yyyy HH:mm')}"></span></li>
                             <li class="list-group-item"><strong>Ngày kết thúc:</strong> <span th:text="${#dates.format(activity.endDate, 'dd/MM/yyyy HH:mm')}"></span></li>
@@ -37,6 +39,7 @@
                             <li class="list-group-item"><strong>Điểm:</strong> <span th:text="${activity.pointValue}"></span></li>
                             <li class="list-group-item"><strong>Khoa tổ chức:</strong> <span th:text="${activity.faculty.name}">Chưa xác định</span></li>
                             <li class="list-group-item"><strong>Người tổ chức:</strong> <span th:text="${activity.organizer.name}">Chưa rõ</span></li>
+                            <li class="list-group-item"><strong>Trạng thái</strong> <span th:text="${activity.status.label}"></span></li>
                         </ul>
                     </div>
                 </div>

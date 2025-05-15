@@ -27,4 +27,5 @@ public interface UserService extends UserDetailsService{
     List<User> getAllStudents();
     public void flush();
     boolean authenticate(String username, String password);
+    List<User> getUsersExcept(String username);
 }

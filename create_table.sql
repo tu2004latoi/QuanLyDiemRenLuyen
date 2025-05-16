@@ -100,6 +100,7 @@ CREATE TABLE activity_registrations (
     user_id INT,
     activity_id INT,
     registration_date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    confirm boolean null,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE CASCADE
 );
@@ -151,11 +152,12 @@ CREATE TABLE evidences (
 CREATE TABLE attendances (
     id INT AUTO_INCREMENT PRIMARY KEY,
     activity_id INT,
-    staff_id INT,
+    user_id INT,
     status ENUM('PRESENT', 'ABSENT', 'LATE'),
     timestamp DATETIME,
+    is_register boolean,
     FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE CASCADE,
-    FOREIGN KEY (staff_id) REFERENCES staff(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 -- 11. Tạo bảng reports

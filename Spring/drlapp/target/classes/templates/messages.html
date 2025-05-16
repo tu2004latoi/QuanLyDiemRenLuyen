@@ -278,10 +278,10 @@
                             <div
                                 th:each="u : ${allUsers}"
                                 class="user-option"
-                                th:data-name="${u.name}"
+                                th:data-name="${u.email}"
                                 onclick="selectUser(this)"
                                 >
-                                <image class="user-avatar" th:src="${u.avatar}" alt="Avatar"/>
+                                <img class="user-avatar" th:src="${u.avatar}" alt="Avatar"/>
                                 <span th:text="${u.name}">Username</span>
                             </div>
                         </div>
@@ -333,6 +333,7 @@
         const db = firebase.firestore();
 
         const sender = /*[[${username}]]*/ "guest";
+        const sender_name = /*[[${name}]]*/ "guest";
         let receiver = "";
         let chatRef;
 
@@ -399,14 +400,28 @@
             const input = document.getElementById("chatInput");
             const text = input.value.trim();
             if (text !== "" && receiver && chatRef) {
+                const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+
+                // 1. Thêm tin nhắn vào messages
                 chatRef.add({
                     sender: sender,
+                    sender_name: sender_name,
                     text: text,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    timestamp: timestamp
                 });
+
+                // 2. Cập nhật thông tin tổng quát của cuộc hội thoại
+                const convId = getConversationId(sender, receiver);
+                db.collection("conversations").doc(convId).set({
+                    participants: [sender, receiver].sort(),
+                    lastMessage: text,
+                    lastTimestamp: timestamp
+                }, { merge: true });
+
                 input.value = "";
             }
         }
+
 
         function handleKeyPress(event) {
             if (event.key === "Enter") {

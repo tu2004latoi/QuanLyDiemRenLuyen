@@ -26,7 +26,8 @@ public class MessageController {
         User u = this.userSer.getUserByUsername(username);
         
         model.addAttribute("allUsers", this.userSer.getUsersExcept(username));
-        model.addAttribute("username", u.getName());
+        model.addAttribute("username", u.getEmail());
+        model.addAttribute("name", u.getName());
         return "messages";
     }
 }

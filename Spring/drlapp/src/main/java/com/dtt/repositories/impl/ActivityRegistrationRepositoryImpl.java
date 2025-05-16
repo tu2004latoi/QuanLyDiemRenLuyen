@@ -111,4 +111,14 @@ public class ActivityRegistrationRepositoryImpl implements ActivityRegistrationR
         }
     }
 
+    @Override
+    public ActivityRegistrations getActivityRegistrationByUserIdAndActivityId(int userId, int activityId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createNamedQuery("ActivityRegistrations.findByUserAndActivity", ActivityRegistrations.class);
+        q.setParameter("userId", userId);
+        q.setParameter("activityId", activityId);
+        
+        return (ActivityRegistrations) q.getSingleResult();
+    }
+
 }

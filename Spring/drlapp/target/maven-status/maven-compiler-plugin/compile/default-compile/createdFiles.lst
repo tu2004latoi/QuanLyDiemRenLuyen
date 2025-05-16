@@ -32,6 +32,7 @@ com\dtt\pojo\Attendance$Status.class
 com\dtt\pojo\Report.class
 com\dtt\services\impl\LikeServiceImpl.class
 com\dtt\repositories\impl\AdminRepositoryImpl.class
+com\dtt\repositories\impl\AttendanceRepositoryImpl.class
 com\dtt\repositories\StaffRepository.class
 com\dtt\controllers\BaseController.class
 com\dtt\services\MyActivityService.class
@@ -53,6 +54,7 @@ com\dtt\controllers\StatisticsController.class
 com\dtt\controllers\ApiActivityController.class
 com\dtt\pojo\ClassRoom.class
 com\dtt\controllers\TrainingPointController.class
+com\dtt\controllers\ApiAttendanceController.class
 com\dtt\pojo\Evidence.class
 com\dtt\pojo\Activity.class
 com\dtt\services\impl\DepartmentServiceImpl.class
@@ -74,6 +76,7 @@ com\dtt\pojo\ReportDetail.class
 com\dtt\configs\PasswordEncoderExample.class
 com\dtt\repositories\AdminRepository.class
 com\dtt\repositories\DepartmentRepository.class
+com\dtt\controllers\ApiAttendanceController$1.class
 com\dtt\services\CommentService.class
 com\dtt\scheduler\ActivityStatusScheduler.class
 com\dtt\services\impl\CommentServiceImpl.class
@@ -81,6 +84,7 @@ com\dtt\drlapp\JakartaRestConfiguration.class
 com\dtt\services\ExportService.class
 com\dtt\controllers\MessageController.class
 com\dtt\services\impl\UserServiceImpl.class
+com\dtt\services\AttendanceService.class
 com\dtt\pojo\TrainingPoint.class
 com\dtt\controllers\ApiActivityRegistrationController.class
 com\dtt\repositories\impl\ActivityRegistrationRepositoryImpl.class
@@ -99,6 +103,7 @@ com\dtt\services\StaffService.class
 com\dtt\repositories\TrainingPointRepository.class
 com\dtt\repositories\impl\NewsFeedRepositoryImpl.class
 com\dtt\services\impl\TrainingPointServiceImpl$1.class
+com\dtt\repositories\AttendanceRepository.class
 com\dtt\repositories\impl\UserRepositoryImpl.class
 com\dtt\controllers\FacultyController.class
 com\dtt\pojo\TrainingPoint$Status.class
@@ -126,6 +131,7 @@ com\dtt\services\impl\MissingReportServiceImpl.class
 com\dtt\services\StatisticsService.class
 com\dtt\controllers\CommentController.class
 com\dtt\repositories\impl\LikeRepositoryImpl.class
+com\dtt\services\impl\AttendanceServiceImpl.class
 com\dtt\controllers\UserController.class
 com\dtt\repositories\StudentRepository.class
 com\dtt\repositories\impl\DepartmentRepositoryImpl.class
@@ -143,4 +149,5 @@ com\dtt\pojo\Faculty.class
 com\dtt\pojo\User.class
 com\dtt\services\ActivityService.class
 com\dtt\repositories\ActivityRepository.class
+com\dtt\controllers\AttendanceController.class
 com\dtt\pojo\ChatService.class

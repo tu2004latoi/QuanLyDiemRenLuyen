@@ -20,4 +20,5 @@ public interface ActivityRegistrationService {
     List<ActivityRegistrations> getAllActivityRegistrations();
     ActivityRegistrations getActivityRegistrationById(int id);
     void deleteActivityRegistrationById(int id);
+    ActivityRegistrations getActivityRegistrationByUserIdAndActivityId(int userId, int activityId);
 }

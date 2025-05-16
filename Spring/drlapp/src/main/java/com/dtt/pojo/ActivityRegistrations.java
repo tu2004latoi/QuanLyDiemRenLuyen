@@ -46,6 +46,17 @@ public class ActivityRegistrations implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registrationDate;
+    
+    @Column(name="confirm")
+    private boolean isConfirm;
+
+    public boolean isIsConfirm() {
+        return isConfirm;
+    }
+
+    public void setIsConfirm(boolean isConfirm) {
+        this.isConfirm = isConfirm;
+    }
 
     public ActivityRegistrations() {
     }

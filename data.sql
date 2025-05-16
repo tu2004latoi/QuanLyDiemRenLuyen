@@ -37,7 +37,7 @@ INSERT INTO staff (id, faculty_id) VALUES
 ('3', '3');
 
 INSERT INTO students (id, student_id, class_room_id, faculty_id) VALUES
-('4','SV00001', '3','3');
+('5','SV00001', '3','3');
 
 INSERT INTO activities (id, name, description, start_date, end_date, location, organizer_id, faculty_id, max_participants, current_participants, point_type, point_value, status, image, active) 
 VALUES 

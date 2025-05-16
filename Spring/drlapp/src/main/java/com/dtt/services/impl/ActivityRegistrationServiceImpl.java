@@ -101,4 +101,9 @@ public class ActivityRegistrationServiceImpl implements ActivityRegistrationServ
         this.arRepo.deleteActivityRegistrationById(id);
     }
 
+    @Override
+    public ActivityRegistrations getActivityRegistrationByUserIdAndActivityId(int userId, int activityId) {
+        return this.arRepo.getActivityRegistrationByUserIdAndActivityId(userId, activityId);
+    }
+
 }

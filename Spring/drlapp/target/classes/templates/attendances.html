@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Danh sách điểm danh</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="base :: styles"></th:block>
+</head>
+<body th:replace="base :: layout(~{::content})">
+<th:block th:fragment="content">
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-primary">📋 Danh sách điểm danh</h2>
+        </div>
+
+        <!-- Thông báo -->
+        <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            <span th:text="${message}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!-- Nhập CSV -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <form th:action="@{/attendances/import}" method="post" enctype="multipart/form-data" class="row g-3 align-items-center">
+                    <div class="col-md-6">
+                        <input class="form-control" type="file" name="file" accept=".csv" required>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-file-upload me-1"></i> Nhập dữ liệu CSV
+                        </button>
+                    </div>
+                </form>
+                <div class="col-md-3">
+                    <button class="btn btn-primary"  th:onclick="'confirmAttendances(' + '\'' + @{/api/attendances/confirm} + '\'' + ')'">
+                        <i class="fas fa-file-upload me-1"></i> Xác nhận điểm danh
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bảng điểm danh -->
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered align-middle shadow-sm">
+                <thead class="table-primary text-center">
+                    <tr>
+                        <th>Email</th>
+                        <th>Hoạt động</th>
+                        <th>Trạng thái</th>
+                        <th>Thời gian</th>
+                        <th>Đăng ký</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="at : ${attendance}">
+                        <td th:text="${at.user.email}"></td>
+                        <td th:text="${at.activity.name}"></td>
+                        <td>
+                            <span th:text="${at.status}" th:classappend="${at.status.name() == 'PRESENT'} ? 'badge bg-success' :
+                                  (${at.status.name() == 'LATE'} ? 'badge bg-warning text-dark' : 'badge bg-secondary')">
+                            </span>
+                        </td>
+                        <td th:text="${#temporals.format(at.timestamp, 'dd/MM/yyyy HH:mm:ss')}"></td>
+                        <td>
+                            <span th:text="${at.isRegister} ? 'Đã đăng ký' : 'Chưa đăng ký'" th:classappend="${at.isRegister} ? 'text-success' : 'text-danger'"></span>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-danger"
+                                    th:onclick="'deleteAttendance(\'' + @{/api/attendances} + '\',' + ${at.id} + ')'">
+                                <i class="fas fa-trash-alt"></i> Xóa
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</th:block>
+</body>
+</html>

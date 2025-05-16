@@ -2,6 +2,7 @@ package com.dtt.pojo;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -10,7 +11,7 @@ import java.util.Date;
     @NamedQuery(name = "Attendance.findAll", query = "SELECT a FROM Attendance a"),
     @NamedQuery(name = "Attendance.findById", query = "SELECT a FROM Attendance a WHERE a.id = :id"),
     @NamedQuery(name = "Attendance.findByActivity", query = "SELECT a FROM Attendance a WHERE a.activity = :activity"),
-    @NamedQuery(name = "Attendance.findByStaff", query = "SELECT a FROM Attendance a WHERE a.staff = :staff"),
+    @NamedQuery(name = "Attendance.findByUser", query = "SELECT a FROM Attendance a WHERE a.user = :user"),
     @NamedQuery(name = "Attendance.findByStatus", query = "SELECT a FROM Attendance a WHERE a.status = :status"),
     @NamedQuery(name = "Attendance.findByTimestamp", query = "SELECT a FROM Attendance a WHERE a.timestamp = :timestamp")
 })
@@ -26,15 +27,26 @@ public class Attendance implements Serializable {
     private Activity activity;
 
     @ManyToOne
-    @JoinColumn(name = "staff_id")
-    private Staff staff;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
 
     @Column(name = "timestamp")
-    private Date timestamp;
+    private LocalDateTime timestamp;
+    
+    @Column(name="is_register")
+    private Boolean isRegister;
+
+    public Boolean getIsRegister() {
+        return isRegister;
+    }
+
+    public void setIsRegister(Boolean isRegister) {
+        this.isRegister = isRegister;
+    }
 
     public enum Status {
         PRESENT, ABSENT, LATE
@@ -56,12 +68,12 @@ public class Attendance implements Serializable {
         this.activity = activity;
     }
 
-    public Staff getStaff() {
-        return staff;
+    public User getUser() {
+        return user;
     }
 
-    public void setStaff(Staff staff) {
-        this.staff = staff;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Status getStatus() {
@@ -72,11 +84,11 @@ public class Attendance implements Serializable {
         this.status = status;
     }
 
-    public Date getTimestamp() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -85,7 +97,7 @@ public class Attendance implements Serializable {
         return "Attendance{" +
                 "id='" + id + '\'' +
                 ", activity=" + activity +
-                ", staff=" + staff +
+                ", user=" + user +
                 ", status=" + status +
                 ", timestamp=" + timestamp +
                 '}';

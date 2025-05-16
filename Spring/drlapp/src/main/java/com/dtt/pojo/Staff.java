@@ -29,10 +29,6 @@ public class Staff implements Serializable {
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
     private Faculty faculty;
 
-    @OneToMany(mappedBy = "staff")
-    @JsonIgnore
-    private Set<Attendance> attendances;
-
     // Getter và Setter
     public Integer getId() {  // Chuyển từ String thành Integer
         return id;
@@ -56,14 +52,6 @@ public class Staff implements Serializable {
 
     public void setFaculty(Faculty faculty) {
         this.faculty = faculty;
-    }
-
-    public Set<Attendance> getAttendances() {
-        return attendances;
-    }
-
-    public void setAttendances(Set<Attendance> attendances) {
-        this.attendances = attendances;
     }
 
     @Override

@@ -17,4 +17,5 @@ public interface ActivityRegistrationRepository {
     boolean isRegistration(int userId, int activityId);
     void deleteActivityRegistrationById(int id);
     ActivityRegistrations getActivityRegistrationById(int id);
+    ActivityRegistrations getActivityRegistrationByUserIdAndActivityId(int userId, int activityId);
 }

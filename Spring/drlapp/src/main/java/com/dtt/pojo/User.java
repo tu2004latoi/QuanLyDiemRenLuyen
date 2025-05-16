@@ -72,6 +72,18 @@ public class User implements Serializable {
     @JsonIgnore
     private Set<Evidence> evidences;
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<Attendance> attendances;
+
+    public Set<Attendance> getAttendances() {
+        return attendances;
+    }
+
+    public void setAttendances(Set<Attendance> attendances) {
+        this.attendances = attendances;
+    }
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<ActivityRegistrations> activityRegistrations = new HashSet<>();

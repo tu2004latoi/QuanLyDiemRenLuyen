@@ -40,6 +40,10 @@ const Header = () => {
                                     <FaExclamationTriangle />
                                     <span>Báo thiếu</span>
                                 </Link>
+                                <Link to="/chat" className="flex items-center gap-2 font-semibold text-blue-700 hover:bg-blue-100 hover:text-blue-900 px-4 py-2 rounded-xl shadow transition-transform hover:translate-x-1 no-underline whitespace-nowrap">
+                                    <FaExclamationTriangle />
+                                    <span>Nhắn tin</span>
+                                </Link>
                             </>
                         )}
 
@@ -61,6 +65,10 @@ const Header = () => {
                                 <Link to="/stats" className="flex items-center gap-2 font-semibold text-blue-700 hover:bg-blue-100 hover:text-blue-900 px-4 py-2 rounded-xl shadow transition-transform hover:translate-x-1 no-underline whitespace-nowrap">
                                     <FaChartBar />
                                     <span>Thống kê</span>
+                                </Link>
+                                <Link to="/chat" className="flex items-center gap-2 font-semibold text-blue-700 hover:bg-blue-100 hover:text-blue-900 px-4 py-2 rounded-xl shadow transition-transform hover:translate-x-1 no-underline whitespace-nowrap">
+                                    <FaExclamationTriangle />
+                                    <span>Nhắn tin</span>
                                 </Link>
                             </>
                         )}

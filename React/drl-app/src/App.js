@@ -20,6 +20,7 @@ import { useEffect, useReducer } from "react";
 import MyUserReducer from "./components/reducers/MyUserReducer";
 import cookie from "react-cookies";
 import { authApis, endpoints } from "./configs/Apis";
+import Chat from "./components/Chat";
 
 
 
@@ -69,6 +70,8 @@ const App = () => {
               <Route path="/missingreport" element={<MissingReport />} />
               <Route path="/registeredactivity" element={<RegisteredActivity />} />
               <Route path="/viewpoint" element={<ViewPoint />} />
+
+              <Route path="/chat" element={<Chat />} />
             </Routes>
           </Container>
 

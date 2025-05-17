@@ -14,6 +14,7 @@ export const endpoints = {
   likes: (activityId) => `/activities/${activityId}/likes`,
   comments: (activityId) => `/activities/${activityId}/comments`,
   activityRegister: "/users/activity-registration",
+  myActivities: "/my-activities"
 };
 
 export const authApis = () => {

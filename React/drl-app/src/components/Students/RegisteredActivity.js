@@ -1,11 +1,51 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+import { authApis, endpoints } from "../../configs/Apis";
 
 const RegisteredActivity = () => {
-    const [activities, setActivities] = useState([
-        { id: 1, name: "Hoạt động thể thao", registeredAt: "2025-05-10 08:00", evidence: null, isSubmitted: false },
-        { id: 2, name: "Hội thảo công nghệ", registeredAt: "2025-05-12 14:30", evidence: null, isSubmitted: false },
-        { id: 3, name: "Khóa học kỹ năng", registeredAt: "2025-05-13 09:15", evidence: null, isSubmitted: false },
-    ]);
+    const [activities, setActivities] = useState([]);
+
+    useEffect(() => {
+        const fetchMyActivities = async () => {
+            try {
+                const res = await authApis().get(endpoints.myActivities);
+                const registrations = res.data;
+
+                const getActivityName = async (activityId) => {
+                    try {
+                        const activityRes = await authApis().get(endpoints.activityDetail(activityId));
+                        return activityRes.data.name;
+                    } catch (err) {
+                        console.error(`Không thể lấy tên hoạt động ${activityId}:`, err);
+                        return `Hoạt động #${activityId}`;
+                    }
+                };
+
+                const data = await Promise.all(
+                    registrations.map(async (item) => {
+                        const date = new Date(item.registrationDate);
+                        const registeredDate = date.toLocaleDateString("vi-VN");
+                        const registeredTime = date.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
+
+                        return {
+                            id: item.id,
+                            name: await getActivityName(item.activityId),
+                            registeredAt: `${registeredDate} ${registeredTime}`,
+                            evidence: item.filePath ? item.filePath : null,
+                            isSubmitted: item.verifyStatus === "APPROVED" || item.verifyStatus === "PENDING"
+                        };
+                    })
+                );
+
+                setActivities(data);
+            } catch (err) {
+                console.error("Lỗi khi tải danh sách hoạt động:", err);
+            }
+        };
+
+        fetchMyActivities();
+    }, []);
+
+
 
     const handleUpload = (event, id) => {
         const file = event.target.files[0];
@@ -21,10 +61,17 @@ const RegisteredActivity = () => {
         setActivities(prev =>
             prev.map(act => act.id === id ? { ...act, isSubmitted: true } : act)
         );
+
+        // TODO: Gửi minh chứng thật sự lên server ở đây
     };
 
-    const handleCancel = (id) => {
-        setActivities(prev => prev.filter(act => act.id !== id));
+    const handleCancel = async (id) => {
+        try {
+            await authApis().delete(`${endpoints.myActivities}/${id}`);
+            setActivities(prev => prev.filter(act => act.id !== id));
+        } catch (err) {
+            console.error("Lỗi khi hủy đăng ký:", err);
+        }
     };
 
     return (
@@ -33,6 +80,7 @@ const RegisteredActivity = () => {
                 <h1 className="text-4xl font-extrabold text-blue-700 drop-shadow-lg">OPEN TRAINING POINT</h1>
                 <p className="text-xl font-semibold text-gray-700 mt-1 drop-shadow-md">CÁC HOẠT ĐỘNG ĐÃ DĂNG KÝ</p>
             </div>
+
             <div className="bg-white shadow-lg rounded-lg overflow-auto">
                 <table className="min-w-full border-collapse border border-gray-300">
                     <thead className="bg-gray-200">
@@ -67,7 +115,7 @@ const RegisteredActivity = () => {
                                             className="block text-sm"
                                         />
                                     </div>
-                                    <div className="flex items-center justify-center space-x-2">
+                                    <div className="flex space-x-2">
                                         <button
                                             className="bg-green-600 text-white text-sm px-3 py-1 rounded hover:bg-green-700"
                                             onClick={() => handleSubmitEvidence(id)}
@@ -75,18 +123,16 @@ const RegisteredActivity = () => {
                                         >
                                             Gửi minh chứng
                                         </button>
-                                        <span className={`text-sm font-semibold ${isSubmitted ? "text-green-700" : "text-red-600"}`}>
-                                            {isSubmitted ? "Đã gửi" : "Chưa gửi"}
-                                        </span>
+                                        <button
+                                            className="bg-red-500 text-white text-sm px-3 py-1 rounded hover:bg-red-600"
+                                            onClick={() => handleCancel(id)}
+                                        >
+                                            Hủy đăng ký
+                                        </button>
                                     </div>
                                 </td>
                                 <td className="py-3 px-4 border text-center">
-                                    <button
-                                        className="bg-red-500 text-white text-sm px-3 py-1 rounded hover:bg-red-600"
-                                        onClick={() => handleCancel(id)}
-                                    >
-                                        Hủy đăng ký
-                                    </button>
+
                                 </td>
                             </tr>
                         ))}

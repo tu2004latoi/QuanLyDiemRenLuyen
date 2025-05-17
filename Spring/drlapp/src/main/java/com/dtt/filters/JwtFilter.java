@@ -15,49 +15,39 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author huu-thanhduong
  */
-public class JwtFilter implements Filter{
+@Component
+public class JwtFilter implements Filter {
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        
-        if (httpRequest.getRequestURI().startsWith(String.format("%s/api/secure", httpRequest.getContextPath())) == true) {
-        
-           
-            String header = httpRequest.getHeader("Authorization");
-            
-            if (header == null || !header.startsWith("Bearer ")) {
-                ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, "Missing or invalid Authorization header.");
-                return;
-            }
-            else {
-                String token = header.substring(7);
-                try {
-                    String username = JwtUtils.validateTokenAndGetUsername(token);
-                    if (username != null) {
-                        httpRequest.setAttribute("username", username);
-                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null, null);
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
-                        
-                        chain.doFilter(request, response);
-                        return;
-                    }
-                } catch (Exception e) {
-                    // Log lỗi
-                }
-            }
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
 
-            ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED, 
-                    "Token không hợp lệ hoặc hết hạn");
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+
+        String header = httpRequest.getHeader("Authorization");
+
+        if (header != null && header.startsWith("Bearer ")) {
+            String token = header.substring(7);
+            try {
+                String username = JwtUtils.validateTokenAndGetUsername(token);
+                if (username != null) {
+                    httpRequest.setAttribute("username", username);
+                    UsernamePasswordAuthenticationToken auth
+                            = new UsernamePasswordAuthenticationToken(username, null, null);
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                }
+            } catch (Exception e) {
+                // Nếu token sai, KHÔNG chặn request, để Security quyết định
+                System.err.println("JWT validation failed: " + e.getMessage());
+            }
         }
-        
+
         chain.doFilter(request, response);
     }
-    
 }

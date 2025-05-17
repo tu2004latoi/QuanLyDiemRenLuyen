@@ -14,6 +14,9 @@ import com.dtt.services.UserService;
 import jakarta.ejb.Local;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -43,9 +46,22 @@ public class ApiLikeController {
     @Autowired
     private LikeService likeSer;
 
-    @GetMapping("/activities/{activityId}/like")
-    public List<Like> ActivityLikesView(@PathVariable("activityId") int activityId) {
-        return this.likeSer.getLikesByActivityId(activityId);
+    @GetMapping("/activities/{activityId}/likes")
+    public ResponseEntity<?> ActivityLikesView(@PathVariable("activityId") int activityId) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        List<Like> likes = this.likeSer.getLikesByActivityId(activityId);
+        List<Map<String, Object>> listData = new ArrayList<>();
+
+        for (Like l : likes) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("id", l.getId());
+            data.put("userId", l.getUser().getId());
+            data.put("activityId", l.getActivity().getId());
+            data.put("createAt", l.getCreatedAt().format(formatter));
+
+            listData.add(data);
+        }
+        return ResponseEntity.ok(listData);
     }
 
     @GetMapping("/activities/{id}/likes/count") //Đếm tổng like của 1 activity
@@ -54,32 +70,37 @@ public class ApiLikeController {
         return new ResponseEntity<>(count, HttpStatus.OK);
     }
 
-    @PostMapping("/activities/{activityId}/like")
+    @PostMapping("/activities/{activityId}/likes")
     public ResponseEntity<?> toggleLike(@PathVariable("activityId") int activityId, Principal principal) {
-        // Lấy user hiện tại từ session
+        System.out.println("Principal: " + (principal != null ? principal.getName() : "null"));
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Chưa đăng nhập");
+        }
         User user = this.userSer.getUserByUsername(principal.getName());
+        if (user == null) {
+            return ResponseEntity.badRequest().body("Người dùng không tồn tại");
+        }
         Activity activity = this.activitySer.getActivityWithLikes(activityId);
-
-        if (user == null || activity == null) {
-            return ResponseEntity.badRequest().body("Không tìm thấy người dùng hoặc hoạt động.");
+        if (activity == null) {
+            return ResponseEntity.badRequest().body("Hoạt động không tồn tại");
         }
-
         Like existingLike = this.likeSer.getLikeByUserIdAndActivityId(user.getId(), activityId);
-
-        if (existingLike != null) {
-            // Đã like -> bỏ like
-            likeSer.deleteLike(existingLike);
-        } else {
-            // Chưa like -> tạo like
-            Like like = new Like();
-            like.setUser(user);
-            like.setActivity(activity);
-            like.setCreatedAt(LocalDateTime.now());
-            this.likeSer.addOrUpdateLike(like);
+        try {
+            if (existingLike != null) {
+                likeSer.deleteLike(existingLike);
+            } else {
+                Like like = new Like();
+                like.setUser(user);
+                like.setActivity(activity);
+                like.setCreatedAt(LocalDateTime.now());
+                this.likeSer.addOrUpdateLike(like);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi server khi xử lý like");
         }
-
-        // Đếm lại tổng like
         long likeCount = this.likeSer.countByActivityId(activityId);
         return ResponseEntity.ok(Map.of("likes", likeCount));
     }
+
 }

@@ -111,7 +111,7 @@
     <script th:inline="javascript">
         function toggleLike(activityId) {
             const api = /*[[@{/api/activities/}]]*/ '';
-            fetch(`${api}${activityId}/like`, {
+            fetch(`${api}${activityId}/likes`, {
                 method: 'POST',
                 credentials: 'include'
             }).then(response => {

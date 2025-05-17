@@ -3,6 +3,7 @@ package com.dtt.pojo;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.io.Serializable;
@@ -85,6 +86,16 @@ public class Activity implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ActivityStatus status;
+
+    @JsonProperty("statusLabel")
+    public String getStatusLabel() {
+        return status != null ? status.getLabel() : null;
+    }
+    
+    @JsonProperty("pointTypeLabel")
+    public String getPointTypeLabel() {
+        return pointType != null ? pointType.getLabel() : null;
+    }
 
     @Column(name = "image")
     private String image;
@@ -285,21 +296,21 @@ public class Activity implements Serializable {
 
     // Enum đại diện cho status
     public enum ActivityStatus {
-        UPCOMING("Sắp diễn ra"), 
-        ONGOING("Đang diễn ra"), 
-        COMPLETED("Đã kết thúc"), 
+        UPCOMING("Sắp diễn ra"),
+        ONGOING("Đang diễn ra"),
+        COMPLETED("Đã kết thúc"),
         CANCELLED("Đã hủy");
-        
+
         private final String label;
 
         ActivityStatus(String label) {
             this.label = label;
         }
-        
-        public String getLabel(){
+
+        public String getLabel() {
             return label;
         }
-        
+
     }
 
     public enum PointType {

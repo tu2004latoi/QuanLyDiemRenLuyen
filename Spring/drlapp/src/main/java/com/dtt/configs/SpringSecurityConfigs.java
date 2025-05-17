@@ -6,6 +6,7 @@ package com.dtt.configs;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.dtt.filters.JwtFilter;
 import jakarta.ws.rs.HttpMethod;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -57,27 +59,28 @@ public class SpringSecurityConfigs {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
             Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(c -> c.disable()).authorizeHttpRequests(requests
-                -> requests
-                        .requestMatchers("/", "/home", "/activities"
-                                , "/activities/**", "/add", "/users", "/emails"
-                                , "/emails/**", "/missing-reports", "/users/**"
-                                , "/classes/**", "faculties/**").hasRole("ADMIN")
-                        .requestMatchers("/training-points", "/statistics").hasAnyRole("ADMIN", "STAFF")
-                        .requestMatchers("/register", "/missing-reports/**", "/my-activities"
-                                , "/users/register", "/users/update", "/faculties", "/classes").permitAll()
-                        .requestMatchers("/api/faculties/**").permitAll()
-                        .requestMatchers("/js/**", "api/classes/**").hasRole("ADMIN")
-                        .requestMatchers("/api/missing-reports/create").permitAll()
-                        .requestMatchers("/api/export", "/api/missing-reports/**").hasAnyRole("ADMIN", "STAFF")
-                        .requestMatchers("/api/**").permitAll()
-                        .anyRequest().authenticated())
-                .formLogin(form -> form.loginPage("/login")
+                .csrf(c -> c.disable()).authorizeHttpRequests(requests -> requests
+                // Ưu tiên các rule cụ thể trước
+                .requestMatchers("/api/secure/profile").permitAll()
+                .requestMatchers("/api/export", "/api/missing-reports/**").hasAnyRole("ADMIN", "STAFF")
+                .requestMatchers("/api/missing-reports/create").permitAll()
+                .requestMatchers("/api/faculties/**").permitAll()
+                .requestMatchers("/api/**").permitAll() // phải để cuối cùng phần /api
+                .requestMatchers("/", "/home", "/activities", "/activities/**", "/add", "/users", "/emails",
+                        "/emails/**", "/missing-reports", "/users/**", "/classes/**", "faculties/**").hasRole("ADMIN")
+                .requestMatchers("/training-points", "/statistics").hasAnyRole("ADMIN", "STAFF")
+                .requestMatchers("/register", "/missing-reports/**", "/my-activities", "/users/register",
+                        "/users/update", "/faculties", "/classes").permitAll()
+                .requestMatchers("/js/**", "api/classes/**").hasRole("ADMIN")
+                .anyRequest().authenticated())
+                .addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class)
+                .formLogin(form -> form
+                .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/", true)
                 .failureUrl("/login?error=true").permitAll())
-                .logout(logout
-                        -> logout.logoutSuccessUrl("/login").permitAll());
+                .logout(logout -> logout.logoutSuccessUrl("/login").permitAll());
+
         return http.build();
     }
 
@@ -95,9 +98,10 @@ public class SpringSecurityConfigs {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000/")); // Gốc hợp lệ (frontend)
+        configuration.setAllowedOrigins(List.of("http://localhost:3000")); // Gốc hợp lệ (frontend)
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Các phương thức HTTP
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Các header được phép
+        configuration.setExposedHeaders(List.of("Authorization"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

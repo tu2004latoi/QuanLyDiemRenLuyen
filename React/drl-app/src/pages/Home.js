@@ -4,7 +4,6 @@ import Apis, { endpoints } from "../configs/Apis";
 import { FaFilter, FaSearch } from "react-icons/fa";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import i18n from "../i18n";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -92,11 +91,11 @@ const Home = () => {
 
   return (
     <>
-      <div className="max-w-6xl mx-auto px-4 py-6 text-center border-b border-gray-300">
+      <div className="max-w-6xl mx-auto px-4 py-6 text-center border-b border-gray-200">
         <h1 className="text-4xl font-extrabold text-blue-700 drop-shadow-lg">
           {t("title")}
         </h1>
-        <p className="text-xl font-semibold text-gray-700 mt-1">
+        <p className="text-xl font-medium text-gray-600 mt-2">
           {t("subtitle")}
         </p>
       </div>
@@ -108,13 +107,13 @@ const Home = () => {
               <FaFilter />
               {t("filterByFaculty")}
             </summary>
-            <ul className="absolute left-0 bg-white border border-gray-200 shadow-md mt-2 rounded-md z-50 max-h-64 overflow-auto w-60 px-2">
+            <ul className="absolute left-0 bg-white border border-gray-200 shadow-xl mt-2 rounded-md z-50 max-h-64 overflow-auto w-60 px-2">
               {faculty.map((f) => (
                 <li key={f.id}>
                   <Link
                     to={`/?faculId=${f.id}`}
                     onClick={handleSelect}
-                    className="block px-4 py-2 hover:bg-gray-100 text-gray-800"
+                    className="block px-4 py-2 hover:bg-gray-100 text-gray-800 rounded-md transition"
                   >
                     {f.name}
                   </Link>
@@ -134,7 +133,7 @@ const Home = () => {
             type="number"
             min="0"
             placeholder={t("minPoint")}
-            className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-400"
+            className="border border-gray-300 rounded-md px-3 py-2 w-24 focus:ring-2 focus:ring-blue-400"
           />
           <input
             value={toPoint}
@@ -142,7 +141,7 @@ const Home = () => {
             type="number"
             min="0"
             placeholder={t("maxPoint")}
-            className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-400"
+            className="border border-gray-300 rounded-md px-3 py-2 w-24 focus:ring-2 focus:ring-blue-400"
           />
           <input
             value={kw}
@@ -163,7 +162,7 @@ const Home = () => {
 
       {activities.length === 0 && !loading && (
         <div className="max-w-6xl mx-auto px-4">
-          <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-md mb-4 text-center">
+          <div className="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-md mb-4 text-center">
             {t("noActivities")}
           </div>
         </div>
@@ -177,7 +176,7 @@ const Home = () => {
         {activities.map((a) => (
           <div
             key={a.id}
-            className="bg-white rounded-2xl shadow-md hover:shadow-lg transition duration-300 p-4 flex flex-col"
+            className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:scale-[1.02] transform transition-transform duration-300 p-4 flex flex-col"
           >
             <img
               src={a.image}
@@ -197,7 +196,7 @@ const Home = () => {
             <p className="text-sm text-gray-600 mb-4">
               {t("faculty")} {a.faculty}
             </p>
-            <div className="flex-grow"></div>
+            <div className="flex-grow" />
             <button
               onClick={() => goToActivityDetail(a.id)}
               className="mt-2 w-full text-blue-600 border border-blue-500 rounded-md py-2 hover:bg-blue-50 transition"
@@ -212,7 +211,7 @@ const Home = () => {
         <div className="text-center mb-20">
           <button
             onClick={loadMore}
-            className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 shadow-lg transition"
           >
             {t("loadMore")}
           </button>

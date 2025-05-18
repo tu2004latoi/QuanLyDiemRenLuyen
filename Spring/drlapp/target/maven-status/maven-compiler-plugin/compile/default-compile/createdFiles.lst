@@ -1,7 +1,6 @@
 com\dtt\pojo\Activity$ActivityStatus.class
 com\dtt\controllers\ApiCommentController.class
 com\dtt\services\impl\FacultyServiceImpl.class
-com\dtt\configs\WebAppContextConfigs.class
 com\dtt\controllers\ApiStudentController.class
 com\dtt\pojo\Message.class
 com\dtt\repositories\MyActivityRepository.class
@@ -111,7 +110,6 @@ com\dtt\utils\JwtUtils.class
 com\dtt\pojo\Evidence$VerifyStatus.class
 com\dtt\repositories\impl\ActivityRepositoryImpl.class
 com\dtt\formatters\FacultyFormatter.class
-com\dtt\controllers\ApiClassRoomController.class
 com\dtt\controllers\ActivityRegistrationController.class
 com\dtt\repositories\impl\MyActivityRepositoryImpl.class
 com\dtt\services\NewsFeedService.class
@@ -150,5 +148,4 @@ com\dtt\pojo\Faculty.class
 com\dtt\pojo\User.class
 com\dtt\services\ActivityService.class
 com\dtt\repositories\ActivityRepository.class
-com\dtt\controllers\AttendanceController.class
 com\dtt\pojo\ChatService.class

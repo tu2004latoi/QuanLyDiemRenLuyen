@@ -53,7 +53,7 @@ const StatisticsFilterForm = ({ onFilter }) => {
           <label className="form-label">Lớp</label>
           <select name="className" className="form-select" value={filters.className} onChange={handleChange}>
             <option value="">-- Chọn lớp --</option>
-            {classes.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+            {classes.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
           </select>
         </div>
         <div className="col-md-4">

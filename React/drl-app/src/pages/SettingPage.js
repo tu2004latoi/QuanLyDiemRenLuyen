@@ -11,34 +11,43 @@ const SettingsPage = () => {
   };
 
   return (
-    <div className="p-6 max-w-xl mx-auto bg-white shadow rounded-xl mt-10">
-      <h2 className="text-2xl font-bold mb-4">{t("settings.title")}</h2>
+    <div className="p-8 max-w-md mx-auto bg-gradient-to-tr from-white to-gray-50 shadow-lg rounded-2xl mt-12">
+      <h2 className="text-3xl font-extrabold mb-6 text-gray-900 tracking-wide">
+        {t("settings.title")}
+      </h2>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         <div>
-          <label className="block text-gray-700 font-medium mb-2">
+          <label className="block text-gray-600 font-semibold mb-3 text-lg">
             {t("settings.language")}
           </label>
-          <div className="flex gap-4">
+          <div className="flex gap-6">
             <button
               onClick={() => changeLanguage("vi")}
-              className={`px-4 py-2 rounded-lg border transition ${
-                i18n.language === "vi"
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-100 text-gray-700"
-              }`}
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl border-2 font-semibold transition 
+                ${
+                  i18n.language === "vi"
+                    ? "bg-blue-600 border-blue-600 text-white shadow-md shadow-blue-300"
+                    : "bg-white border-gray-300 text-gray-700 hover:bg-blue-50 hover:border-blue-400"
+                }`}
+              title="Chọn Tiếng Việt"
+              aria-label="Chọn Tiếng Việt"
             >
-              🇻🇳 Tiếng Việt
+              <span className="text-xl">🇻🇳</span> Tiếng Việt
             </button>
+
             <button
               onClick={() => changeLanguage("en")}
-              className={`px-4 py-2 rounded-lg border transition ${
-                i18n.language === "en"
-                  ? "bg-blue-600 text-white"
-                  : "bg-gray-100 text-gray-700"
-              }`}
+              className={`flex items-center gap-2 px-5 py-3 rounded-xl border-2 font-semibold transition 
+                ${
+                  i18n.language === "en"
+                    ? "bg-blue-600 border-blue-600 text-white shadow-md shadow-blue-300"
+                    : "bg-white border-gray-300 text-gray-700 hover:bg-blue-50 hover:border-blue-400"
+                }`}
+              title="Select English"
+              aria-label="Select English"
             >
-              🇺🇸 English
+              <span className="text-xl">🇺🇸</span> English
             </button>
           </div>
         </div>

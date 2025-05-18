@@ -19,7 +19,9 @@ export const endpoints = {
   csv: "/export/csv",
   pdf: "/export/pdf",
   trainingPoints: "/training-points",
-  myActivities: "/my-activities"
+  myActivities: "/my-activities",
+  students: "/users/students",
+  studentDetails: (studentId) => `/users/students/${studentId}`,
 };
 
 export const authApis = () => {

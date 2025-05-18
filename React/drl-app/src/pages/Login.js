@@ -1,105 +1,116 @@
-import { Alert, Button, Form } from "react-bootstrap";
+import { Alert, Button, Form, Card, Container } from "react-bootstrap";
 import { useContext, useState } from "react";
 import Apis, { authApis, endpoints } from "../configs/Apis";
 import { useNavigate } from "react-router-dom";
 import MySpinner from "../components/layouts/MySpinner";
-import cookie from 'react-cookies';
+import cookie from "react-cookies";
 import { MyDispatcherContext } from "../configs/MyContexts";
 
 const Login = () => {
-    const info = [{
-        title: "Tên đăng nhập",
-        field: "email",
-        type: "email"
-    }, {
-        title: "Mật khẩu",
-        field: "password",
-        type: "password"
-    }];
+  const info = [
+    { title: "Tên đăng nhập", field: "email", type: "email" },
+    { title: "Mật khẩu", field: "password", type: "password" },
+  ];
 
-    const [user, setUser] = useState({}); //Biến set user
+  const [user, setUser] = useState({});
+  const [msg, setMsg] = useState(null);
+  const [selectedRole, setSelectedRole] = useState("");
+  const [loading, setLoading] = useState(false);
+  const nav = useNavigate();
+  const dispatch = useContext(MyDispatcherContext);
 
-    const [msg, setMsg] = useState(null); //Hiển thị lỗi ràng buộc khi đăng nhập
+  const setState = (value, field) => {
+    setUser({ ...user, [field]: value });
+  };
 
-    const [selectedRole, setSelectedRole] = useState(""); //Biến set role
+  const login = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      let res = await Apis.post(endpoints["login"], { ...user });
+      cookie.save("token", res.data.token);
 
-    const [loading, setLoading] = useState(false); //Biến hiển thị đang load dữ liệu
+      let u = await authApis().get(endpoints["current-user"]);
+      const roleMap = {
+        ADMIN: "Quản Trị Viên",
+        STAFF: "CTV sinh viên",
+        STUDENT: "Sinh viên",
+      };
 
-    const nav = useNavigate(); //Hàm điều hướng
+      if (roleMap[u.data.role] !== selectedRole) {
+        setMsg(`Bạn không có quyền đăng nhập với vai trò "${selectedRole}".`);
+        cookie.remove("token");
+        return;
+      }
 
-    const setState = (value, field) => { //Hàm set trạng thái user
-        setUser({ ...user, [field]: value });
-    };
+      dispatch({
+        type: "login",
+        payload: u.data,
+      });
+      nav("/");
+    } catch (ex) {
+      console.error(ex);
+      setMsg("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const dispatch = useContext(MyDispatcherContext);
+  return (
+    <Container className="d-flex justify-content-center align-items-center min-vh-100">
+      <Card
+        className="p-4 shadow rounded-4"
+        style={{ maxWidth: "450px", width: "100%" }}
+      >
+        <div className="text-center mb-4">
+          <h2 className="fw-bold text-primary">Hệ thống quản lý</h2>
+          <h4 className="fw-semibold text-secondary">Điểm rèn luyện</h4>
+          <p className="text-muted small">Đăng nhập để truy cập hệ thống</p>
+        </div>
 
-    const login = async (e) => { //Hàm đăng nhập
-        e.preventDefault();
-        try {
-            setLoading(true);
+        {msg && <Alert variant="danger">{msg}</Alert>}
 
-            // Gửi request đăng nhập
-            let res = await Apis.post(endpoints['login'], { ...user });
-            cookie.save('token', res.data.token);
+        <Form onSubmit={login}>
+          <Form.Group className="mb-3">
+            <Form.Label>Vai trò</Form.Label>
+            <Form.Select
+              value={selectedRole}
+              onChange={(e) => setSelectedRole(e.target.value)}
+              required
+            >
+              <option value="">-- Chọn vai trò --</option>
+              <option value="Sinh viên">Sinh viên</option>
+              <option value="CTV sinh viên">CTV sinh viên</option>
+              <option value="Quản Trị Viên">Quản Trị Viên</option>
+            </Form.Select>
+          </Form.Group>
 
-            // Lấy thông tin user
-            let u = await authApis().get(endpoints['current-user']);
-            console.info(u.data);
+          {info.map((i) => (
+            <Form.Group key={i.field} className="mb-3">
+              <Form.Label>{i.title}</Form.Label>
+              <Form.Control
+                type={i.type}
+                placeholder={i.title}
+                value={user[i.field] || ""}
+                onChange={(e) => setState(e.target.value, i.field)}
+                required
+              />
+            </Form.Group>
+          ))}
 
-            // Kiểm tra role
-            const roleMap = {
-                "ADMIN": "Quản Trị Viên",
-                "STAFF": "CTV sinh viên",
-                "STUDENT": "Sinh viên"
-            };
-
-            if (roleMap[u.data.role] !== selectedRole) {
-                setMsg(`Bạn không có quyền đăng nhập với vai trò "${selectedRole}".`);
-                cookie.remove('token'); // Xóa token nếu sai vai trò
-                return;
-            }
-
-
-            dispatch({
-                "type": "login",
-                "payload": u.data
-            });
-            nav("/");
-        } catch (ex) {
-            console.error(ex);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    return (
-        <>
-            <div className="text-center">
-                <h1 className="text-2xl md:text-3xl font-bold text-blue-800 mb-1">Hệ thống quản lý </h1>
-                <h1 className="text-2xl md:text-3xl font-bold text-blue-800 mb-1">Điểm rèn luyện </h1>
-                <p className="text-sm text-gray-500">Đăng nhập để truy cập hệ thống!</p>
+          {loading ? (
+            <MySpinner />
+          ) : (
+            <div className="d-grid">
+              <Button type="submit" variant="primary">
+                Đăng nhập
+              </Button>
             </div>
-
-            {msg && <Alert variant="danger">{msg}</Alert>}
-            <Form onSubmit={login}>
-                <Form.Select className="mt-2 mb-2" value={selectedRole} onChange={(e) => setSelectedRole(e.target.value)} required>
-                    <option value="">-- Chọn vai trò --</option>
-                    <option value="Sinh viên">Sinh viên</option>
-                    <option value="CTV sinh viên">CTV sinh viên</option>
-                    <option value="Quản Trị Viên">Quản Trị Viên</option>
-                </Form.Select>
-
-                {info.map(i => <Form.Control className="mt-2 mb-1" value={user[i.field]} onChange={e => setState(e.target.value, i.field)}
-                    type={i.type} key={i.field} placeholder={i.title} required />)}
-
-                {loading === true ? <MySpinner /> :
-                    <div className="flex items-center justify-center mt-2 mb-2">
-                        <Button type="submit" variant="success">Đăng nhập</Button>
-                    </div>
-                }
-            </Form>
-        </>
-    );
+          )}
+        </Form>
+      </Card>
+    </Container>
+  );
 };
 
 export default Login;

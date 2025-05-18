@@ -99,7 +99,7 @@ public class SpringSecurityConfigs {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:3000")); // Gốc hợp lệ (frontend)
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Các phương thức HTTP
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")); // Các phương thức HTTP
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Các header được phép
         configuration.setExposedHeaders(List.of("Authorization"));
         configuration.setAllowCredentials(true);

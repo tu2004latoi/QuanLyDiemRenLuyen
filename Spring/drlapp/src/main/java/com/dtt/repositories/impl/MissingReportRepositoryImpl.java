@@ -8,6 +8,8 @@ import com.dtt.pojo.MissingReport;
 import com.dtt.repositories.MissingReportRepository;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class MissingReportRepositoryImpl implements MissingReportRepository{
+public class MissingReportRepositoryImpl implements MissingReportRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
 
@@ -52,31 +55,48 @@ public class MissingReportRepositoryImpl implements MissingReportRepository{
         if (params != null) {
             List<jakarta.persistence.criteria.Predicate> predicates = new ArrayList<>();
 
+            // Join để truy cập thông tin user, student và department
+            Join<?, ?> userJoin = root.join("user", JoinType.LEFT);
+            Join<?, ?> studentJoin = userJoin.join("student", JoinType.LEFT);
+            Join<?, ?> facultyJoin = studentJoin.join("faculty", JoinType.LEFT);
+
             String nameUser = params.get("nameUser");
             if (nameUser != null && !nameUser.isEmpty()) {
-                predicates.add(b.like(root.get("user.name"), String.format("%%%s%%", nameUser)));
+                predicates.add(b.like(userJoin.get("name"), String.format("%%%s%%", nameUser)));
             }
-            
+
             String nameActivity = params.get("nameActivity");
-            if (nameActivity != null && nameActivity.isEmpty()) {
-                predicates.add(b.like(root.get("activity.name"), String.format("%%%s%%", nameActivity)));
+            if (nameActivity != null && !nameActivity.isEmpty()) {
+                predicates.add(b.like(root.get("activity").get("name"), String.format("%%%s%%", nameActivity)));
             }
 
             String fromPoint = params.get("fromPoint");
             if (fromPoint != null && !fromPoint.isEmpty()) {
-                predicates.add(b.greaterThanOrEqualTo(root.get("point"), fromPoint));
+                try {
+                    predicates.add(b.greaterThanOrEqualTo(root.get("point"), Float.parseFloat(fromPoint)));
+                } catch (NumberFormatException e) {
+                    // ignore
+                }
             }
 
             String toPoint = params.get("toPoint");
             if (toPoint != null && !toPoint.isEmpty()) {
-                predicates.add(b.lessThanOrEqualTo(root.get("point"), toPoint));
+                try {
+                    predicates.add(b.lessThanOrEqualTo(root.get("point"), Float.parseFloat(toPoint)));
+                } catch (NumberFormatException e) {
+                    // ignore
+                }
+            }
+
+            String facultyName = params.get("faculty");
+            if (facultyName != null && !facultyName.isEmpty()) {
+                predicates.add(b.equal(facultyJoin.get("name"), facultyName));
             }
 
             q.where(predicates.toArray(new jakarta.persistence.criteria.Predicate[0]));
         }
 
         Query query = s.createQuery(q);
-
         return query.getResultList();
     }
 
@@ -85,8 +105,8 @@ public class MissingReportRepositoryImpl implements MissingReportRepository{
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createNamedQuery("MissingReport.findById", MissingReport.class);
         q.setParameter("id", id);
-        
+
         return (MissingReport) q.getSingleResult();
     }
-    
+
 }

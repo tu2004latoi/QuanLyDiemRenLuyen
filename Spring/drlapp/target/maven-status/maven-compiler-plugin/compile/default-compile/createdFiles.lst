@@ -116,6 +116,7 @@ com\dtt\controllers\ActivityRegistrationController.class
 com\dtt\repositories\impl\MyActivityRepositoryImpl.class
 com\dtt\services\NewsFeedService.class
 com\dtt\controllers\ApiFacultyController.class
+com\dtt\controllers\ApiStatisticsController.class
 com\dtt\filters\JwtFilter.class
 com\dtt\services\impl\ExportServiceImpl.class
 com\dtt\services\impl\StaffServiceImpl.class

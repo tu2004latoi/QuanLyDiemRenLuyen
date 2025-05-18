@@ -34,7 +34,7 @@ public class Evidence implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "training_point_id")
     private TrainingPoint trainingPoint;
 

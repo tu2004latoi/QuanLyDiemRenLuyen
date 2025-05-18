@@ -58,14 +58,20 @@ public class ApiTrainingPointController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         for (TrainingPoint tp : listTrainingPoints) {
-            Map<String, Object> data = Map.of(
-                    "id", tp.getId(),
-                    "userId", tp.getUser().getId(),
-                    "activitityId", tp.getActivity().getId(),
-                    "point", tp.getPoint(),
-                    "dataAwarded", tp.getDateAwarded().format(formatter),
-                    "status", tp.getStatus()
-            );
+            Map<String, Object> data = new HashMap<>();
+            data.put("id", tp.getId());
+            data.put("userId", tp.getUser().getId());
+            data.put("userName", tp.getUser().getName());
+            data.put("userEmail", tp.getUser().getEmail());
+            data.put("activityId", tp.getActivity().getId());
+            data.put("activityName", tp.getActivity().getName());
+            data.put("pointType", tp.getActivity().getPointType().getLabel());
+            data.put("point", tp.getPoint());
+            data.put("evidence", tp.getEvidences().getFilePath());
+            data.put("dataAwarded", tp.getDateAwarded().format(formatter));
+            data.put("status", tp.getStatus());
+            data.put("comfirmBy", tp.getConfirmedBy() == null ? "Chưa xác nhận" : tp.getConfirmedBy().getName());
+
             listData.add(data);
         }
 
@@ -76,15 +82,20 @@ public class ApiTrainingPointController {
     public ResponseEntity<?> getTrainingPoint(@PathVariable("id") int id) {
         TrainingPoint tp = this.tpSer.getTrainingPointById(id);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        Map<String, Object> data = Map.of(
-                "id", tp.getId(),
-                "userId", tp.getUser().getId(),
-                "activitityId", tp.getActivity().getId(),
-                "point", tp.getPoint(),
-                "dataAwarded", tp.getDateAwarded().format(formatter),
-                "status", tp.getStatus()
-        );
-        
+        Map<String, Object> data = new HashMap<>();
+        data.put("id", tp.getId());
+        data.put("userId", tp.getUser().getId());
+        data.put("userName", tp.getUser().getName());
+        data.put("userEmail", tp.getUser().getEmail());
+        data.put("activityId", tp.getActivity().getId());
+        data.put("activityName", tp.getActivity().getName());
+        data.put("pointType", tp.getActivity().getPointType().getLabel());
+        data.put("point", tp.getPoint());
+        data.put("evidence", tp.getEvidences().getFilePath());
+        data.put("dataAwarded", tp.getDateAwarded().format(formatter));
+        data.put("status", tp.getStatus());
+        data.put("comfirmBy", tp.getConfirmedBy() == null ? "Chưa xác nhận" : tp.getConfirmedBy().getName());
+
         return ResponseEntity.ok(data);
     }
 

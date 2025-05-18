@@ -9,6 +9,7 @@ import com.dtt.pojo.MissingReport;
 import com.dtt.pojo.TrainingPoint;
 import com.dtt.pojo.User;
 import com.dtt.services.ActivityService;
+import com.dtt.services.FacultyService;
 import com.dtt.services.MissingReportService;
 import com.dtt.services.TrainingPointService;
 import com.dtt.services.UserService;
@@ -41,9 +42,13 @@ public class MissingReportController {
     @Autowired
     private TrainingPointService tpSer;
     
+    @Autowired
+    private FacultyService facSer;
+    
     @GetMapping("/missing-reports") 
     public String missingReportsView(Model model, @RequestParam Map<String, String> params){
         model.addAttribute("mr", this.mrSer.getMissingReports(params));
+        model.addAttribute("faculties", this.facSer.getAllFaculties());
         
         return "missingReport";
     }

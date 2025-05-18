@@ -51,9 +51,9 @@ public class TrainingPoint implements Serializable {
     @Column(name = "status")
     private Status status;
 
-    @OneToMany(mappedBy = "trainingPoint")
+    @OneToOne(mappedBy = "trainingPoint")
     @JsonIgnore
-    private Set<Evidence> evidences;
+    private Evidence evidences;
 
     @OneToMany(mappedBy = "trainingPoint")
     @JsonIgnore
@@ -122,11 +122,11 @@ public class TrainingPoint implements Serializable {
         this.status = status;
     }
 
-    public Set<Evidence> getEvidences() {
+    public Evidence getEvidences() {
         return evidences;
     }
 
-    public void setEvidences(Set<Evidence> evidences) {
+    public void setEvidences(Evidence evidences) {
         this.evidences = evidences;
     }
 

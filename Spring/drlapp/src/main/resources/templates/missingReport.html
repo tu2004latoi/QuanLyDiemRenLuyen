@@ -44,6 +44,20 @@
                     </div>
                 </div>
 
+                <!-- Khoa -->
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white"><i class="fas fa-university"></i></span>
+                        <select class="form-select" name="faculty">
+                            <option value="">-- Chọn khoa --</option>
+                            <option th:each="f : ${faculties}"
+                                    th:value="${f.name}"
+                                    th:text="${f.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+
                 <!-- Nút tìm kiếm -->
                 <div class="col-12 text-end mt-3">
                     <button type="submit" class="btn btn-primary rounded-pill px-4">
@@ -60,6 +74,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Người dùng báo thiếu</th>
+                            <th>Khoa</th>
                             <th>Hoạt động</th>
                             <th>Điều</th>
                             <th>Điểm</th>
@@ -73,6 +88,7 @@
                         <tr th:each="m : ${mr}">
                             <td th:text="${m.id}"></td>
                             <td th:text="${m.user.name}"></td>
+                            <td th:text="${m.user.role == 'STUDENT' ? m.user.faculty.name : ''}"></td>
                             <td th:text="${m.activity.name}"></td>
                             <td th:text="${m.activity.pointType.label}"></td>
                             <td th:text="${m.point}"></td>

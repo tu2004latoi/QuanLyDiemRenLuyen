@@ -3105,6 +3105,7 @@ ajv@^6.12.2, ajv@^6.12.4, ajv@^6.12.5:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ajv@^8.0.0:
   version "8.17.1"
   resolved "https://registry.npmjs.org/ajv/-/ajv-8.17.1.tgz"
@@ -3126,6 +3127,9 @@ ajv@^8.6.0:
     require-from-string "^2.0.2"
 
 ajv@^8.9.0:
+=======
+ajv@^8.0.0, ajv@^8.6.0, ajv@^8.9.0:
+>>>>>>> 540a89c210c888685fd2fa803565c66155fc2020
 =======
 ajv@^8.0.0, ajv@^8.6.0, ajv@^8.9.0:
 >>>>>>> 540a89c210c888685fd2fa803565c66155fc2020
@@ -5923,6 +5927,7 @@ human-signals@^2.1.0:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 i18next-browser-languagedetector@^8.1.0:
   version "8.1.0"
   resolved "https://registry.npmjs.org/i18next-browser-languagedetector/-/i18next-browser-languagedetector-8.1.0.tgz"
@@ -5951,6 +5956,8 @@ iconv-lite@^0.6.3:
   dependencies:
     safer-buffer ">= 2.1.2 < 3.0.0"
 
+=======
+>>>>>>> 540a89c210c888685fd2fa803565c66155fc2020
 =======
 >>>>>>> 540a89c210c888685fd2fa803565c66155fc2020
 =======

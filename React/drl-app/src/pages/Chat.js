@@ -10,8 +10,10 @@ import {
 } from "firebase/firestore";
 import { db } from "../configs/Firebase";
 import { MyUserContext } from "../configs/MyContexts";
+import { useTranslation } from "react-i18next";
 
 function Chat() {
+  const { t } = useTranslation();
   const [currentUser, setCurrentUser] = useState(null);
   const [chatUsers, setChatUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -129,10 +131,10 @@ function Chat() {
         }}
       >
         <h2 style={{ marginBottom: "15px", fontWeight: "600", color: "#333" }}>
-          Danh sách chat
+          {t("chat.userListTitle")}
         </h2>
         {chatUsers.length === 0 && (
-          <p style={{ color: "#888", fontStyle: "italic" }}>Chưa có tin nhắn</p>
+          <p style={{ color: "#888", fontStyle: "italic" }}>{t("chat.noMessages")}</p>
         )}
         <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
           {chatUsers.map((userEmail) => (
@@ -190,7 +192,7 @@ function Chat() {
               fontStyle: "italic",
             }}
           >
-            Chọn một người để bắt đầu chat
+            {t("chat.selectUserPrompt")}
           </div>
         ) : (
           <>
@@ -204,7 +206,7 @@ function Chat() {
                 color: "#1976d2",
               }}
             >
-              Chat với {selectedUser}
+              {t("chat.chatWith")} {selectedUser}
             </header>
 
             <div
@@ -328,7 +330,7 @@ function Chat() {
                   (e.currentTarget.style.backgroundColor = "#1976d2")
                 }
               >
-                Gửi
+                {t("chat.send")}
               </button>
             </div>
           </>

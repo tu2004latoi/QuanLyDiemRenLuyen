@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
-import MySpinner from "./layouts/MySpinner";
+import MySpinner from "../components/layouts/MySpinner";
 import Apis, { endpoints } from "../configs/Apis";
 import { FaFilter, FaSearch } from "react-icons/fa";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import i18n from "../i18n";
 
 const Home = () => {
+  const { t } = useTranslation();
   const [activities, setActivities] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
@@ -91,10 +94,10 @@ const Home = () => {
     <>
       <div className="max-w-6xl mx-auto px-4 py-6 text-center border-b border-gray-300">
         <h1 className="text-4xl font-extrabold text-blue-700 drop-shadow-lg">
-          OPEN UNIVERSITY TRAINING POINT
+          {t("title")}
         </h1>
         <p className="text-xl font-semibold text-gray-700 mt-1">
-          DANH SÁCH CÁC HOẠT ĐỘNG
+          {t("subtitle")}
         </p>
       </div>
 
@@ -103,7 +106,7 @@ const Home = () => {
           <details className="group">
             <summary className="cursor-pointer select-none bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition flex items-center gap-2">
               <FaFilter />
-              Lọc theo khoa
+              {t("filterByFaculty")}
             </summary>
             <ul className="absolute left-0 bg-white border border-gray-200 shadow-md mt-2 rounded-md z-50 max-h-64 overflow-auto w-60 px-2">
               {faculty.map((f) => (
@@ -130,7 +133,7 @@ const Home = () => {
             onChange={(e) => setFromPoint(e.target.value)}
             type="number"
             min="0"
-            placeholder="Điểm MIN"
+            placeholder={t("minPoint")}
             className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-400"
           />
           <input
@@ -138,14 +141,14 @@ const Home = () => {
             onChange={(e) => setToPoint(e.target.value)}
             type="number"
             min="0"
-            placeholder="Điểm MAX"
+            placeholder={t("maxPoint")}
             className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-400"
           />
           <input
             value={kw}
             onChange={(e) => setKw(e.target.value)}
             type="text"
-            placeholder="Tìm hoạt động"
+            placeholder={t("searchPlaceholder")}
             className="border border-gray-300 rounded-md px-4 py-2 w-48 md:w-64 focus:ring-2 focus:ring-blue-400"
           />
           <button
@@ -153,7 +156,7 @@ const Home = () => {
             className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center gap-2 transition"
           >
             <FaSearch />
-            Tìm
+            {t("searchButton")}
           </button>
         </form>
       </div>
@@ -161,7 +164,7 @@ const Home = () => {
       {activities.length === 0 && !loading && (
         <div className="max-w-6xl mx-auto px-4">
           <div className="bg-blue-100 text-blue-800 px-4 py-2 rounded-md mb-4 text-center">
-            Không có hoạt động nào!
+            {t("noActivities")}
           </div>
         </div>
       )}
@@ -183,19 +186,23 @@ const Home = () => {
             />
             <h3 className="text-lg font-bold text-blue-600 mb-1">{a.name}</h3>
             <p className="text-sm text-gray-600">
-              Bắt đầu: {new Date(a.startDate).toLocaleString("vi-VN")}
+              {t("start")} {new Date(a.startDate).toLocaleString("vi-VN")}
             </p>
             <p className="text-sm text-gray-600">
-              Kết thúc: {new Date(a.endDate).toLocaleString("vi-VN")}
+              {t("end")} {new Date(a.endDate).toLocaleString("vi-VN")}
             </p>
-            <p className="text-sm text-gray-600">Điểm: {a.pointValue}</p>
-            <p className="text-sm text-gray-600 mb-4">Tổ chức: {a.faculty}</p>
+            <p className="text-sm text-gray-600">
+              {t("point")} {a.pointValue}
+            </p>
+            <p className="text-sm text-gray-600 mb-4">
+              {t("faculty")} {a.faculty}
+            </p>
             <div className="flex-grow"></div>
             <button
               onClick={() => goToActivityDetail(a.id)}
               className="mt-2 w-full text-blue-600 border border-blue-500 rounded-md py-2 hover:bg-blue-50 transition"
             >
-              Chi tiết
+              {t("details")}
             </button>
           </div>
         ))}
@@ -207,7 +214,7 @@ const Home = () => {
             onClick={loadMore}
             className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition"
           >
-            Xem thêm...
+            {t("loadMore")}
           </button>
         </div>
       )}

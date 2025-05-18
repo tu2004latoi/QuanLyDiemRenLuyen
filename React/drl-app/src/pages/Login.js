@@ -2,7 +2,7 @@ import { Alert, Button, Form } from "react-bootstrap";
 import { useContext, useState } from "react";
 import Apis, { authApis, endpoints } from "../configs/Apis";
 import { useNavigate } from "react-router-dom";
-import MySpinner from "./layouts/MySpinner";
+import MySpinner from "../components/layouts/MySpinner";
 import cookie from 'react-cookies';
 import { MyDispatcherContext } from "../configs/MyContexts";
 

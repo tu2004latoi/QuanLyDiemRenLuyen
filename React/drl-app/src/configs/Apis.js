@@ -14,6 +14,11 @@ export const endpoints = {
   likes: (activityId) => `/activities/${activityId}/likes`,
   comments: (activityId) => `/activities/${activityId}/comments`,
   activityRegister: "/users/activity-registration",
+  statistics: "/statistics",
+  "classes-by-faculty": (facultyId) => `/users/faculty/${facultyId}/classes`,
+  csv: "/export/csv",
+  pdf: "/export/pdf",
+  trainingPoints: "/training-points",
 };
 
 export const authApis = () => {

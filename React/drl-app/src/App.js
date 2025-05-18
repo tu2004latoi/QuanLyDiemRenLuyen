@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
-import Home from "./components/Home";
-import Register from "./components/Register";
-import Login from "./components/Login";
-import ActivityDetail from "./components/ActivityDetails";
+import Home from "./pages/Home";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import ActivityDetail from "./pages/ActivityDetails";
 import AddActivity from "./components/Staffs/AddActivity";
 import ReportList from "./components/Staffs/ReportList";
 import Stats from "./components/Staffs/Stats";
@@ -20,7 +20,10 @@ import { useEffect, useReducer } from "react";
 import MyUserReducer from "./components/reducers/MyUserReducer";
 import cookie from "react-cookies";
 import { authApis, endpoints } from "./configs/Apis";
-import Chat from "./components/Chat";
+import Chat from "./pages/Chat";
+import StatisticsPage from "./pages/StatisticsPage";
+import TrainingPointsPage from "./pages/TrainingPointsPage";
+import SettingsPage from "./pages/SettingPage";
 
 
 
@@ -60,11 +63,14 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/activitydetails/:activityId" element={<ActivityDetail />} />
+              <Route path="/settings" element={<SettingsPage />} />
               {/* Staff */}
               <Route path="/addactivity" element={<AddActivity />} />
               <Route path="/reportlist" element={<ReportList />} />
               <Route path="/stats" element={<Stats />} />
               <Route path="/viewachievement" element={<ViewAchievement />} />
+              <Route path="/statistics" element={<StatisticsPage />} />
+              <Route path="/training-points" element={<TrainingPointsPage />} />
               {/* Student */}
               <Route path="/activityparticipated" element={<ActivityParticipated />} />
               <Route path="/missingreport" element={<MissingReport />} />

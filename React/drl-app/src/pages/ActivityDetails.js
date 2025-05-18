@@ -10,8 +10,10 @@ import {
 } from "react-icons/fa";
 import { MyUserContext } from "../configs/MyContexts";
 import cookie from "react-cookies";
+import { useTranslation } from "react-i18next"; 
 
 const ActivityDetail = () => {
+  const { t } = useTranslation();  // dùng t() cho i18n
   const { activityId } = useParams();
   const [activity, setActivity] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -56,14 +58,14 @@ const ActivityDetail = () => {
 
   const handleRegister = async () => {
     if (!user) {
-      alert("Vui lòng đăng nhập để đăng ký hoạt động!");
+      alert(t("activityDetails.loginToRegister"));
       return;
     }
 
-    const confirm = window.confirm(
-      `Bạn có muốn đăng ký hoạt động "${activity.name}" không?`
+    const confirmRegister = window.confirm(
+      t("activityDetails.confirmRegister", { activityName: activity.name })
     );
-    if (!confirm) return;
+    if (!confirmRegister) return;
 
     try {
       let res = await Apis.post(endpoints.activityRegister, {
@@ -71,75 +73,71 @@ const ActivityDetail = () => {
         activityId: parseInt(activityId),
       });
 
-      alert(`Đăng ký hoạt động "${activity.name}" thành công!`);
+      alert(t("activityDetails.registerSuccess", { activityName: activity.name }));
       loadActivityDetail();
     } catch (err) {
       console.error(err);
       const msg = err.response?.data;
 
       if (typeof msg === "string" && msg.includes("đã đăng ký")) {
-        alert("Bạn đã đăng ký hoạt động này rồi!");
+        alert(t("activityDetails.alreadyRegistered"));
       } else {
-        alert("Đăng ký thất bại: " + (msg || "Lỗi không xác định"));
+        alert(t("activityDetails.registerFail", { error: msg || "Lỗi không xác định" }));
       }
     }
   };
 
   const handleLike = async () => {
     const token = cookie.load("token");
-    console.log("Token khi gọi like:", token);
     if (!user) {
-      alert("Vui lòng đăng nhập để thích hoạt động!");
+      alert(t("activityDetails.loginToLike"));
       return;
     }
 
     if (!token) {
-      alert("Token không tồn tại, vui lòng đăng nhập lại!");
+      alert(t("activityDetails.tokenMissing"));
       return;
     }
 
     try {
       const api = authApis();
       const res = await api.post(endpoints["likes"](activityId));
-      console.log("Response data:", res.data);
       setLikeCount(res.data.likes);
     } catch (err) {
       console.error("Lỗi khi xử lý like:", err);
       const msg =
         err.response?.data?.message || err.response?.data || err.message;
-      alert("Không thể thực hiện thao tác thích. Chi tiết: " + msg);
+      alert(t("activityDetails.likeFail", { error: msg }));
     }
   };
 
   const handleComment = async (e) => {
     e.preventDefault();
     const token = cookie.load("token");
-    console.log("Token khi gọi comment:", token);
     if (!user) {
-      alert("Vui lòng đăng nhập để bình luận hoạt động!");
+      alert(t("activityDetails.loginToComment"));
       return;
     }
 
     if (!token) {
-      alert("Token không tồn tại, vui lòng đăng nhập lại!");
+      alert(t("activityDetails.tokenMissing"));
       return;
     }
 
     try {
       const api = authApis();
-      const res = await api.post(endpoints["comments"](activityId),{
+      const res = await api.post(endpoints["comments"](activityId), {
         userId: user.id,
         activityId: parseInt(activityId),
         content: commentContent,
       });
       setCommentContent("");
       loadComments();
-      console.log("Response data:", res.data);
     } catch (err) {
       console.error("Lỗi khi xử lý comment:", err);
       const msg =
         err.response?.data?.message || err.response?.data || err.message;
-      alert("Không thể thực hiện thao tác bình luận. Chi tiết: " + msg);
+      alert(t("activityDetails.commentFail", { error: msg }));
     }
   };
 
@@ -149,17 +147,17 @@ const ActivityDetail = () => {
     loadComments();
   }, [activityId]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!activity) return <div>Không tìm thấy hoạt động.</div>;
+  if (loading) return <div>{t("loading") || "Loading..."}</div>;
+  if (!activity) return <div>{t("activityDetails.notFound") || "Không tìm thấy hoạt động."}</div>;
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6 mb-20">
       <div className="max-w-6xl mx-auto px-4 py-6 text-center border-b border-gray-300">
         <h1 className="text-4xl font-extrabold text-blue-700 drop-shadow-lg">
-          OPEN UNIVERSITY TRAINING POINT
+          {t("activityDetails.title")}
         </h1>
         <p className="text-xl font-semibold text-gray-700 mt-1 drop-shadow-md">
-          THÔNG TIN CHI TIẾT HOẠT ĐỘNG
+          {t("activityDetails.subtitle")}
         </p>
       </div>
 
@@ -176,40 +174,36 @@ const ActivityDetail = () => {
         <div className="md:w-3/5 space-y-1">
           <h1 className="text-2xl font-bold mb-2">{activity.name}</h1>
           <p>
-            <span className="font-semibold">Mô tả:</span> {activity.description}
+            <span className="font-semibold">{t("activityDetails.description")}:</span> {activity.description}
           </p>
           <p>
-            <span className="font-semibold">Địa điểm:</span> {activity.location}
+            <span className="font-semibold">{t("activityDetails.location")}:</span> {activity.location}
           </p>
           <p>
-            <span className="font-semibold">Loại điểm:</span>{" "}
-            {activity.pointTypeLabel}
+            <span className="font-semibold">{t("activityDetails.pointType")}:</span> {activity.pointTypeLabel}
           </p>
           <p>
-            <span className="font-semibold">Bắt đầu:</span>{" "}
+            <span className="font-semibold">{t("activityDetails.startDate")}:</span>{" "}
             {new Date(activity.startDate).toLocaleString("vi-VN")}
           </p>
           <p>
-            <span className="font-semibold">Kết thúc:</span>{" "}
+            <span className="font-semibold">{t("activityDetails.endDate")}:</span>{" "}
             {new Date(activity.endDate).toLocaleString("vi-VN")}
           </p>
           <p>
-            <span className="font-semibold">Trạng thái:</span>{" "}
-            {activity.statusLabel}
+            <span className="font-semibold">{t("activityDetails.status")}:</span> {activity.statusLabel}
           </p>
           <p>
-            <span className="font-semibold">Điểm:</span> {activity.pointValue}
+            <span className="font-semibold">{t("activityDetails.point")}:</span> {activity.pointValue}
           </p>
           <p>
-            <span className="font-semibold">Khoa tổ chức:</span>{" "}
-            {activity.faculty}
+            <span className="font-semibold">{t("activityDetails.faculty")}:</span> {activity.faculty}
           </p>
           <p>
-            <span className="font-semibold">Người tổ chức:</span>{" "}
-            {activity.organizer}
+            <span className="font-semibold">{t("activityDetails.organizer")}:</span> {activity.organizer}
           </p>
           <p>
-            <span className="font-semibold">Lượt thích:</span> {likeCount}
+            <span className="font-semibold">{t("activityDetails.likeCount")}:</span> {likeCount}
           </p>
         </div>
       </div>
@@ -221,14 +215,14 @@ const ActivityDetail = () => {
             onClick={() => window.history.back()}
             className="flex items-center gap-2 bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-xl"
           >
-            <FaArrowLeft /> Quay lại
+            <FaArrowLeft /> {t("activityDetails.back")}
           </button>
 
           <button
             onClick={handleLike}
             className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl"
           >
-            <FaThumbsUp /> Thích ({likeCount})
+            <FaThumbsUp /> {t("activityDetails.like")} ({likeCount})
           </button>
         </div>
 
@@ -237,15 +231,15 @@ const ActivityDetail = () => {
             onClick={handleRegister}
             className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl"
           >
-            <FaClipboardList /> Đăng ký
+            <FaClipboardList /> {t("activityDetails.register")}
           </button>
           {user?.role === "STAFF" && (
             <>
               <button className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl">
-                <FaEdit /> Sửa
+                <FaEdit /> {t("activityDetails.edit")}
               </button>
               <button className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl">
-                <FaTrash /> Xóa
+                <FaTrash /> {t("activityDetails.delete")}
               </button>
             </>
           )}
@@ -254,7 +248,7 @@ const ActivityDetail = () => {
 
       {/* Bình luận */}
       <div className="bg-white rounded-2xl shadow p-6 space-y-4">
-        <h2 className="text-xl font-semibold">Bình luận</h2>
+        <h2 className="text-xl font-semibold">{t("activityDetails.comments")}</h2>
 
         <div className="space-y-0 px-4">
           {comments.map((cmt) => (
@@ -262,18 +256,16 @@ const ActivityDetail = () => {
               <div className="flex-shrink-0">
                 <img
                   src={cmt.userAvatar || "/default-avatar.png"}
-                  alt={cmt.userName || "Ẩn danh"}
+                  alt={cmt.userName || t("activityDetails.anonymous")}
                   className="w-10 h-10 rounded-full object-cover border-2 border-black"
                 />
               </div>
               <div className="flex-1 text-sm">
                 <div className="bg-gray-100 p-2 rounded-md">
                   <p className="font-bold text-base mb-1">
-                    {cmt.userName || "Ẩn danh"}
+                    {cmt.userName || t("activityDetails.anonymous")}
                   </p>
-                  <p className="text-gray-700 text-sm leading-tight">
-                    {cmt.content}
-                  </p>
+                  <p className="text-gray-700 text-sm leading-tight">{cmt.content}</p>
                 </div>
               </div>
             </div>
@@ -282,7 +274,7 @@ const ActivityDetail = () => {
 
         <form className="space-y-2">
           <textarea
-            placeholder="Nhập bình luận của bạn..."
+            placeholder={t("activityDetails.enterComment")}
             className="w-full p-3 border rounded-lg resize-none"
             value={commentContent}
             onChange={(e) => setCommentContent(e.target.value)}
@@ -293,7 +285,7 @@ const ActivityDetail = () => {
             onClick={handleComment}
             className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-xl"
           >
-            Gửi bình luận
+            {t("activityDetails.sendComment")}
           </button>
         </form>
       </div>

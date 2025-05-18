@@ -1,0 +1,131 @@
+{
+  "welcome": "Chào mừng",
+  "logout": "Đăng xuất",
+  "profile": "Hồ sơ",
+  "title": "OPEN UNIVERSITY TRAINING POINT",
+  "subtitle": "DANH SÁCH CÁC HOẠT ĐỘNG",
+  "filterByFaculty": "Lọc theo khoa",
+  "minPoint": "Điểm MIN",
+  "maxPoint": "Điểm MAX",
+  "searchPlaceholder": "Tìm hoạt động",
+  "searchButton": "Tìm",
+  "noActivities": "Không có hoạt động nào!",
+  "start": "Bắt đầu:",
+  "end": "Kết thúc:",
+  "point": "Điểm:",
+  "faculty": "Tổ chức:",
+  "details": "Chi tiết",
+  "loadMore": "Xem thêm...",
+  "settings": {
+    "title": "Cài đặt",
+    "language": "Ngôn ngữ"
+  },
+  "appTitle": "OU TRAINING POINT",
+  "nav": {
+    "home": "Trang chủ",
+    "settings": "Cài đặt",
+    "registeredActivity": "Đã đăng ký",
+    "activityParticipated": "Đã tham gia",
+    "viewPoint": "Xem điểm",
+    "missingReport": "Báo thiếu",
+    "chat": "Nhắn tin",
+    "viewAchievement": "Thành tích",
+    "reportList": "Báo thiếu",
+    "addActivity": "Thêm hoạt động",
+    "statistics": "Thống kê",
+    "trainingPoints": "Quản lý điểm",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "logout": "Đăng xuất"
+  },
+  "greeting": "Chào",
+  "roles": {
+    "STUDENT": "SINH VIÊN",
+    "STAFF": "CTV SINH VIÊN",
+    "ADMIN": "QUẢN TRỊ VIÊN"
+  },
+  "trainingPointsPage": {
+    "title": "Danh sách điểm rèn luyện",
+    "search": {
+      "placeholder": {
+        "firstName": "Họ",
+        "lastName": "Tên",
+        "email": "Email",
+        "activityName": "Tên hoạt động"
+      },
+      "button": "Tìm kiếm"
+    },
+    "table": {
+      "headers": {
+        "id": "ID",
+        "fullName": "Họ và tên",
+        "email": "Email",
+        "activityName": "Tên hoạt động",
+        "pointType": "Loại điểm",
+        "point": "Điểm",
+        "time": "Thời gian",
+        "evidence": "Minh chứng",
+        "status": "Trạng thái",
+        "processedBy": "Người dùng xử lý",
+        "actions": "Hành động"
+      },
+      "loading": "Đang tải dữ liệu...",
+      "noData": "Không có dữ liệu",
+      "noEmail": "Chưa có email",
+      "unknownPointType": "Chưa rõ",
+      "noEvidence": "Không có",
+      "unconfirmed": "Chưa xác nhận",
+      "actions": {
+        "confirm": "Confirm",
+        "reject": "Reject"
+      }
+    }
+  },
+  "activityDetails": {
+    "title": "ĐẠI HỌC MỞ TP. HCM - ĐIỂM ĐÀO TẠO",
+    "subtitle": "THÔNG TIN CHI TIẾT HOẠT ĐỘNG",
+    "description": "Mô tả",
+    "location": "Địa điểm",
+    "pointType": "Loại điểm",
+    "startDate": "Bắt đầu",
+    "endDate": "Kết thúc",
+    "status": "Trạng thái",
+    "point": "Điểm",
+    "faculty": "Khoa tổ chức",
+    "organizer": "Người tổ chức",
+    "likeCount": "Lượt thích",
+    "back": "Quay lại",
+    "like": "Thích",
+    "register": "Đăng ký",
+    "edit": "Sửa",
+    "delete": "Xóa",
+    "comments": "Bình luận",
+    "enterComment": "Nhập bình luận của bạn...",
+    "sendComment": "Gửi bình luận",
+    "loginToRegister": "Vui lòng đăng nhập để đăng ký hoạt động!",
+    "confirmRegister": "Bạn có muốn đăng ký hoạt động \"{{activityName}}\" không?",
+    "registerSuccess": "Đăng ký hoạt động \"{{activityName}}\" thành công!",
+    "alreadyRegistered": "Bạn đã đăng ký hoạt động này rồi!",
+    "registerFail": "Đăng ký thất bại: {{error}}",
+    "loginToLike": "Vui lòng đăng nhập để thích hoạt động!",
+    "tokenMissing": "Token không tồn tại, vui lòng đăng nhập lại!",
+    "likeFail": "Không thể thực hiện thao tác thích. Chi tiết: {{error}}",
+    "loginToComment": "Vui lòng đăng nhập để bình luận hoạt động!",
+    "commentFail": "Không thể thực hiện thao tác bình luận. Chi tiết: {{error}}",
+    "anonymous": "Ẩn danh"
+  },
+  "footer": {
+    "support": "Hỗ trợ",
+    "policy": "Chính sách",
+    "contact": "Liên hệ",
+    "copyright": "© 2025 Phòng Công tác Sinh viên - ĐẠI HỌC MỞ TPHCM"
+  },
+  "chat": {
+    "userListTitle": "Danh sách chat",
+    "noMessages": "Chưa có tin nhắn",
+    "selectUserPrompt": "Chọn một người để bắt đầu chat",
+    "chatWith": "Chat với ",
+    "messagePlaceholder": "Nhắn tin cho ",
+    "send": "Gửi"
+  }
+}

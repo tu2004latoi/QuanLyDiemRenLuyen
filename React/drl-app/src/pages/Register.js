@@ -2,7 +2,7 @@ import { Alert, Button, Form } from "react-bootstrap";
 import { useRef, useState } from "react";
 import Apis, { endpoints } from "../configs/Apis";
 import { useNavigate } from "react-router-dom";
-import MySpinner from "./layouts/MySpinner";
+import MySpinner from "../components/layouts/MySpinner";
 import { useEffect } from "react";
 
 const Register = () => {

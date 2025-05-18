@@ -1,0 +1,131 @@
+{
+  "welcome": "Welcome",
+  "logout": "Log out",
+  "profile": "Profile",
+  "title": "OPEN UNIVERSITY TRAINING POINT",
+  "subtitle": "LIST OF ACTIVITIES",
+  "filterByFaculty": "Filter by Faculty",
+  "minPoint": "Min Point",
+  "maxPoint": "Max Point",
+  "searchPlaceholder": "Search activity",
+  "searchButton": "Search",
+  "noActivities": "No activities found!",
+  "start": "Start:",
+  "end": "End:",
+  "point": "Point:",
+  "faculty": "Organized by:",
+  "details": "Details",
+  "loadMore": "Load more...",
+  "settings": {
+    "title": "Settings",
+    "language": "Language"
+  },
+  "appTitle": "OU TRAINING POINT",
+  "nav": {
+    "home": "Home",
+    "settings": "Settings",
+    "registeredActivity": "Registered",
+    "activityParticipated": "Participated",
+    "viewPoint": "View Points",
+    "missingReport": "Missing Report",
+    "chat": "Chat",
+    "viewAchievement": "Achievements",
+    "reportList": "Missing Reports",
+    "addActivity": "Add Activity",
+    "statistics": "Statistics",
+    "trainingPoints": "Manage Points",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  },
+  "greeting": "Hello",
+  "roles": {
+    "STUDENT": "STUDENT",
+    "STAFF": "STUDENT COLLABORATOR",
+    "ADMIN": "ADMINISTRATOR"
+  },
+  "trainingPointsPage": {
+    "title": "Training Points List",
+    "search": {
+      "placeholder": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "activityName": "Activity Name"
+      },
+      "button": "Search"
+    },
+    "table": {
+      "headers": {
+        "id": "ID",
+        "fullName": "Full Name",
+        "email": "Email",
+        "activityName": "Activity Name",
+        "pointType": "Point Type",
+        "point": "Point",
+        "time": "Time",
+        "evidence": "Evidence",
+        "status": "Status",
+        "processedBy": "Processed By",
+        "actions": "Actions"
+      },
+      "loading": "Loading data...",
+      "noData": "No data available",
+      "noEmail": "No email",
+      "unknownPointType": "Unknown",
+      "noEvidence": "No evidence",
+      "unconfirmed": "Unconfirmed",
+      "actions": {
+        "confirm": "Confirm",
+        "reject": "Reject"
+      }
+    }
+  },
+  "activityDetails": {
+    "title": "OPEN UNIVERSITY TRAINING POINT",
+    "subtitle": "ACTIVITY DETAIL INFORMATION",
+    "description": "Description",
+    "location": "Location",
+    "pointType": "Point Type",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "status": "Status",
+    "point": "Point",
+    "faculty": "Faculty",
+    "organizer": "Organizer",
+    "likeCount": "Likes",
+    "back": "Back",
+    "like": "Like",
+    "register": "Register",
+    "edit": "Edit",
+    "delete": "Delete",
+    "comments": "Comments",
+    "enterComment": "Enter your comment...",
+    "sendComment": "Send Comment",
+    "loginToRegister": "Please log in to register for the activity!",
+    "confirmRegister": "Do you want to register for the activity \"{{activityName}}\"?",
+    "registerSuccess": "Successfully registered for \"{{activityName}}\"!",
+    "alreadyRegistered": "You have already registered for this activity!",
+    "registerFail": "Registration failed: {{error}}",
+    "loginToLike": "Please log in to like the activity!",
+    "tokenMissing": "Token missing, please log in again!",
+    "likeFail": "Could not perform like action. Details: {{error}}",
+    "loginToComment": "Please log in to comment on the activity!",
+    "commentFail": "Could not perform comment action. Details: {{error}}",
+    "anonymous": "Anonymous"
+  },
+  "footer": {
+    "support": "Support",
+    "policy": "Policy",
+    "contact": "Contact",
+    "copyright": "© 2025 Student Affairs Office - Ho Chi Minh City Open University"
+  },
+  "chat": {
+    "userListTitle": "Chat List",
+    "noMessages": "No messages yet",
+    "selectUserPrompt": "Select a user to start chatting",
+    "chatWith": "Chat with ",
+    "messagePlaceholder": "Message ",
+    "send": "Send"
+  }
+}

@@ -7,7 +7,6 @@ import Login from "./pages/Login";
 import ActivityDetail from "./pages/ActivityDetails";
 import AddActivity from "./components/Staffs/AddActivity";
 import ReportList from "./components/Staffs/ReportList";
-import Stats from "./components/Staffs/Stats";
 import ViewAchievement from "./components/Staffs/ViewAchievement";
 import ActivityParticipated from "./components/Students/ActivityParticipated";
 import MissingReport from "./components/Students/MissingReport";
@@ -67,7 +66,6 @@ const App = () => {
               {/* Staff */}
               <Route path="/addactivity" element={<AddActivity />} />
               <Route path="/reportlist" element={<ReportList />} />
-              <Route path="/stats" element={<Stats />} />
               <Route path="/viewachievement" element={<ViewAchievement />} />
               <Route path="/statistics" element={<StatisticsPage />} />
               <Route path="/training-points" element={<TrainingPointsPage />} />

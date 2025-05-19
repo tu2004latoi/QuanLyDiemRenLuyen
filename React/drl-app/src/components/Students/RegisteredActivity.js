@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { MyUserContext } from "../../configs/MyContexts";
 import { authApis, endpoints } from "../../configs/Apis";
 
 const RegisteredActivity = () => {
     const [activities, setActivities] = useState([]);
+    const user = useContext(MyUserContext);
 
     useEffect(() => {
         const fetchMyActivities = async () => {
@@ -10,15 +12,22 @@ const RegisteredActivity = () => {
                 const res = await authApis().get(endpoints.myActivities);
                 const registrations = res.data;
 
-                const getActivityName = async (activityId) => {
+                const getActivityInfo = async (activityId) => {
                     try {
-                        const activityRes = await authApis().get(endpoints.activityDetail(activityId));
-                        return activityRes.data.name;
+                        const res = await authApis().get(endpoints.activityDetail(activityId));
+                        return {
+                            name: res.data.name,
+                            point: res.data.pointValue
+                        };
                     } catch (err) {
-                        console.error(`Không thể lấy tên hoạt động ${activityId}:`, err);
-                        return `Hoạt động #${activityId}`;
+                        console.error(`Không thể lấy thông tin hoạt động ${activityId}:`, err);
+                        return {
+                            name: `Hoạt động #${activityId}`,
+                            point: 0
+                        };
                     }
                 };
+
 
                 const data = await Promise.all(
                     registrations.map(async (item) => {
@@ -26,15 +35,20 @@ const RegisteredActivity = () => {
                         const registeredDate = date.toLocaleDateString("vi-VN");
                         const registeredTime = date.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
 
+                        const { name, point } = await getActivityInfo(item.activityId);
+
                         return {
                             id: item.id,
-                            name: await getActivityName(item.activityId),
+                            activityId: item.activityId,
+                            name: name,
+                            point: point,
                             registeredAt: `${registeredDate} ${registeredTime}`,
                             evidence: item.filePath ? item.filePath : null,
                             isSubmitted: item.verifyStatus === "APPROVED" || item.verifyStatus === "PENDING"
                         };
                     })
                 );
+
 
                 setActivities(data);
             } catch (err) {
@@ -52,17 +66,44 @@ const RegisteredActivity = () => {
         if (file) {
             const url = URL.createObjectURL(file);
             setActivities(prev =>
-                prev.map(act => act.id === id ? { ...act, evidence: url } : act)
+                prev.map(act =>
+                    act.id === id ? { ...act, evidence: url, file: file } : act
+                )
             );
         }
     };
 
-    const handleSubmitEvidence = (id) => {
-        setActivities(prev =>
-            prev.map(act => act.id === id ? { ...act, isSubmitted: true } : act)
-        );
+    const handleSubmitEvidence = async (id) => {
+        const activity = activities.find(act => act.id === id);
+        if (!activity || !activity.file) return;
 
-        // TODO: Gửi minh chứng thật sự lên server ở đây
+        console.log({
+            arId: activity.id,
+            userId: user.id,
+            activityId: activity.activityId,
+            point: activity.point,
+            file: activity.file
+        });
+        const formData = new FormData();
+        formData.append("arId", activity.id); // hoặc `activity.arId` nếu có sẵn
+        formData.append("userId", user.id); // đảm bảo bạn đã lưu userId khi đăng nhập
+        formData.append("activityId", activity.activityId); // bạn cần đảm bảo lấy được activityId
+        formData.append("point", activity.point); // hoặc 10, hay lấy từ đâu đó
+        formData.append("file", activity.file);
+
+        try {
+            await authApis().post(endpoints.createTraining, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+
+            setActivities(prev =>
+                prev.map(act => act.id === id ? { ...act, isSubmitted: true } : act)
+            );
+        } catch (err) {
+            console.error("Lỗi khi gửi minh chứng:", err);
+        }
     };
 
     const handleCancel = async (id) => {

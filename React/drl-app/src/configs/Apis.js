@@ -19,6 +19,7 @@ export const endpoints = {
   csv: "/export/csv",
   pdf: "/export/pdf",
   trainingPoints: "/training-points",
+  createTraining: "/training-points/create",
   myActivities: "/my-activities",
   students: "/users/students",
   studentDetails: (studentId) => `/users/students/${studentId}`,

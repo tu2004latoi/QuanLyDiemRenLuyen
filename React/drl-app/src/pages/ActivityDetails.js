@@ -65,17 +65,15 @@ const ActivityDetail = () => {
     const res = await Apis.get(endpoints.activityRegistratons);
     const registrations = res.data;
 
-    // 2. Kiểm tra xem người dùng đã đăng ký hoạt động này chưa
     const hasRegistered = registrations.some(
       (r) => r.activityId === parseInt(activityId) && r.userId === user.id
     );
 
     if (hasRegistered) {
-      alert(t("activityDetails.alreadyRegistered")); // Ví dụ: "Bạn đã đăng ký hoạt động này rồi"
+      alert(t("activityDetails.alreadyRegistered"));
       return;
     }
 
-    // Kiểm tra hết hạn đăng ký trước khi gọi API
     if (activity.endDate) {
       const endTime = new Date(activity.endDate);
       const now = new Date();

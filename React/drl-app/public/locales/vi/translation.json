@@ -36,7 +36,8 @@
     "trainingPoints": "Quản lý điểm",
     "login": "Đăng nhập",
     "register": "Đăng ký",
-    "logout": "Đăng xuất"
+    "logout": "Đăng xuất",
+    "calendar": "Lịch"
   },
   "greeting": "Chào",
   "roles": {

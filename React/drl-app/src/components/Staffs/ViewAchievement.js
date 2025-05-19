@@ -27,11 +27,6 @@ const ViewAchievement = () => {
               <th>Mã SV</th>
               <th>Họ tên</th>
               <th>Email</th>
-              <th>Lớp</th>
-              <th>Đ1</th>
-              <th>Đ2</th>
-              <th>Đ3</th>
-              <th>Đ4</th>
               <th>Tổng điểm</th>
               <th>Xếp loại</th>
               <th>Chi tiết</th>
@@ -43,11 +38,6 @@ const ViewAchievement = () => {
                 <td>{student.studentId}</td>
                 <td className="text-start">{student.studentName}</td>
                 <td>{student.email}</td>
-                <td>{student.classroom}</td>
-                <td>{student.point_1}</td>
-                <td>{student.point_2}</td>
-                <td>{student.point_3}</td>
-                <td>{student.point_4}</td>
                 <td className="fw-bold">{student.totalPoint}</td>
                 <td>
                   <span className="badge bg-info text-dark">
@@ -56,7 +46,7 @@ const ViewAchievement = () => {
                 </td>
                 <td>
                   <Link
-                    to={`/users/students/${student.studentId}`}
+                    to={`/users/students/${student.id}`}
                     className="btn btn-outline-primary btn-sm rounded-pill px-3"
                   >
                     Chi tiết

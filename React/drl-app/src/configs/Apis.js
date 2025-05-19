@@ -22,7 +22,7 @@ export const endpoints = {
   createTraining: "/training-points/create",
   myActivities: "/my-activities",
   students: "/users/students",
-  studentDetails: (studentId) => `/users/students/${studentId}`,
+  studentDetails: (userId) => `/users/students/${userId}`,
   activityRegistratons: "/activity-registrations",
   deleteEvidence: (evidenceId) => `/evidences/${evidenceId}`
 };

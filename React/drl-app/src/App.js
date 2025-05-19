@@ -23,7 +23,8 @@ import Chat from "./pages/Chat";
 import StatisticsPage from "./pages/StatisticsPage";
 import TrainingPointsPage from "./pages/TrainingPointsPage";
 import SettingsPage from "./pages/SettingPage";
-
+import StudentDetailsPage from "./pages/StudentDetailsPage"
+import CalendarPage from "./pages/CalendarPage";
 
 
 const App = () => {
@@ -69,11 +70,13 @@ const App = () => {
               <Route path="/viewachievement" element={<ViewAchievement />} />
               <Route path="/statistics" element={<StatisticsPage />} />
               <Route path="/training-points" element={<TrainingPointsPage />} />
+              <Route path="/users/students/:userId" element={<StudentDetailsPage />} />
               {/* Student */}
               <Route path="/activityparticipated" element={<ActivityParticipated />} />
               <Route path="/missingreport" element={<MissingReport />} />
               <Route path="/registeredactivity" element={<RegisteredActivity />} />
               <Route path="/viewpoint" element={<ViewPoint />} />
+              <Route path="/calendar" element={<CalendarPage />} />
 
               <Route path="/chat" element={<Chat />} />
             </Routes>

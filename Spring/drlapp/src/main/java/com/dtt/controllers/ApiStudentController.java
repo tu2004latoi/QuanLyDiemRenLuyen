@@ -45,6 +45,8 @@ public class ApiStudentController {
             data.put("studentId", s.getStudentId());
             data.put("classroom", s.getClassRoom().getName());
             data.put("facultyId", s.getFaculty().getId());
+            data.put("facultyName", s.getFaculty().getName());
+            data.put("avatar", s.getUser().getAvatar());
             data.put("classify", s.getClassify());
             data.put("point_1", s.getUser().getPoint_1());
             data.put("point_2", s.getUser().getPoint_2());
@@ -68,6 +70,8 @@ public class ApiStudentController {
         data.put("studentId", s.getStudentId());
         data.put("classroom", s.getClassRoom().getName());
         data.put("facultyId", s.getFaculty().getId());
+        data.put("facultyName", s.getFaculty().getName());
+        data.put("avatar", s.getUser().getAvatar());
         data.put("classify", s.getClassify());
         data.put("point_1", s.getUser().getPoint_1());
         data.put("point_2", s.getUser().getPoint_2());

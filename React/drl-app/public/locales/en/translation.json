@@ -36,7 +36,8 @@
     "trainingPoints": "Manage Points",
     "login": "Login",
     "register": "Register",
-    "logout": "Logout"
+    "logout": "Logout",
+    "calendar": "Calendar"
   },
   "greeting": "Hello",
   "roles": {

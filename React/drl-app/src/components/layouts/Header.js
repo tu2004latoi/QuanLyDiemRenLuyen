@@ -14,6 +14,7 @@ import {
   FaSignInAlt,
   FaUserPlus,
   FaComments,
+  FaCalendarAlt
 } from "react-icons/fa";
 import { MyDispatcherContext, MyUserContext } from "../../configs/MyContexts";
 
@@ -60,6 +61,15 @@ const Header = () => {
                 "/settings",
                 <FaClipboardList />,
                 t("nav.settings"),
+                "text-indigo-700",
+                "hover:bg-indigo-100 hover:text-indigo-900"
+              )}
+
+            {user !== null &&
+              navItem(
+                "/calendar",
+                <FaCalendarAlt />,
+                t("nav.calendar"),
                 "text-indigo-700",
                 "hover:bg-indigo-100 hover:text-indigo-900"
               )}

@@ -24,6 +24,7 @@ export const endpoints = {
   students: "/users/students",
   studentDetails: (studentId) => `/users/students/${studentId}`,
   activityRegistratons: "/activity-registrations",
+  deleteEvidence: (evidenceId) => `/evidences/${evidenceId}`
 };
 
 export const authApis = () => {

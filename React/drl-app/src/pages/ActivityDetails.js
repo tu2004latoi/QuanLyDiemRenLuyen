@@ -10,10 +10,10 @@ import {
 } from "react-icons/fa";
 import { MyUserContext } from "../configs/MyContexts";
 import cookie from "react-cookies";
-import { useTranslation } from "react-i18next"; 
+import { useTranslation } from "react-i18next";
 
 const ActivityDetail = () => {
-  const { t } = useTranslation();  // dùng t() cho i18n
+  const { t } = useTranslation(); // dùng t() cho i18n
   const { activityId } = useParams();
   const [activity, setActivity] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -62,27 +62,61 @@ const ActivityDetail = () => {
       return;
     }
 
+    const res = await Apis.get(endpoints.activityRegistratons);
+    const registrations = res.data;
+
+    // 2. Kiểm tra xem người dùng đã đăng ký hoạt động này chưa
+    const hasRegistered = registrations.some(
+      (r) => r.activityId === parseInt(activityId) && r.userId === user.id
+    );
+
+    if (hasRegistered) {
+      alert(t("activityDetails.alreadyRegistered")); // Ví dụ: "Bạn đã đăng ký hoạt động này rồi"
+      return;
+    }
+
+    // Kiểm tra hết hạn đăng ký trước khi gọi API
+    if (activity.endDate) {
+      const endTime = new Date(activity.endDate);
+      const now = new Date();
+
+      if (now > endTime) {
+        alert(t("activityDetails.registrationExpired"));
+        return; // Dừng không gọi API
+      }
+    }
+
     const confirmRegister = window.confirm(
       t("activityDetails.confirmRegister", { activityName: activity.name })
     );
     if (!confirmRegister) return;
 
     try {
-      let res = await Apis.post(endpoints.activityRegister, {
+      await Apis.post(endpoints.activityRegister, {
         userId: user.id,
         activityId: parseInt(activityId),
       });
 
-      alert(t("activityDetails.registerSuccess", { activityName: activity.name }));
+      alert(
+        t("activityDetails.registerSuccess", { activityName: activity.name })
+      );
       loadActivityDetail();
     } catch (err) {
       console.error(err);
-      const msg = err.response?.data;
+      const msg = err.response?.data || "Unknown error";
 
-      if (typeof msg === "string" && msg.includes("đã đăng ký")) {
-        alert(t("activityDetails.alreadyRegistered"));
+      if (typeof msg === "string") {
+        if (msg.includes("đã đăng ký")) {
+          alert(t("activityDetails.alreadyRegistered"));
+        } else if (msg.includes("hết hạn đăng ký")) {
+          alert(t("activityDetails.registrationExpired"));
+        } else if (msg.includes("đủ số lượng")) {
+          alert(t("activityDetails.fullParticipants"));
+        } else {
+          alert(t("activityDetails.registerFail", { error: msg }));
+        }
       } else {
-        alert(t("activityDetails.registerFail", { error: msg || "Lỗi không xác định" }));
+        alert(t("activityDetails.registerFail", { error: "Unknown error" }));
       }
     }
   };
@@ -148,7 +182,10 @@ const ActivityDetail = () => {
   }, [activityId]);
 
   if (loading) return <div>{t("loading") || "Loading..."}</div>;
-  if (!activity) return <div>{t("activityDetails.notFound") || "Không tìm thấy hoạt động."}</div>;
+  if (!activity)
+    return (
+      <div>{t("activityDetails.notFound") || "Không tìm thấy hoạt động."}</div>
+    );
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6 mb-20">
@@ -174,36 +211,62 @@ const ActivityDetail = () => {
         <div className="md:w-3/5 space-y-1">
           <h1 className="text-2xl font-bold mb-2">{activity.name}</h1>
           <p>
-            <span className="font-semibold">{t("activityDetails.description")}:</span> {activity.description}
+            <span className="font-semibold">
+              {t("activityDetails.description")}:
+            </span>{" "}
+            {activity.description}
           </p>
           <p>
-            <span className="font-semibold">{t("activityDetails.location")}:</span> {activity.location}
+            <span className="font-semibold">
+              {t("activityDetails.location")}:
+            </span>{" "}
+            {activity.location}
           </p>
           <p>
-            <span className="font-semibold">{t("activityDetails.pointType")}:</span> {activity.pointTypeLabel}
+            <span className="font-semibold">
+              {t("activityDetails.pointType")}:
+            </span>{" "}
+            {activity.pointTypeLabel}
           </p>
           <p>
-            <span className="font-semibold">{t("activityDetails.startDate")}:</span>{" "}
+            <span className="font-semibold">
+              {t("activityDetails.startDate")}:
+            </span>{" "}
             {new Date(activity.startDate).toLocaleString("vi-VN")}
           </p>
           <p>
-            <span className="font-semibold">{t("activityDetails.endDate")}:</span>{" "}
+            <span className="font-semibold">
+              {t("activityDetails.endDate")}:
+            </span>{" "}
             {new Date(activity.endDate).toLocaleString("vi-VN")}
           </p>
           <p>
-            <span className="font-semibold">{t("activityDetails.status")}:</span> {activity.statusLabel}
+            <span className="font-semibold">
+              {t("activityDetails.status")}:
+            </span>{" "}
+            {activity.statusLabel}
           </p>
           <p>
-            <span className="font-semibold">{t("activityDetails.point")}:</span> {activity.pointValue}
+            <span className="font-semibold">{t("activityDetails.point")}:</span>{" "}
+            {activity.pointValue}
           </p>
           <p>
-            <span className="font-semibold">{t("activityDetails.faculty")}:</span> {activity.faculty}
+            <span className="font-semibold">
+              {t("activityDetails.faculty")}:
+            </span>{" "}
+            {activity.faculty}
           </p>
           <p>
-            <span className="font-semibold">{t("activityDetails.organizer")}:</span> {activity.organizer}
+            <span className="font-semibold">
+              {t("activityDetails.organizer")}:
+            </span>{" "}
+            {activity.organizer}
           </p>
           <p>
-            <span className="font-semibold">{t("activityDetails.likeCount")}:</span> {likeCount}
+            <span className="font-semibold">
+              {t("activityDetails.likeCount")}:
+            </span>{" "}
+            {likeCount}
           </p>
         </div>
       </div>
@@ -248,7 +311,9 @@ const ActivityDetail = () => {
 
       {/* Bình luận */}
       <div className="bg-white rounded-2xl shadow p-6 space-y-4">
-        <h2 className="text-xl font-semibold">{t("activityDetails.comments")}</h2>
+        <h2 className="text-xl font-semibold">
+          {t("activityDetails.comments")}
+        </h2>
 
         <div className="space-y-0 px-4">
           {comments.map((cmt) => (
@@ -265,7 +330,9 @@ const ActivityDetail = () => {
                   <p className="font-bold text-base mb-1">
                     {cmt.userName || t("activityDetails.anonymous")}
                   </p>
-                  <p className="text-gray-700 text-sm leading-tight">{cmt.content}</p>
+                  <p className="text-gray-700 text-sm leading-tight">
+                    {cmt.content}
+                  </p>
                 </div>
               </div>
             </div>

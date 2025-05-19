@@ -112,7 +112,9 @@
     "likeFail": "Could not perform like action. Details: {{error}}",
     "loginToComment": "Please log in to comment on the activity!",
     "commentFail": "Could not perform comment action. Details: {{error}}",
-    "anonymous": "Anonymous"
+    "anonymous": "Anonymous",
+    "registrationExpired": "Registration period for this activity has expired.",
+    "fullParticipants": "The activity has reached the maximum number of participants."
   },
   "footer": {
     "support": "Support",

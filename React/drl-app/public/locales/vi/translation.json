@@ -112,7 +112,9 @@
     "likeFail": "Không thể thực hiện thao tác thích. Chi tiết: {{error}}",
     "loginToComment": "Vui lòng đăng nhập để bình luận hoạt động!",
     "commentFail": "Không thể thực hiện thao tác bình luận. Chi tiết: {{error}}",
-    "anonymous": "Ẩn danh"
+    "anonymous": "Ẩn danh",
+    "registrationExpired": "Đã hết hạn đăng ký hoạt động.",
+    "fullParticipants": "Hoạt động đã đủ số lượng người tham gia."
   },
   "footer": {
     "support": "Hỗ trợ",

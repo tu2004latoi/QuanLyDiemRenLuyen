@@ -23,6 +23,7 @@ export const endpoints = {
   myActivities: "/my-activities",
   students: "/users/students",
   studentDetails: (studentId) => `/users/students/${studentId}`,
+  activityRegistratons: "/activity-registrations",
 };
 
 export const authApis = () => {

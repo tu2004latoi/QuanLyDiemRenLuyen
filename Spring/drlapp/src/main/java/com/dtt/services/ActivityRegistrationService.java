@@ -6,6 +6,7 @@ package com.dtt.services;
 
 import com.dtt.pojo.ActivityRegistrations;
 import java.util.List;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 public interface ActivityRegistrationService {
     ActivityRegistrations addActivityRegistration(ActivityRegistrations ar);
     boolean isRegistration(int userId, int activityId);
-    void registerToActivity(int activityId, int userId);
+    ResponseEntity<?> registerToActivity(int activityId, int userId);
     List<ActivityRegistrations> getAllActivityRegistrations();
     ActivityRegistrations getActivityRegistrationById(int id);
     void deleteActivityRegistrationById(int id);

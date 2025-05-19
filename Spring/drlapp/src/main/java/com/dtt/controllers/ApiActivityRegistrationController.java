@@ -6,10 +6,16 @@ package com.dtt.controllers;
 
 import com.dtt.pojo.ActivityRegistrations;
 import com.dtt.services.ActivityRegistrationService;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,5 +49,24 @@ public class ApiActivityRegistrationController {
         int activityId = payload.get("activityId");
         this.arSer.registerToActivity(userId, activityId);
         return null;
+    }
+    
+    @GetMapping("/activity-registrations")
+    public ResponseEntity<?> activityRegistrationView(){
+        List<ActivityRegistrations> activityRegistrations = this.arSer.getAllActivityRegistrations();
+        List<Map<String, Object>> listData = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        for (ActivityRegistrations ar : activityRegistrations){
+            Map<String, Object> data = new HashMap<>();
+            data.put("id", ar.getId());
+            data.put("userId", ar.getUser().getId());
+            data.put("activityId", ar.getActivity().getId());
+            data.put("registrationDate", ar.getRegistrationDate().format(formatter));
+            data.put("isConfirm", ar.isIsConfirm());
+            
+            listData.add(data);
+        }
+        
+        return ResponseEntity.ok(listData);
     }
 }

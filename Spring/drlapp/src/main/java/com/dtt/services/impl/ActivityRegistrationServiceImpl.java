@@ -14,8 +14,12 @@ import com.dtt.repositories.TrainingPointRepository;
 import com.dtt.repositories.UserRepository;
 import com.dtt.services.ActivityRegistrationService;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 /**
@@ -33,7 +37,7 @@ public class ActivityRegistrationServiceImpl implements ActivityRegistrationServ
 
     @Autowired
     private UserRepository userRepo;
-    
+
     @Autowired
     private TrainingPointRepository tpRepo;
 
@@ -48,7 +52,7 @@ public class ActivityRegistrationServiceImpl implements ActivityRegistrationServ
     }
 
     @Override
-    public void registerToActivity(int userId, int activityId) {
+    public ResponseEntity<?> registerToActivity(int userId, int activityId) {
         Activity a = activityRepo.getActivityById(activityId);
         User u = userRepo.getUserById(userId);
         if (a == null) {
@@ -57,11 +61,26 @@ public class ActivityRegistrationServiceImpl implements ActivityRegistrationServ
 
         if (a.getMaxParticipants() != null
                 && a.getCurrentParticipants() >= a.getMaxParticipants()) {
-            throw new RuntimeException("Đã đủ số lượng người tham gia");
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Đã đủ số lượng người tham gia");
         }
 
         if (!arRepo.isRegistration(userId, activityId)) {
-            throw new RuntimeException("Bạn đã đăng ký hoạt động này");
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Bạn đã đăng ký hoạt động này");
+        }
+
+        Date endDate = a.getEndDate();
+        LocalDateTime endLocalDateTime = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        System.out.println("End time from DB: " + endLocalDateTime);
+        System.out.println("Current time: " + LocalDateTime.now());
+        System.out.println("Is end time after now? " + endLocalDateTime.isAfter(LocalDateTime.now()));
+        if (!endLocalDateTime.isAfter(LocalDateTime.now())) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Đã hết hạn đăng ký hoạt động");
         }
 
         ActivityRegistrations ar = new ActivityRegistrations();
@@ -70,7 +89,7 @@ public class ActivityRegistrationServiceImpl implements ActivityRegistrationServ
         ar.setRegistrationDate(LocalDateTime.now());
 
         arRepo.addActivityRegistration(ar);
-        
+
 //        TrainingPoint t = new TrainingPoint();
 //        t.setUser(u);
 //        t.setActivity(a);
@@ -80,10 +99,10 @@ public class ActivityRegistrationServiceImpl implements ActivityRegistrationServ
 //        t.setConfirmedBy(null);
 //        
 //        tpRepo.addOrUpdateTrainingPoint(t);
-
         // Tăng số người tham gia và cập nhật
         a.setCurrentParticipants(a.getCurrentParticipants() + 1);
         activityRepo.addOrUpdateActivity(a);
+        return ResponseEntity.ok("Đăng ký thành công");
     }
 
     @Override

@@ -8,7 +8,6 @@ import ActivityDetail from "./pages/ActivityDetails";
 import AddActivity from "./components/Staffs/AddActivity";
 import ReportList from "./components/Staffs/ReportList";
 import ViewAchievement from "./components/Staffs/ViewAchievement";
-import ActivityParticipated from "./components/Students/ActivityParticipated";
 import RegisteredActivity from "./components/Students/RegisteredActivity";
 import ViewPoint from "./components/Students/ViewPoint";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -71,7 +70,6 @@ const App = () => {
               <Route path="/training-points" element={<TrainingPointsPage />} />
               <Route path="/users/students/:userId" element={<StudentDetailsPage />} />
               {/* Student */}
-              <Route path="/activityparticipated" element={<ActivityParticipated />} />
               <Route path="/registeredactivity" element={<RegisteredActivity />} />
               <Route path="/viewpoint" element={<ViewPoint />} />
               <Route path="/calendar" element={<CalendarPage />} />

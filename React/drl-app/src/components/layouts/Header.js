@@ -81,11 +81,6 @@ const Header = () => {
                   <FaClipboardCheck />,
                   t("nav.registeredActivity")
                 )}
-                {navItem(
-                  "/activityparticipated",
-                  <FaCheckCircle />,
-                  t("nav.activityParticipated")
-                )}
                 {navItem("/viewpoint", <FaStar />, t("nav.viewPoint"))}
                 {navItem(
                   "/chat",

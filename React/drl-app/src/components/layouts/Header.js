@@ -88,13 +88,6 @@ const Header = () => {
                 )}
                 {navItem("/viewpoint", <FaStar />, t("nav.viewPoint"))}
                 {navItem(
-                  "/missingreport",
-                  <FaExclamationTriangle />,
-                  t("nav.missingReport"),
-                  "text-red-600",
-                  "hover:bg-red-100 hover:text-red-800"
-                )}
-                {navItem(
                   "/chat",
                   <FaComments />,
                   t("nav.chat"),

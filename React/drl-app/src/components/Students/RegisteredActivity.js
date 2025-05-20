@@ -70,7 +70,7 @@ const RegisteredActivity = () => {
       const url = URL.createObjectURL(file);
       setActivities((prev) =>
         prev.map((act) =>
-          act.id === id ? { ...act, evidence: url, file, hasSentEvidence: false } : act
+          act.id === id ? { ...act, evidence: url, file } : act
         )
       );
     }
@@ -132,6 +132,30 @@ const RegisteredActivity = () => {
     }
   };
 
+  const handleReportMissing = async (id) => {
+    const activity = activities.find((act) => act.id === id);
+    if (!activity || !activity.file) return;
+
+    const formData = new FormData();
+    formData.append("arId", activity.id);
+    formData.append("userId", user.id);
+    formData.append("activityId", activity.activityId);
+    formData.append("point", activity.point);
+    formData.append("file", activity.file);
+
+    try {
+      await authApis().post(endpoints.reportMissing, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      // Gửi thành công -> cập nhật lại trạng thái giao diện
+      await fetchMyActivities();
+    } catch (err) {
+      console.error("Lỗi khi báo thiếu minh chứng:", err);
+    }
+  };
+
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="max-w-6xl mx-auto px-4 py-6 text-center border-b border-gray-300">
@@ -162,10 +186,10 @@ const RegisteredActivity = () => {
                 name,
                 registeredAt,
                 evidence,
-                isSubmitted,
                 verifyStatus,
                 hasSentEvidence,
                 evidenceId,
+                file,
               }) => (
                 <tr key={id} className="hover:bg-gray-50">
                   <td className="py-3 px-4 border">{id}</td>
@@ -181,7 +205,7 @@ const RegisteredActivity = () => {
                             className="w-16 h-16 object-cover rounded hover:opacity-80 transition"
                           />
                         </a>
-                        {verifyStatus !== "APPROVED" && evidenceId && (
+                        {verifyStatus !== "APPROVED" && evidenceId && !file && (
                           <button
                             className="flex items-center gap-1 bg-red-500 text-white text-sm px-3 py-1 rounded hover:bg-red-700 transition"
                             onClick={() => handleDeleteEvidence(evidenceId)}
@@ -214,7 +238,8 @@ const RegisteredActivity = () => {
                           {hasSentEvidence ? (
                             <button
                               className="bg-yellow-600 text-white text-sm px-3 py-1 rounded hover:bg-yellow-700"
-                              disabled
+                              onClick={() => handleReportMissing(id)}
+                              disabled={!evidence}
                             >
                               Báo thiếu
                             </button>

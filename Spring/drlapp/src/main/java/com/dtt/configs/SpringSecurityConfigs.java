@@ -62,8 +62,8 @@ public class SpringSecurityConfigs {
                 .csrf(c -> c.disable()).authorizeHttpRequests(requests -> requests
                 // Ưu tiên các rule cụ thể trước
                 .requestMatchers("/api/secure/profile").permitAll()
-                .requestMatchers("/api/export", "/api/missing-reports/**").hasAnyRole("ADMIN", "STAFF")
                 .requestMatchers("/api/missing-reports/create").permitAll()
+                .requestMatchers("/api/export", "/api/missing-reports/**").hasAnyRole("ADMIN", "STAFF")
                 .requestMatchers("/api/faculties/**").permitAll()
                 .requestMatchers("/api/**").permitAll() // phải để cuối cùng phần /api
                 .requestMatchers("/", "/home", "/activities", "/activities/**", "/add", "/users", "/emails",

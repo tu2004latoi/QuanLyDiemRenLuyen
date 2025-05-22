@@ -10,11 +10,13 @@ import static com.dtt.pojo.Activity.PointType.POINT_2;
 import static com.dtt.pojo.Activity.PointType.POINT_3;
 import com.dtt.pojo.ActivityRegistrations;
 import com.dtt.pojo.Evidence;
+import com.dtt.pojo.Notification;
 import com.dtt.pojo.TrainingPoint;
 import com.dtt.pojo.User;
 import com.dtt.services.ActivityRegistrationService;
 import com.dtt.services.ActivityService;
 import com.dtt.services.EvidenceService;
+import com.dtt.services.NotificationService;
 import com.dtt.services.TrainingPointService;
 import com.dtt.services.UserService;
 import java.time.LocalDateTime;
@@ -55,12 +57,15 @@ public class ApiTrainingPointController {
 
     @Autowired
     private EvidenceService evidenceSer;
-    
+
     @Autowired
     private ActivityRegistrationService arSer;
-    
+
     @Autowired
     private ActivityService actSer;
+
+    @Autowired
+    private NotificationService noSer;
 
     @GetMapping("/training-points")
     public ResponseEntity<?> getAllTrainingPoint() {
@@ -127,6 +132,12 @@ public class ApiTrainingPointController {
         }
 
         this.tpSer.confirmTrainingPointById(id, u);
+        Notification n = new Notification();
+        n.setUser(u);
+        n.setContent("Minh chứng của bạn được chấp nhận");
+        n.setIsRead(false);
+        n.setCreatedAt(LocalDateTime.now());
+        this.noSer.addNotification(n);
 
         return ResponseEntity.ok("Successfully");
     }
@@ -141,6 +152,12 @@ public class ApiTrainingPointController {
         }
 
         this.tpSer.rejectTrainingPointById(id, u);
+        Notification n = new Notification();
+        n.setUser(u);
+        n.setContent("Minh chứng của bạn bị từ chối");
+        n.setIsRead(false);
+        n.setCreatedAt(LocalDateTime.now());
+        this.noSer.addNotification(n);
 
         return ResponseEntity.ok("Successfully");
     }
@@ -175,6 +192,12 @@ public class ApiTrainingPointController {
             this.tpSer.addOrUpdateTrainingPoint(t);
             this.evidenceSer.addOrUpdateEvidence(e);
             this.userSer.updatePointUser(addPointUser);
+            Notification n = new Notification();
+            n.setUser(addPointUser);
+            n.setContent("Minh chứng của bạn bị từ chối");
+            n.setIsRead(false);
+            n.setCreatedAt(LocalDateTime.now());
+            this.noSer.addNotification(n);
 
             return ResponseEntity.ok("Successfully");
         } catch (Exception ex) {

@@ -23,6 +23,7 @@ com\dtt\controllers\EmailController.class
 com\dtt\pojo\Staff.class
 com\dtt\services\FacultyService.class
 com\dtt\repositories\CommentRepository.class
+com\dtt\repositories\NotificationRepository.class
 com\dtt\services\MissingReportService.class
 com\dtt\services\impl\StatisticsServiceImpl.class
 com\dtt\configs\HibernateConfigs.class
@@ -44,6 +45,7 @@ com\dtt\repositories\LikeRepository.class
 com\dtt\configs\SpringSecurityConfigs.class
 com\dtt\repositories\StatisticsRepository.class
 com\dtt\services\LikeService.class
+com\dtt\services\NotificationService.class
 com\dtt\controllers\MyActivityController.class
 com\dtt\pojo\User$Role.class
 com\dtt\services\EvidenceService.class
@@ -65,6 +67,7 @@ com\dtt\repositories\impl\StudentRepositoryImpl.class
 com\dtt\controllers\ApiTrainingPointController$1.class
 com\dtt\pojo\NewsFeed.class
 com\dtt\repositories\MissingReportRepository.class
+com\dtt\repositories\impl\NotificationRepositoryImpl.class
 com\dtt\repositories\NewsFeedRepository.class
 com\dtt\services\impl\ClassRoomServiceImpl.class
 com\dtt\services\impl\EmailServiceImpl.class
@@ -113,6 +116,7 @@ com\dtt\formatters\FacultyFormatter.class
 com\dtt\controllers\ActivityRegistrationController.class
 com\dtt\repositories\impl\MyActivityRepositoryImpl.class
 com\dtt\services\NewsFeedService.class
+com\dtt\services\impl\NotificationServiceImpl.class
 com\dtt\controllers\ApiFacultyController.class
 com\dtt\controllers\ApiStatisticsController.class
 com\dtt\filters\JwtFilter.class
@@ -131,6 +135,7 @@ com\dtt\services\StatisticsService.class
 com\dtt\controllers\CommentController.class
 com\dtt\repositories\impl\LikeRepositoryImpl.class
 com\dtt\services\impl\AttendanceServiceImpl.class
+com\dtt\pojo\Notification.class
 com\dtt\controllers\UserController.class
 com\dtt\repositories\StudentRepository.class
 com\dtt\repositories\impl\DepartmentRepositoryImpl.class
@@ -144,6 +149,7 @@ com\dtt\repositories\FacultyRepository.class
 com\dtt\services\impl\NewsFeedServiceImpl.class
 com\dtt\drlapp\resources\JakartaEE11Resource.class
 com\dtt\pojo\Student.class
+com\dtt\controllers\NotificationController.class
 com\dtt\pojo\Faculty.class
 com\dtt\pojo\User.class
 com\dtt\services\ActivityService.class

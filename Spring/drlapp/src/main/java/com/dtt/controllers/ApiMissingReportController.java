@@ -6,10 +6,12 @@ package com.dtt.controllers;
 
 import com.dtt.pojo.Activity;
 import com.dtt.pojo.MissingReport;
+import com.dtt.pojo.Notification;
 import com.dtt.pojo.TrainingPoint;
 import com.dtt.pojo.User;
 import com.dtt.services.ActivityService;
 import com.dtt.services.MissingReportService;
+import com.dtt.services.NotificationService;
 import com.dtt.services.TrainingPointService;
 import com.dtt.services.UserService;
 import java.time.LocalDateTime;
@@ -33,20 +35,24 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RestController
 @RequestMapping("/api")
 public class ApiMissingReportController {
+
     @Autowired
     private MissingReportService mrSer;
-    
+
     @Autowired
     private TrainingPointService tpSer;
-    
+
     @Autowired
     private UserService userSer;
-    
+
     @Autowired
     private ActivityService activitySer;
-    
+
+    @Autowired
+    private NotificationService noSer;
+
     @PatchMapping("/missing-reports/confirm/{id}")
-    public ResponseEntity<?> comfirmMissingReport(@PathVariable("id") int id) throws Exception{
+    public ResponseEntity<?> comfirmMissingReport(@PathVariable("id") int id) throws Exception {
         MissingReport mr = this.mrSer.getMissingReportById(id);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
@@ -54,12 +60,18 @@ public class ApiMissingReportController {
         this.tpSer.confirmTrainingPointById(mr.getTrainingPoint().getId(), u);
         mr.setStatus(MissingReport.ReportStatus.CONFIRMED);
         this.mrSer.addOrUpdateMissingReport(mr);
-        
+        Notification n = new Notification();
+        n.setUser(u);
+        n.setContent("Biếu thiếu của bạn được chấp nhận");
+        n.setIsRead(false);
+        n.setCreatedAt(LocalDateTime.now());
+        this.noSer.addNotification(n);
+
         return ResponseEntity.ok("Successfully");
     }
-    
+
     @PatchMapping("/missing-reports/reject/{id}")
-    public ResponseEntity<?> rejectMissingReport(@PathVariable("id") int id) throws Exception{
+    public ResponseEntity<?> rejectMissingReport(@PathVariable("id") int id) throws Exception {
         MissingReport mr = this.mrSer.getMissingReportById(id);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
@@ -67,12 +79,18 @@ public class ApiMissingReportController {
         this.tpSer.rejectTrainingPointById(mr.getTrainingPoint().getId(), u);
         mr.setStatus(MissingReport.ReportStatus.REJECTED);
         this.mrSer.addOrUpdateMissingReport(mr);
-        
+        Notification n = new Notification();
+        n.setUser(u);
+        n.setContent("Biếu thiếu của bạn bị từ chối");
+        n.setIsRead(false);
+        n.setCreatedAt(LocalDateTime.now());
+        this.noSer.addNotification(n);
+
         return ResponseEntity.ok("Successfully");
     }
-    
+
     @PatchMapping("/missing-reports/reject-after-confirm/{id}")
-    public ResponseEntity<?> rejectAfterConfirmMissingReport(@PathVariable("id") int id) throws Exception{
+    public ResponseEntity<?> rejectAfterConfirmMissingReport(@PathVariable("id") int id) throws Exception {
         MissingReport mr = this.mrSer.getMissingReportById(id);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
@@ -80,17 +98,23 @@ public class ApiMissingReportController {
         this.tpSer.rejectAfterApprovedTrainingPointById(mr.getTrainingPoint().getId(), u);
         mr.setStatus(MissingReport.ReportStatus.REJECTED);
         this.mrSer.addOrUpdateMissingReport(mr);
-        
+        Notification n = new Notification();
+        n.setUser(u);
+        n.setContent("Biếu thiếu của bạn bị từ chối");
+        n.setIsRead(false);
+        n.setCreatedAt(LocalDateTime.now());
+        this.noSer.addNotification(n);
+
         return ResponseEntity.ok("Successfully");
     }
-    
-     @PostMapping("/missing-reports/create")
-    public  ResponseEntity<?> createMissingReport(@RequestParam("userId") int userId,
+
+    @PostMapping("/missing-reports/create")
+    public ResponseEntity<?> createMissingReport(@RequestParam("userId") int userId,
             @RequestParam("activityId") int activityId,
             @RequestParam("point") int point,
             @RequestParam("file") MultipartFile file,
-            RedirectAttributes redirectAttributes){
-        
+            RedirectAttributes redirectAttributes) {
+
         User u = this.userSer.getUserById(userId);
         Activity a = this.activitySer.getActivityById(activityId);
         TrainingPoint t = this.tpSer.getTrainingPointByUserIdAndActivityId(userId, activityId);
@@ -102,7 +126,7 @@ public class ApiMissingReportController {
         mr.setFile(file);
         mr.setDateReport(LocalDateTime.now());
         mr.setStatus(MissingReport.ReportStatus.PENDING);
-        
+
         this.mrSer.addOrUpdateMissingReport(mr);
         return ResponseEntity.ok("Successfuly to create");
     }

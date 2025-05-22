@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <title th:fragment="title">Trang chủ</title>
         <!-- Google Font -->
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
 
     <th:block th:fragment="styles">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
@@ -183,6 +183,112 @@
                     padding: 20px;
                 }
             }
+
+            .badge-dot {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                width: 10px;
+                height: 10px;
+                background-color: red;
+                border-radius: 50%;
+            }
+
+            /* Notification dropdown custom styles */
+            .dropdown-menu.notifications {
+                max-height: 400px;
+                overflow-y: auto;
+                width: 320px;
+                padding: 0;
+                border-radius: 12px;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+                font-size: 14px;
+                background-color: #fff;
+            }
+
+            .dropdown-menu.notifications li {
+                padding: 12px 20px;
+                border-bottom: 1px solid #eee;
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+            }
+
+            .dropdown-menu.notifications li:last-child {
+                border-bottom: none;
+            }
+
+            .dropdown-menu.notifications li:hover {
+                background-color: #f0f0f0;
+            }
+
+            .dropdown-menu.notifications .notification-time {
+                font-size: 11px;
+                color: #888;
+                margin-bottom: 5px;
+            }
+
+            .dropdown-menu.notifications .notification-content {
+                color: #333;
+            }
+
+            .dropdown-menu.notifications .no-notifications {
+                padding: 15px 20px;
+                color: #999;
+                text-align: center;
+                font-style: italic;
+            }
+
+            .dropdown-menu.notifications .dropdown-footer {
+                padding: 10px 20px;
+                text-align: center;
+                background-color: #f8f9fa;
+                border-top: 1px solid #ddd;
+            }
+
+            .dropdown-menu.notifications .dropdown-footer a {
+                color: #007bff;
+                text-decoration: none;
+                font-weight: 500;
+            }
+
+            .dropdown-menu.notifications .dropdown-footer a:hover {
+                text-decoration: underline;
+            }
+
+            /* Badge on notification bell */
+            .btn-notification {
+                position: relative;
+                font-size: 20px;
+                color: #555;
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+            }
+
+            .btn-notification .badge {
+                position: absolute;
+                top: 2px;
+                right: 2px;
+                font-size: 10px;
+                padding: 5px 6px;
+                border-radius: 50%;
+                background-color: #dc3545;
+                color: white;
+                border: 2px solid white;
+            }
+
+            .dropdown-menu.notifications li.notification-unread {
+                background-color: #ffffff; /* nền trắng */
+                color: #222222; /* chữ đậm */
+                font-weight: 600;
+            }
+
+            .dropdown-menu.notifications li.notification-read {
+                background-color: #f0f0f0; /* nền xám nhạt */
+                color: #6c757d; /* chữ xám */
+                font-weight: 400;
+            }
+
         </style>
     </th:block>
 </head>
@@ -195,7 +301,7 @@
                 <div class="d-flex flex-column align-items-start mb-4">
                     <!-- Avatar -->
                     <div class="avatar-container mb-3">
-                        <img th:src="${user.avatar}" alt="Avatar" class="avatar">
+                        <img th:src="${user.avatar}" alt="Avatar" class="avatar"/>
                     </div>
                     <h5 class="fw-bold mb-4">CTSV Dashboard</h5>
                     <ul class="nav flex-column w-100">
@@ -235,6 +341,26 @@
                     </ul>
                 </div>
             </aside>
+        </div>
+
+        <!-- Notification dropdown -->
+        <div class="dropdown me-3" style="position: absolute; top: 10px; right: 10px; z-index: 1000;">
+            <button class="btn btn-light btn-notification dropdown-toggle" type="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-bell"></i>
+                <span th:if="${notifications.?[!isRead].size() > 0}" class="badge-dot"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end notifications shadow" aria-labelledby="notificationDropdown">
+                <li th:if="${#lists.isEmpty(notifications)}" class="no-notifications">Không có thông báo mới</li>
+                <li th:each="notification : ${notifications}"
+                    th:classappend="${notification.isRead} ? 'notification-read' : 'notification-unread'">
+                    <div class="notification-time" th:text="${#temporals.format(notification.createdAt, 'dd/MM/yyyy HH:mm')}"></div>
+                    <div class="notification-content" th:text="${notification.content}">Nội dung ngắn gọn...</div>
+                </li>
+                <li><hr class="dropdown-divider"></li>
+                <li class="dropdown-footer">
+                    <a th:href="@{/notifications/mark-all-read(returnUrl=${requestUri})}">Đánh dấu tất cả là đã đọc</a>
+                </li>
+            </ul>
         </div>
 
         <!-- Main content -->

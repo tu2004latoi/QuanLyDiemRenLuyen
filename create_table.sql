@@ -216,3 +216,13 @@ CREATE TABLE messages (
     FOREIGN KEY (chat_service_id) REFERENCES chat_service(id) ON DELETE CASCADE,
     FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+CREATE TABLE notifications (
+	id INT auto_increment primary key,
+    user_id int,
+    content text,
+    is_read boolean,
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    foreign key (user_id) references users(id) on delete cascade
+);
+

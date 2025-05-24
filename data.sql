@@ -7,7 +7,9 @@ INSERT INTO emails (email) VALUES
 ('staff2@gmail.com'),
 ('student1@gmail.com'),
 ('student2@gmail.com'),
-('student3@gmail.com');
+('student3@gmail.com'),
+('2251012147tu@ou.edu.vn'),
+('2251012149tuan@ou.edu.vn');
 
 INSERT INTO faculties (id, name) VALUES
 ('1', 'Khoa Công Nghệ Thông Tin'),
@@ -24,7 +26,9 @@ INSERT INTO users (id, email, password, first_name, last_name, avatar, point_1, 
 ('2', 'admin2@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Admin', 'Pro2', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'ADMIN'),
 ('3', 'staff1@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Staff', '1', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STAFF'),
 ('4', 'staff2@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Staff', '2', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STAFF'),
-('5', 'student1@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Kiều Văn', 'Minh', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STUDENT');
+('5', 'student1@gmail.com', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Kiều Văn', 'Minh', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STUDENT'),
+('6', '2251012147tu@ou.edu.vn', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Đinh Thanh', 'Tú', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'ADMIN'),
+('7', '2251012149tuan@ou.edu.vn', '$2a$10$k2KLa0DUlgUE65aPWoGnru/VMgClsU3n0QArq7JjPu8Lpj6Kppfqy', 'Kiều Minh', 'Tuấn', 'https://res.cloudinary.com/druxxfmia/image/upload/v1743651318/n0i4pxhiwbmqztwrdyjs.jpg', '0', '0', '0', '0', 'STUDENT');
 
 insert into departments(id, name) values
 ('1','Quản lý đào tạo');

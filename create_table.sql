@@ -43,6 +43,7 @@ CREATE TABLE users (
     point_4 INT,
     FOREIGN KEY (email) references emails(email) ON DELETE CASCADE,
     role ENUM('ADMIN', 'STAFF', 'STUDENT') NOT NULL,
+    is_OAuth boolean default false,
     active BOOLEAN DEFAULT TRUE
 );
 
@@ -101,6 +102,7 @@ CREATE TABLE activity_registrations (
     activity_id INT,
     registration_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     confirm boolean null,
+    is_send_mail boolean null,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE CASCADE
 );

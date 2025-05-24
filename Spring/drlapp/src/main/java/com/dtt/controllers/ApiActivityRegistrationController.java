@@ -4,8 +4,13 @@
  */
 package com.dtt.controllers;
 
+import com.dtt.pojo.Activity;
 import com.dtt.pojo.ActivityRegistrations;
+import com.dtt.pojo.User;
 import com.dtt.services.ActivityRegistrationService;
+import com.dtt.services.ActivityService;
+import com.dtt.services.EmailService;
+import com.dtt.services.UserService;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +39,15 @@ public class ApiActivityRegistrationController {
     @Autowired
     private ActivityRegistrationService arSer;
 
+    @Autowired
+    private EmailService emailSer;
+
+    @Autowired
+    private ActivityService activitySer;
+
+    @Autowired
+    private UserService userSer;
+
     @DeleteMapping("/users/activity-registration/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public String destroyActivityRegistration(@PathVariable("id") int id) {
@@ -48,25 +62,35 @@ public class ApiActivityRegistrationController {
         int userId = payload.get("userId");
         int activityId = payload.get("activityId");
         this.arSer.registerToActivity(userId, activityId);
+        Activity a = this.activitySer.getActivityById(activityId);
+        User user = this.userSer.getUserById(userId);
+        String subject = "Xác nhận đăng ký hoạt động";
+        String content = "Xin chào " + user.getName() + ",\n\n"
+                + "Bạn đã đăng ký thành công hoạt động: " + a.getName() + ".\n"
+                + "Thời gian: " + a.getStartDate() + " - " + a.getEndDate() + "\n"
+                + "Địa điểm: " + a.getLocation() + "\n\n"
+                + "Trân trọng!";
+        System.out.println("Sending email to: " + user.getEmail());
+        emailSer.sendEmail(user.getEmail(), subject, content);
         return null;
     }
-    
+
     @GetMapping("/activity-registrations")
-    public ResponseEntity<?> activityRegistrationView(){
+    public ResponseEntity<?> activityRegistrationView() {
         List<ActivityRegistrations> activityRegistrations = this.arSer.getAllActivityRegistrations();
         List<Map<String, Object>> listData = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        for (ActivityRegistrations ar : activityRegistrations){
+        for (ActivityRegistrations ar : activityRegistrations) {
             Map<String, Object> data = new HashMap<>();
             data.put("id", ar.getId());
             data.put("userId", ar.getUser().getId());
             data.put("activityId", ar.getActivity().getId());
             data.put("registrationDate", ar.getRegistrationDate().format(formatter));
             data.put("isConfirm", ar.isIsConfirm());
-            
+
             listData.add(data);
         }
-        
+
         return ResponseEntity.ok(listData);
     }
 }

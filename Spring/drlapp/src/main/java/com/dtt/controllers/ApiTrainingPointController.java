@@ -132,8 +132,10 @@ public class ApiTrainingPointController {
         }
 
         this.tpSer.confirmTrainingPointById(id, u);
+        TrainingPoint t = this.tpSer.getTrainingPointById(id);
+        User user = this.userSer.getUserById(t.getUser().getId());
         Notification n = new Notification();
-        n.setUser(u);
+        n.setUser(user);
         n.setContent("Minh chứng của bạn được chấp nhận");
         n.setIsRead(false);
         n.setCreatedAt(LocalDateTime.now());
@@ -152,8 +154,10 @@ public class ApiTrainingPointController {
         }
 
         this.tpSer.rejectTrainingPointById(id, u);
+        TrainingPoint t = this.tpSer.getTrainingPointById(id);
+        User user = this.userSer.getUserById(t.getUser().getId());
         Notification n = new Notification();
-        n.setUser(u);
+        n.setUser(user);
         n.setContent("Minh chứng của bạn bị từ chối");
         n.setIsRead(false);
         n.setCreatedAt(LocalDateTime.now());

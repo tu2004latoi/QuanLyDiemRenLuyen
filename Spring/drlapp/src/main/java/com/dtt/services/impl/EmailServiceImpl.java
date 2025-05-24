@@ -9,7 +9,11 @@ import com.dtt.repositories.EmailRepository;
 import com.dtt.services.EmailService;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,9 +21,13 @@ import org.springframework.stereotype.Service;
  * @author MR TU
  */
 @Service
-public class EmailServiceImpl implements EmailService{
+public class EmailServiceImpl implements EmailService {
+
     @Autowired
     private EmailRepository emailRepo;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Override
     public Email getEmailByEmail(String email) {
@@ -45,5 +53,19 @@ public class EmailServiceImpl implements EmailService{
     public long getCountEmails() {
         return this.emailRepo.getCountEmails();
     }
-    
+
+    @Override
+    public void sendEmail(String to, String subject, String content) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(to);
+            message.setSubject(subject);
+            message.setText(content);
+            message.setFrom("tu2004latoi@gmail.com");
+            mailSender.send(message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

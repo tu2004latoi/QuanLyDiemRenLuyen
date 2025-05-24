@@ -4,13 +4,18 @@
  */
 package com.dtt.controllers;
 
+import com.dtt.pojo.Notification;
 import com.dtt.pojo.User;
 import com.dtt.services.ActivityRegistrationService;
+import com.dtt.services.NotificationService;
 import com.dtt.services.UserService;
 import com.dtt.utils.JwtUtils;
 import jakarta.ws.rs.core.MediaType;
 import java.security.Principal;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +47,9 @@ public class ApiUserController {
 
     @Autowired
     private ActivityRegistrationService arSer;
+    
+    @Autowired
+    private NotificationService noSer;
 
     @PostMapping(path = "/users", consumes = MediaType.MULTIPART_FORM_DATA)
     public ResponseEntity<User> register(@RequestParam Map<String, String> params,
@@ -94,5 +102,37 @@ public class ApiUserController {
     public ResponseEntity<User> getProfile(Principal principal) {
         return new ResponseEntity<>(this.userSer.getUserByUsername(principal.getName()), HttpStatus.OK);
     }
-
+    
+    @GetMapping("/users/{id}/notifications")
+    public ResponseEntity<?> UserNotificationsView(@PathVariable("id") int id){
+        User u = this.userSer.getUserById(id);
+        List<Notification> notifications = this.noSer.getNotificationsByUser(u);
+        List<Map<String, Object>> listData = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        for (Notification n : notifications){
+            Map<String, Object> data = new HashMap<>();
+            data.put("id", n.getId());
+            data.put("userId", n.getUser().getId());
+            data.put("content", n.getContent());
+            data.put("createAt", n.getCreatedAt().format(formatter));
+            data.put("isRead", n.getIsRead());
+            
+            listData.add(data);
+        }
+        
+        return ResponseEntity.ok(listData);
+    }
+    
+//    @GetMapping("/users/{id}/notifications/unread")
+//    public ResponseEntity<?> notificationsUnReadView(@PathVariable("id") int id){
+//        
+//    }
+    
+    @PostMapping("/users/{id}/notifications/mark-all-read")
+    public ResponseEntity<?> MarkAllRead(@PathVariable("id") int id){
+        User u = this.userSer.getUserById(id);
+        noSer.markAllAsRead(u);
+        
+        return ResponseEntity.ok("Read all");
+    }
 }

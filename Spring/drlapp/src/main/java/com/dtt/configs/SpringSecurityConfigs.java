@@ -9,15 +9,22 @@ import com.cloudinary.utils.ObjectUtils;
 import com.dtt.filters.JwtFilter;
 import jakarta.ws.rs.HttpMethod;
 import java.util.List;
+import java.util.Properties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
+import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -37,12 +44,16 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 @ComponentScan(basePackages = {
     "com.dtt.controllers",
     "com.dtt.repositories",
-    "com.dtt.services"
+    "com.dtt.services",
+    "com.dtt.filters"
 })
 public class SpringSecurityConfigs {
 
     @Autowired
     private UserDetailsService userDetailsService;
+    
+    @Autowired
+    private JwtFilter jwtFilter;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -56,30 +67,62 @@ public class SpringSecurityConfigs {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
-            Exception {
+    public ClientRegistrationRepository clientRegistrationRepository() {
+        ClientRegistration googleRegistration = ClientRegistration.withRegistrationId("google")
+                .clientId("994268841222-vjdspthgkfdndjg1gjndgsbje9l9dbv4.apps.googleusercontent.com")
+                .clientSecret("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")
+                .scope("profile", "email")
+                .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
+                .tokenUri("https://oauth2.googleapis.com/token")
+                .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
+                .userNameAttributeName("sub")
+                .clientName("Google")
+                .redirectUri("{baseUrl}/oauth2/callback/google")
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .build();
+
+        return new InMemoryClientRegistrationRepository(googleRegistration);
+    }
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf(c -> c.disable()).authorizeHttpRequests(requests -> requests
-                // Ưu tiên các rule cụ thể trước
-                .requestMatchers("/api/secure/profile").permitAll()
-                .requestMatchers("/api/missing-reports/create").permitAll()
-                .requestMatchers("/api/export", "/api/missing-reports/**").hasAnyRole("ADMIN", "STAFF")
-                .requestMatchers("/api/faculties/**").permitAll()
-                .requestMatchers("/api/**").permitAll() // phải để cuối cùng phần /api
-                .requestMatchers("/", "/home", "/activities", "/activities/**", "/add", "/users", "/emails",
-                        "/emails/**", "/missing-reports", "/users/**", "/classes/**", "faculties/**").hasRole("ADMIN")
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                // Public endpoints
+                .requestMatchers("/login", "/oauth2/**", "/register", "/users/register", "/users/update").permitAll()
+                .requestMatchers("/api/secure/profile", "/api/missing-reports/create").permitAll()
+                .requestMatchers("/faculties", "/classes", "/api/faculties/**").permitAll()
+                .requestMatchers("/js/**").permitAll()
+                // Restricted API endpoints
+                .requestMatchers("/api/export", "/api/missing-reports").hasAnyRole("ADMIN", "STAFF")
                 .requestMatchers("/training-points", "/statistics").hasAnyRole("ADMIN", "STAFF")
-                .requestMatchers("/register", "/missing-reports/**", "/my-activities", "/users/register",
-                        "/users/update", "/faculties", "/classes").permitAll()
-                .requestMatchers("/js/**", "api/classes/**").hasRole("ADMIN")
-                .anyRequest().authenticated())
-                .addFilterBefore(new JwtFilter(), UsernamePasswordAuthenticationFilter.class)
+                .requestMatchers("/api/classes/**").hasRole("ADMIN")
+                // Admin UI endpoints
+                .requestMatchers("/", "/home", "/activities/**", "/add", "/users/**", "/emails/**", "/missing-reports", "/classes/**", "/faculties/**").hasRole("ADMIN")
+                // Student/Staff access
+                .requestMatchers("/my-activities").permitAll()
+                // Optionally expose remaining API if needed
+                .requestMatchers("/api/**").permitAll()
+
+                // All other requests
+                .anyRequest().authenticated()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                .clientRegistrationRepository(clientRegistrationRepository())
+                .loginPage("/login")
+                .defaultSuccessUrl("/", true)
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/", true)
-                .failureUrl("/login?error=true").permitAll())
-                .logout(logout -> logout.logoutSuccessUrl("/login").permitAll());
+                .failureUrl("/login?error=true").permitAll()
+                )
+                .logout(logout -> logout
+                .logoutSuccessUrl("/login").permitAll()
+                );
 
         return http.build();
     }
@@ -114,4 +157,23 @@ public class SpringSecurityConfigs {
     public StandardServletMultipartResolver multipartResolver() {
         return new StandardServletMultipartResolver();
     }
+
+    @Bean
+    public JavaMailSender javaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername("tu2004latoi@gmail.com");
+        mailSender.setPassword("qiky upgh diyx zyst");
+
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.starttls.required", "true");
+        props.put("mail.debug", "true");
+
+        return mailSender;
+    }
+
 }

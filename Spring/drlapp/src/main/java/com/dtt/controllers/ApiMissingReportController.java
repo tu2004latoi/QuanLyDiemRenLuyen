@@ -15,10 +15,16 @@ import com.dtt.services.NotificationService;
 import com.dtt.services.TrainingPointService;
 import com.dtt.services.UserService;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,8 +66,10 @@ public class ApiMissingReportController {
         this.tpSer.confirmTrainingPointById(mr.getTrainingPoint().getId(), u);
         mr.setStatus(MissingReport.ReportStatus.CONFIRMED);
         this.mrSer.addOrUpdateMissingReport(mr);
+        MissingReport m = this.mrSer.getMissingReportById(id);
+        User user = this.userSer.getUserById(m.getUser().getId());
         Notification n = new Notification();
-        n.setUser(u);
+        n.setUser(user);
         n.setContent("Biếu thiếu của bạn được chấp nhận");
         n.setIsRead(false);
         n.setCreatedAt(LocalDateTime.now());
@@ -79,8 +87,10 @@ public class ApiMissingReportController {
         this.tpSer.rejectTrainingPointById(mr.getTrainingPoint().getId(), u);
         mr.setStatus(MissingReport.ReportStatus.REJECTED);
         this.mrSer.addOrUpdateMissingReport(mr);
+        MissingReport m = this.mrSer.getMissingReportById(id);
+        User user = this.userSer.getUserById(m.getUser().getId());
         Notification n = new Notification();
-        n.setUser(u);
+        n.setUser(user);
         n.setContent("Biếu thiếu của bạn bị từ chối");
         n.setIsRead(false);
         n.setCreatedAt(LocalDateTime.now());
@@ -98,8 +108,10 @@ public class ApiMissingReportController {
         this.tpSer.rejectAfterApprovedTrainingPointById(mr.getTrainingPoint().getId(), u);
         mr.setStatus(MissingReport.ReportStatus.REJECTED);
         this.mrSer.addOrUpdateMissingReport(mr);
+        MissingReport m = this.mrSer.getMissingReportById(id);
+        User user = this.userSer.getUserById(m.getUser().getId());
         Notification n = new Notification();
-        n.setUser(u);
+        n.setUser(user);
         n.setContent("Biếu thiếu của bạn bị từ chối");
         n.setIsRead(false);
         n.setCreatedAt(LocalDateTime.now());
@@ -129,5 +141,44 @@ public class ApiMissingReportController {
 
         this.mrSer.addOrUpdateMissingReport(mr);
         return ResponseEntity.ok("Successfuly to create");
+    }
+
+    @GetMapping("/missing-reports")
+    public ResponseEntity<?> missingReportsView(@RequestParam Map<String, String> params) {
+        List<MissingReport> listMissingReports = this.mrSer.getMissingReports(params);
+        List<Map<String, Object>> listData = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        for (MissingReport mr : listMissingReports) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("id", mr.getId());
+            data.put("userId", mr.getUser().getId());
+            data.put("activityId", mr.getActivity().getId());
+            data.put("trainingPointId", mr.getTrainingPoint().getId());
+            data.put("point", mr.getPoint());
+            data.put("dateReport", mr.getDateReport().format(formatter));
+            data.put("image", mr.getImage());
+            data.put("status", mr.getStatus());
+
+            listData.add(data);
+        }
+
+        return ResponseEntity.ok(listData);
+    }
+
+    @GetMapping("/missing-reports/{id}")
+    public ResponseEntity<?> missingReportDetailsView(@PathVariable("id") int id) {
+        MissingReport mr = this.mrSer.getMissingReportById(id);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        Map<String, Object> data = new HashMap<>();
+        data.put("id", mr.getId());
+        data.put("userId", mr.getUser().getId());
+        data.put("activityId", mr.getActivity().getId());
+        data.put("trainingPointId", mr.getTrainingPoint().getId());
+        data.put("point", mr.getPoint());
+        data.put("dateReport", mr.getDateReport().format(formatter));
+        data.put("image", mr.getImage());
+        data.put("status", mr.getStatus());
+
+        return ResponseEntity.ok(data);
     }
 }

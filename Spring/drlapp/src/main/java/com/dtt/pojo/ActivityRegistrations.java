@@ -49,6 +49,17 @@ public class ActivityRegistrations implements Serializable {
     
     @Column(name="confirm")
     private boolean isConfirm;
+    
+    @Column(name="is_send_mail")
+    private boolean isSendMail = false;
+
+    public boolean isSendMail() {
+        return isSendMail;
+    }
+
+    public void setIsSendMail(boolean isSendMail) {
+        this.isSendMail = isSendMail;
+    }
 
     public boolean isIsConfirm() {
         return isConfirm;

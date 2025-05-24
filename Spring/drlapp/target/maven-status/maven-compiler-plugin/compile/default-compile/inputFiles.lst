@@ -19,6 +19,7 @@ E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\m
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiLikeController.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiMissingReportController.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiMyActivityController.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiNotificationController.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiStatisticsController.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiStudentController.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\controllers\ApiTrainingPointController.java
@@ -104,6 +105,7 @@ E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\m
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\TrainingPointRepository.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\UserRepository.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\scheduler\ActivityStatusScheduler.java
+E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\scheduler\NotificationAndMailActivityScheduler.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\security\CustomUserDetails.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\ActivityRegistrationService.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\ActivityService.java

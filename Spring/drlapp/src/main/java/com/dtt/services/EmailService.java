@@ -20,4 +20,5 @@ public interface EmailService {
     void deleteEmail(Email e);
     Email addEmail(Email e);
     long getCountEmails();
+    void sendEmail(String to, String subject, String content);
 }

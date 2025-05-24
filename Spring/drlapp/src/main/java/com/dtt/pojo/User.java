@@ -56,6 +56,17 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Role role;
+    
+    @Column(name = "is_OAuth", nullable = false)
+    private boolean isOAuth = false;
+
+    public boolean isIsOAuth() {
+        return isOAuth;
+    }
+
+    public void setIsOAuth(boolean isOAuth) {
+        this.isOAuth = isOAuth;
+    }
 
     @Column(name = "active")
     private boolean active;
@@ -76,7 +87,7 @@ public class User implements Serializable {
     @JsonIgnore
     private Set<Attendance> attendances;
     
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Notification> notifications;
 

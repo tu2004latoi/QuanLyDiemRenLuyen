@@ -9,6 +9,7 @@ import com.dtt.pojo.ActivityRegistrations;
 import com.dtt.pojo.User;
 import com.dtt.services.ActivityRegistrationService;
 import com.dtt.services.ActivityService;
+import com.dtt.services.EmailService;
 import com.dtt.services.TrainingPointService;
 import com.dtt.services.UserService;
 import jakarta.ws.rs.core.MediaType;
@@ -51,6 +52,9 @@ public class ApiActivityController {
 
     @Autowired
     private TrainingPointService trainingPointSer;
+    
+    @Autowired
+    private EmailService emailSer;
 
     //Toàn bộ hoạt động API
     @GetMapping("/activities")
@@ -90,13 +94,21 @@ public class ApiActivityController {
                 redirectAttributes.addFlashAttribute("message", "Hoạt động không còn mở đăng ký!");
                 return new ResponseEntity<>("Hoạt động không còn mở đăng ký!", HttpStatus.BAD_REQUEST);
             }
-            
-            if (a.getCurrentParticipants() == a.getMaxParticipants()){
+
+            if (a.getCurrentParticipants() == a.getMaxParticipants()) {
                 redirectAttributes.addFlashAttribute("message", "Hoạt động đã đủ số người đăng ký!");
                 return new ResponseEntity<>("Hoạt động đã đủ số người đăng ký!", HttpStatus.BAD_REQUEST);
             }
-            
+
             arSer.registerToActivity(user.getId(), activityId);
+            String subject = "Xác nhận đăng ký hoạt động";
+            String content = "Xin chào " + user.getName()+ ",\n\n"
+                    + "Bạn đã đăng ký thành công hoạt động: " + a.getName() + ".\n"
+                    + "Thời gian: " + a.getStartDate()+ " - " + a.getEndDate() + "\n"
+                    + "Địa điểm: " + a.getLocation() + "\n\n"
+                    + "Trân trọng!";
+            System.out.println("Sending email to: " + user.getEmail());
+            emailSer.sendEmail(user.getEmail(), subject, content);
 
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex) {

@@ -14,6 +14,7 @@ com\dtt\services\StudentService.class
 com\dtt\pojo\MissingReport.class
 com\dtt\services\EmailService.class
 com\dtt\repositories\ClassRoomRepository.class
+com\dtt\controllers\ApiNotificationController.class
 com\dtt\pojo\Comment.class
 com\dtt\secutiry\CustomUserDetails.class
 com\dtt\repositories\impl\StaffRepositoryImpl.class
@@ -81,6 +82,7 @@ com\dtt\repositories\DepartmentRepository.class
 com\dtt\controllers\ApiAttendanceController$1.class
 com\dtt\services\CommentService.class
 com\dtt\scheduler\ActivityStatusScheduler.class
+com\dtt\scheduler\NotificationAndMailActivityScheduler.class
 com\dtt\services\impl\CommentServiceImpl.class
 com\dtt\drlapp\JakartaRestConfiguration.class
 com\dtt\services\ExportService.class

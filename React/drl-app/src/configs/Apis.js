@@ -25,7 +25,10 @@ export const endpoints = {
   studentDetails: (userId) => `/users/students/${userId}`,
   activityRegistratons: "/activity-registrations",
   deleteEvidence: (evidenceId) => `/evidences/${evidenceId}`,
-  reportMissing: "/missing-reports/create"
+  reportMissing: "/missing-reports/create",
+  notifications: (userId) => `/users/${userId}/notifications`,
+  markAllRead: (userId) => `/users/${userId}/notifications/mark-all-read`,
+  missingReports: "/missing-reports",
 };
 
 export const authApis = () => {

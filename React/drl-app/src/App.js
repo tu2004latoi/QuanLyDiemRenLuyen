@@ -10,7 +10,7 @@ import ReportList from "./components/Staffs/ReportList";
 import ViewAchievement from "./components/Staffs/ViewAchievement";
 import RegisteredActivity from "./components/Students/RegisteredActivity";
 import ViewPoint from "./components/Students/ViewPoint";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import { Container } from "react-bootstrap";
 import { MyDispatcherContext, MyUserContext } from "./configs/MyContexts";
 import { useEffect, useReducer } from "react";
@@ -21,9 +21,9 @@ import Chat from "./pages/Chat";
 import StatisticsPage from "./pages/StatisticsPage";
 import TrainingPointsPage from "./pages/TrainingPointsPage";
 import SettingsPage from "./pages/SettingPage";
-import StudentDetailsPage from "./pages/StudentDetailsPage"
+import StudentDetailsPage from "./pages/StudentDetailsPage";
 import CalendarPage from "./pages/CalendarPage";
-
+import MissingReportsPage from "./pages/MissingReportsPage"
 
 const App = () => {
   const [user, dispatch] = useReducer(MyUserReducer, null);
@@ -33,17 +33,17 @@ const App = () => {
       const token = cookie.load("token");
       if (token !== undefined) {
         try {
-          let res = await authApis().get(endpoints['current-user']);
+          let res = await authApis().get(endpoints["current-user"]);
           dispatch({
-            "type": "login",
-            "payload": res.data
+            type: "login",
+            payload: res.data,
           });
         } catch (err) {
           console.error("Lỗi load user từ token:", err);
           cookie.remove("token");
         }
       }
-    }
+    };
 
     loadUser();
   }, []);
@@ -60,7 +60,10 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/activitydetails/:activityId" element={<ActivityDetail />} />
+              <Route
+                path="/activitydetails/:activityId"
+                element={<ActivityDetail />}
+              />
               <Route path="/settings" element={<SettingsPage />} />
               {/* Staff */}
               <Route path="/addactivity" element={<AddActivity />} />
@@ -68,9 +71,19 @@ const App = () => {
               <Route path="/viewachievement" element={<ViewAchievement />} />
               <Route path="/statistics" element={<StatisticsPage />} />
               <Route path="/training-points" element={<TrainingPointsPage />} />
-              <Route path="/users/students/:userId" element={<StudentDetailsPage />} />
+              <Route
+                path="/users/students/:userId"
+                element={<StudentDetailsPage />}
+              />
+              <Route
+                path="/missing-reports"
+                element={<MissingReportsPage />}
+              />
               {/* Student */}
-              <Route path="/registeredactivity" element={<RegisteredActivity />} />
+              <Route
+                path="/registeredactivity"
+                element={<RegisteredActivity />}
+              />
               <Route path="/viewpoint" element={<ViewPoint />} />
               <Route path="/calendar" element={<CalendarPage />} />
 
@@ -82,7 +95,7 @@ const App = () => {
         </BrowserRouter>
       </MyDispatcherContext.Provider>
     </MyUserContext.Provider>
-  )
-}
+  );
+};
 
 export default App;

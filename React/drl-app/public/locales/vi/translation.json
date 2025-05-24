@@ -130,5 +130,22 @@
     "chatWith": "Chat với ",
     "messagePlaceholder": "Nhắn tin cho ",
     "send": "Gửi"
+  },
+  "missingReportsPage": {
+    "title": "Báo cáo điểm rèn luyện thiếu",
+    "headers": {
+      "userId": "Mã sinh viên",
+      "activityId": "Mã hoạt động",
+      "trainingPointId": "Mã điểm rèn luyện",
+      "point": "Điểm",
+      "dateReport": "Ngày báo cáo",
+      "status": "Trạng thái",
+      "image": "Hình minh chứng"
+    },
+    "status": {
+      "pending": "Chờ xác nhận"
+    },
+    "noData": "Không có báo cáo nào.",
+    "noImage": "Không có minh chứng"
   }
 }

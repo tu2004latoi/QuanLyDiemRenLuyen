@@ -6,10 +6,12 @@ package com.dtt.controllers;
 
 import com.dtt.pojo.Activity;
 import com.dtt.pojo.ActivityRegistrations;
+import com.dtt.pojo.Faculty;
 import com.dtt.pojo.User;
 import com.dtt.services.ActivityRegistrationService;
 import com.dtt.services.ActivityService;
 import com.dtt.services.EmailService;
+import com.dtt.services.FacultyService;
 import com.dtt.services.TrainingPointService;
 import com.dtt.services.UserService;
 import jakarta.ws.rs.core.MediaType;
@@ -52,9 +54,12 @@ public class ApiActivityController {
 
     @Autowired
     private TrainingPointService trainingPointSer;
-    
+
     @Autowired
     private EmailService emailSer;
+
+    @Autowired
+    private FacultyService facultySer;
 
     //Toàn bộ hoạt động API
     @GetMapping("/activities")
@@ -102,9 +107,9 @@ public class ApiActivityController {
 
             arSer.registerToActivity(user.getId(), activityId);
             String subject = "Xác nhận đăng ký hoạt động";
-            String content = "Xin chào " + user.getName()+ ",\n\n"
+            String content = "Xin chào " + user.getName() + ",\n\n"
                     + "Bạn đã đăng ký thành công hoạt động: " + a.getName() + ".\n"
-                    + "Thời gian: " + a.getStartDate()+ " - " + a.getEndDate() + "\n"
+                    + "Thời gian: " + a.getStartDate() + " - " + a.getEndDate() + "\n"
                     + "Địa điểm: " + a.getLocation() + "\n\n"
                     + "Trân trọng!";
             System.out.println("Sending email to: " + user.getEmail());
@@ -118,13 +123,25 @@ public class ApiActivityController {
 
     //Thêm 1 hoạt động
     @PostMapping(path = "/activities", consumes = MediaType.MULTIPART_FORM_DATA)
-    public ResponseEntity<Activity> addAcitivity(@ModelAttribute Activity a, Principal principal) {
+    public ResponseEntity<String> addActivity(
+            @ModelAttribute Activity a,
+            @RequestParam("facultyId") Integer facultyId,
+            Principal principal) {
+
         User u = userSer.getUserByUsername(principal.getName());
         if (u.getRole() == User.Role.STUDENT) {
             throw new AccessDeniedException("Sinh viên không được phép thêm hoạt động");
         }
-        Activity saved = this.activityService.addOrUpdateActivity(a);
-        return new ResponseEntity<>(saved, HttpStatus.CREATED);
+
+        a.setOrganizer(u);
+
+        Faculty f = facultySer.getFacultyById(facultyId);
+        a.setFaculty(f);
+
+        this.activityService.addOrUpdateActivity(a);
+
+        // Trả về chuỗi đơn giản
+        return ResponseEntity.status(HttpStatus.CREATED).body("Hoạt động đã được tạo thành công!");
     }
 
 }

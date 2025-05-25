@@ -51,7 +51,7 @@ public class SpringSecurityConfigs {
 
     @Autowired
     private UserDetailsService userDetailsService;
-    
+
     @Autowired
     private JwtFilter jwtFilter;
 
@@ -64,24 +64,6 @@ public class SpringSecurityConfigs {
     public HandlerMappingIntrospector
             mvcHandlerMappingIntrospector() {
         return new HandlerMappingIntrospector();
-    }
-
-    @Bean
-    public ClientRegistrationRepository clientRegistrationRepository() {
-        ClientRegistration googleRegistration = ClientRegistration.withRegistrationId("google")
-                .clientId("994268841222-vjdspthgkfdndjg1gjndgsbje9l9dbv4.apps.googleusercontent.com")
-                .clientSecret("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")
-                .scope("profile", "email")
-                .authorizationUri("https://accounts.google.com/o/oauth2/v2/auth")
-                .tokenUri("https://oauth2.googleapis.com/token")
-                .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo")
-                .userNameAttributeName("sub")
-                .clientName("Google")
-                .redirectUri("{baseUrl}/oauth2/callback/google")
-                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .build();
-
-        return new InMemoryClientRegistrationRepository(googleRegistration);
     }
 
     @Bean
@@ -104,14 +86,8 @@ public class SpringSecurityConfigs {
                 .requestMatchers("/my-activities").permitAll()
                 // Optionally expose remaining API if needed
                 .requestMatchers("/api/**").permitAll()
-
                 // All other requests
                 .anyRequest().authenticated()
-                )
-                .oauth2Login(oauth2 -> oauth2
-                .clientRegistrationRepository(clientRegistrationRepository())
-                .loginPage("/login")
-                .defaultSuccessUrl("/", true)
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form

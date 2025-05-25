@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Apis, { endpoints } from "../../configs/Apis";
 
 const ViewAchievement = () => {
+  const { t } = useTranslation();
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
@@ -14,22 +16,20 @@ const ViewAchievement = () => {
   return (
     <div className="container py-5">
       <div className="text-center mb-4">
-        <h2 className="fw-bold text-primary">Bảng thành tích sinh viên</h2>
-        <p className="text-muted">
-          Theo dõi thành tích của từng sinh viên theo các tiêu chí đánh giá
-        </p>
+        <h2 className="fw-bold text-primary">{t("achievementTable.title")}</h2>
+        <p className="text-muted">{t("achievementTable.description")}</p>
       </div>
 
       <div className="table-responsive shadow-sm rounded-4 overflow-hidden">
         <table className="table table-hover align-middle text-center mb-0">
           <thead className="table-light">
             <tr className="align-middle">
-              <th>Mã SV</th>
-              <th>Họ tên</th>
-              <th>Email</th>
-              <th>Tổng điểm</th>
-              <th>Xếp loại</th>
-              <th>Chi tiết</th>
+              <th>{t("achievementTable.studentId")}</th>
+              <th>{t("achievementTable.name")}</th>
+              <th>{t("achievementTable.email")}</th>
+              <th>{t("achievementTable.totalPoint")}</th>
+              <th>{t("achievementTable.classify")}</th>
+              <th>{t("achievementTable.details")}</th>
             </tr>
           </thead>
           <tbody>
@@ -49,15 +49,15 @@ const ViewAchievement = () => {
                     to={`/users/students/${student.id}`}
                     className="btn btn-outline-primary btn-sm rounded-pill px-3"
                   >
-                    Chi tiết
+                    {t("achievementTable.details")}
                   </Link>
                 </td>
               </tr>
             ))}
             {students.length === 0 && (
               <tr>
-                <td colSpan="11" className="text-muted text-center py-4">
-                  Không có dữ liệu sinh viên.
+                <td colSpan="6" className="text-muted text-center py-4">
+                  {t("achievementTable.noData")}
                 </td>
               </tr>
             )}

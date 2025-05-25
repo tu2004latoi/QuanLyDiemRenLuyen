@@ -130,5 +130,226 @@
     "chatWith": "Chat with ",
     "messagePlaceholder": "Message ",
     "send": "Send"
+  },
+  "missingReportsPage": {
+    "title": "Missing Training Point Reports",
+    "headers": {
+      "userId": "Student ID",
+      "activityId": "Activity ID",
+      "trainingPointId": "Training Point ID",
+      "point": "Point",
+      "dateReport": "Report Date",
+      "status": "Status",
+      "image": "Evidence Image"
+    },
+    "status": {
+      "pending": "Pending Confirmation"
+    },
+    "noData": "No reports available.",
+    "noImage": "No evidence provided"
+  },
+  "achievementChart": {
+    "distribution": "Achievement Distribution Chart",
+    "distributionStudent": "Student Achievement Distribution",
+    "count": "Count"
+  },
+  "addActivity": {
+    "title": "Add New Activity",
+    "labels": {
+      "name": "Activity Name",
+      "description": "Description",
+      "startDate": "Start Time",
+      "endDate": "End Time",
+      "location": "Location",
+      "faculty": "Organizing Faculty",
+      "maxParticipants": "Maximum Participants",
+      "pointType": "Point Type",
+      "pointValue": "Point Value",
+      "status": "Status",
+      "image": "Image",
+      "active": "Active"
+    },
+    "facultyOption": "-- Select Faculty --",
+    "pointTypeOptions": {
+      "POINT_1": "Point 1",
+      "POINT_2": "Point 2",
+      "POINT_3": "Point 3",
+      "POINT_4": "Point 4"
+    },
+    "statusOptions": {
+      "UPCOMING": "Upcoming",
+      "ONGOING": "Ongoing",
+      "COMPLETED": "Completed",
+      "CANCELLED": "Cancelled"
+    },
+    "submitButton": "Add Activity"
+  },
+  "statisticsFilterForm": {
+    "labels": {
+      "faculty": "Faculty",
+      "className": "Class",
+      "classification": "Classification"
+    },
+    "placeholders": {
+      "faculty": "-- Select Faculty --",
+      "className": "-- Select Class --",
+      "classification": "-- Select Type --"
+    },
+    "classifications": {
+      "excellent": "Excellent",
+      "good": "Good",
+      "fair": "Fair",
+      "average": "Average",
+      "weak": "Weak"
+    },
+    "button": {
+      "filter": "Filter"
+    }
+  },
+  "statisticsTable": {
+    "studentCode": "Student Code",
+    "name": "Full Name",
+    "email": "Email",
+    "faculty": "Faculty",
+    "class": "Class",
+    "point1": "Point 1",
+    "point2": "Point 2",
+    "point3": "Point 3",
+    "point4": "Point 4",
+    "totalPoint": "Total Point",
+    "classify": "Classification"
+  },
+  "achievementTable": {
+    "title": "Student Achievement Table",
+    "description": "Track each student's achievement based on evaluation criteria",
+    "studentId": "Student ID",
+    "name": "Full Name",
+    "email": "Email",
+    "totalPoint": "Total Point",
+    "classify": "Classification",
+    "details": "Details",
+    "noData": "No student data available."
+  },
+  "registeredActivity": {
+    "title": "Registered Activities",
+    "subtitle": "Manage activity information and evidence",
+    "table": {
+      "id": "ID",
+      "name": "Activity Name",
+      "registeredAt": "Registration Date",
+      "evidence": "Evidence",
+      "actions": "Actions",
+      "status": "Status"
+    },
+    "activity": "Activity",
+    "evidenceAlt": "Activity evidence",
+    "delete": "Delete",
+    "noEvidence": "No evidence yet",
+    "evidenceSent": "Evidence submitted",
+    "submitEvidence": "Submit evidence",
+    "cancelRegistration": "Cancel registration",
+    "reportMissing": "Report missing",
+    "status": {
+      "approved": "Approved",
+      "pending": "Pending approval",
+      "rejected": "Rejected",
+      "notSubmitted": "Evidence not submitted"
+    },
+    "noData": "You have not registered for any activities.",
+    "fetchError": "Error loading your activities.",
+    "submitError": "Error submitting evidence.",
+    "cancelError": "Error canceling registration.",
+    "deleteEvidenceError": "Error deleting evidence.",
+    "reportMissingError": "Error reporting missing evidence."
+  },
+  "viewPoint": {
+    "loading": "Loading user information...",
+    "loadError": "Failed to load user information",
+    "role": "Role",
+    "department": "Department",
+    "chartTitle": "Training Points Chart",
+    "point1": "Point 1",
+    "point2": "Point 2",
+    "point3": "Point 3",
+    "point4": "Point 4",
+    "point": "Point"
+  },
+  "notificationDropdown": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "loading": "Loading...",
+    "noNotifications": "No notifications"
+  },
+  "calendar": {
+    "title": "Activity Calendar — {{monthYear}}",
+    "prevMonth": "Previous Month",
+    "nextMonth": "Next Month",
+    "weekDays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "activitiesCount": "{{count}} activities",
+    "noActivities": "No activities",
+    "activityListTitle": "Activities on {{date}}",
+    "noActivityForDay": "No activities on this day.",
+    "viewDetails": "View activity details"
+  },
+  "login": {
+    "systemTitle": "Management System",
+    "systemSubtitle": "Training Points",
+    "loginPrompt": "Log in to access the system",
+    "roleLabel": "Role",
+    "selectRolePlaceholder": "-- Select role --",
+    "roleStudent": "Student",
+    "roleStaff": "Staff",
+    "roleAdmin": "Administrator",
+    "username": "Username",
+    "password": "Password",
+    "loginButton": "Log In",
+    "errorRoleMismatch": "You do not have permission to log in with the role \"{{role}}\".",
+    "errorLoginFailed": "Login failed. Please check your credentials."
+  },
+  "register": {
+    "systemTitle": "Management System",
+    "systemSubtitle": "Training Points",
+    "registerPrompt": "Don't have an account? Register now!",
+    "firstName": "First Name",
+    "lastName": "Last and Middle Name",
+    "email": "Username",
+    "password": "Password",
+    "confirm": "Confirm Password",
+    "selectFaculty": "-- Select Faculty --",
+    "selectClass": "-- Select Class --",
+    "avatar": "Avatar",
+    "submitButton": "Register",
+    "passwordMismatch": "Passwords do not match",
+    "errorOccurred": "An error occurred, please try again!"
+  },
+  "statistics": {
+    "pageTitle": "Student Achievement Statistics",
+    "exportCsv": "Export CSV",
+    "exportPdf": "Export PDF",
+    "csvTitle": "Export data to CSV file",
+    "pdfTitle": "Export data to PDF file",
+    "fetchError": "Error fetching statistics",
+    "exportError": "Error exporting file"
+  },
+  "student": {
+    "backToAchievements": "Back to Achievements Table",
+    "notFoundTitle": "Student information not found",
+    "notFoundMessage": "Please check the student ID again or try later.",
+    "personalInfo": "Personal Information",
+    "email": "Email",
+    "highlightAchievements": "Outstanding Achievements",
+    "totalPoint": "Total Points",
+    "classify": "Classification",
+    "academicResults": "Detailed Academic Results",
+    "classification": {
+      "excellent": "Excellent",
+      "good": "Good",
+      "fair": "Fair",
+      "average": "Average"
+    },
+    "criteria1": "Criteria 1",
+    "criteria2": "Criteria 2",
+    "criteria3": "Criteria 3",
+    "criteria4": "Criteria 4"
   }
 }

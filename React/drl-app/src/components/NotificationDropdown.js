@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { FaBell } from "react-icons/fa";
 import { authApis, endpoints } from "../configs/Apis";
+import { useTranslation } from "react-i18next";
 
 const NotificationDropdown = ({ user }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -11,9 +13,7 @@ const NotificationDropdown = ({ user }) => {
   const loadNotifications = async () => {
     try {
       setLoading(true);
-      console.log(endpoints["notifications"](user.id));
       const res = await authApis().get(endpoints["notifications"](user.id));
-      console.log(res.data);
       setNotifications(res.data);
     } catch (err) {
       console.error(err);
@@ -60,6 +60,7 @@ const NotificationDropdown = ({ user }) => {
       <button
         className="relative text-indigo-600 hover:text-indigo-800 transition"
         onClick={toggleDropdown}
+        aria-label={t("notificationDropdown.title")}
       >
         <FaBell size={22} />
         {unreadCount > 0 && (
@@ -73,20 +74,20 @@ const NotificationDropdown = ({ user }) => {
       {isOpen && (
         <div className="w-60 bg-white border border-gray-200 rounded-lg shadow-xl z-50">
           <div className="p-3 font-semibold text-gray-700 border-b flex justify-between items-center">
-            <span>Thông báo</span>
+            <span>{t("notificationDropdown.title")}</span>
             <button
               onClick={markAllRead}
               className="text-xs text-indigo-600 hover:underline"
               disabled={loading}
             >
-              Đánh dấu đã đọc
+              {t("notificationDropdown.markAllRead")}
             </button>
           </div>
 
           <div className="max-h-64 overflow-y-auto">
             {loading ? (
               <div className="p-4 text-center text-gray-500 text-sm">
-                Đang tải...
+                {t("notificationDropdown.loading")}
               </div>
             ) : notifications.length > 0 ? (
               <ul className="divide-y">
@@ -106,7 +107,7 @@ const NotificationDropdown = ({ user }) => {
               </ul>
             ) : (
               <div className="p-4 text-center text-gray-500 text-sm">
-                Không có thông báo nào
+                {t("notificationDropdown.noNotifications")}
               </div>
             )}
           </div>

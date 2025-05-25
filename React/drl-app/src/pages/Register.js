@@ -3,14 +3,16 @@ import { useRef, useState, useEffect } from "react";
 import Apis, { endpoints } from "../configs/Apis";
 import { useNavigate } from "react-router-dom";
 import MySpinner from "../components/layouts/MySpinner";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
+  const { t } = useTranslation();
   const info = [
-    { title: "Tên", field: "firstName", type: "text" },
-    { title: "Họ và tên lót", field: "lastName", type: "text" },
-    { title: "Tên đăng nhập", field: "email", type: "email" },
-    { title: "Mật khẩu", field: "password", type: "password" },
-    { title: "Xác nhận mật khẩu", field: "confirm", type: "password" },
+    { title: t("register.firstName"), field: "firstName", type: "text" },
+    { title: t("register.lastName"), field: "lastName", type: "text" },
+    { title: t("register.email"), field: "email", type: "email" },
+    { title: t("register.password"), field: "password", type: "password" },
+    { title: t("register.confirm"), field: "confirm", type: "password" },
   ];
 
   const [user, setUser] = useState({});
@@ -29,7 +31,7 @@ const Register = () => {
   const register = async (e) => {
     e.preventDefault();
     if (user.password !== user.confirm) {
-      setMsg("Mật khẩu không khớp");
+      setMsg(t("register.passwordMismatch"));
       return;
     }
 
@@ -50,7 +52,7 @@ const Register = () => {
       nav("/login");
     } catch (ex) {
       console.error(ex);
-      setMsg("Đã xảy ra lỗi, vui lòng thử lại!");
+      setMsg(t("register.errorOccurred"));
     } finally {
       setLoading(false);
     }
@@ -81,13 +83,13 @@ const Register = () => {
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-2xl shadow-xl">
       <div className="text-center mb-6">
-        <h1 className="text-3xl font-bold text-blue-700">Hệ thống quản lý</h1>
-        <h1 className="text-3xl font-bold text-blue-700 mb-2">
-          Điểm rèn luyện
+        <h1 className="text-3xl font-bold text-blue-700">
+          {t("register.systemTitle")}
         </h1>
-        <p className="text-sm text-gray-500">
-          Bạn chưa có tài khoản? Đăng ký ngay!
-        </p>
+        <h1 className="text-3xl font-bold text-blue-700 mb-2">
+          {t("register.systemSubtitle")}
+        </h1>
+        <p className="text-sm text-gray-500">{t("register.registerPrompt")}</p>
       </div>
 
       {msg && <Alert variant="danger">{msg}</Alert>}
@@ -115,7 +117,7 @@ const Register = () => {
           }}
           value={user.facultyId || ""}
         >
-          <option value="">-- Chọn khoa --</option>
+          <option value="">{t("register.selectFaculty")}</option>
           {faculties.map((f) => (
             <option key={f.id} value={f.id}>
               {f.name}
@@ -129,7 +131,7 @@ const Register = () => {
           onChange={(e) => setState(e.target.value, "classRoomId")}
           value={user.classRoomId || ""}
         >
-          <option value="">-- Chọn lớp --</option>
+          <option value="">{t("register.selectClass")}</option>
           {classes.map((c) => (
             <option key={c.id} value={c.id}>
               {c.name}
@@ -141,7 +143,7 @@ const Register = () => {
           ref={avatar}
           className="mt-3 mb-2 p-2 rounded-xl border border-gray-300"
           type="file"
-          placeholder="Ảnh đại diện"
+          placeholder={t("register.avatar")}
           required
         />
 
@@ -155,7 +157,7 @@ const Register = () => {
             variant="success"
             className="w-full mt-4 py-2 rounded-xl bg-green-500 hover:bg-green-600 transition-colors"
           >
-            Đăng ký
+            {t("register.submitButton")}
           </Button>
         )}
       </Form>

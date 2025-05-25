@@ -5,13 +5,10 @@ import { useNavigate } from "react-router-dom";
 import MySpinner from "../components/layouts/MySpinner";
 import cookie from "react-cookies";
 import { MyDispatcherContext } from "../configs/MyContexts";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
-  const info = [
-    { title: "Tên đăng nhập", field: "email", type: "email" },
-    { title: "Mật khẩu", field: "password", type: "password" },
-  ];
-
+  const { t } = useTranslation();
   const [user, setUser] = useState({});
   const [msg, setMsg] = useState(null);
   const [selectedRole, setSelectedRole] = useState("");
@@ -32,13 +29,13 @@ const Login = () => {
 
       let u = await authApis().get(endpoints["current-user"]);
       const roleMap = {
-        ADMIN: "Quản Trị Viên",
-        STAFF: "CTV sinh viên",
-        STUDENT: "Sinh viên",
+        ADMIN: t("login.roleAdmin"),
+        STAFF: t("login.roleStaff"),
+        STUDENT: t("login.roleStudent"),
       };
 
       if (roleMap[u.data.role] !== selectedRole) {
-        setMsg(`Bạn không có quyền đăng nhập với vai trò "${selectedRole}".`);
+        setMsg(t("login.errorRoleMismatch", { role: selectedRole }));
         cookie.remove("token");
         return;
       }
@@ -50,38 +47,40 @@ const Login = () => {
       nav("/");
     } catch (ex) {
       console.error(ex);
-      setMsg("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
+      setMsg(t("login.errorLoginFailed"));
     } finally {
       setLoading(false);
     }
   };
 
+  const info = [
+    { title: t("login.username"), field: "email", type: "email" },
+    { title: t("login.password"), field: "password", type: "password" },
+  ];
+
   return (
     <Container className="d-flex justify-content-center align-items-center min-vh-100">
-      <Card
-        className="p-4 shadow rounded-4"
-        style={{ maxWidth: "450px", width: "100%" }}
-      >
+      <Card className="p-4 shadow rounded-4" style={{ maxWidth: "450px", width: "100%" }}>
         <div className="text-center mb-4">
-          <h2 className="fw-bold text-primary">Hệ thống quản lý</h2>
-          <h4 className="fw-semibold text-secondary">Điểm rèn luyện</h4>
-          <p className="text-muted small">Đăng nhập để truy cập hệ thống</p>
+          <h2 className="fw-bold text-primary">{t("login.systemTitle")}</h2>
+          <h4 className="fw-semibold text-secondary">{t("login.systemSubtitle")}</h4>
+          <p className="text-muted small">{t("login.loginPrompt")}</p>
         </div>
 
         {msg && <Alert variant="danger">{msg}</Alert>}
 
         <Form onSubmit={login}>
           <Form.Group className="mb-3">
-            <Form.Label>Vai trò</Form.Label>
+            <Form.Label>{t("login.roleLabel")}</Form.Label>
             <Form.Select
               value={selectedRole}
               onChange={(e) => setSelectedRole(e.target.value)}
               required
             >
-              <option value="">-- Chọn vai trò --</option>
-              <option value="Sinh viên">Sinh viên</option>
-              <option value="CTV sinh viên">CTV sinh viên</option>
-              <option value="Quản Trị Viên">Quản Trị Viên</option>
+              <option value="">{t("login.selectRolePlaceholder")}</option>
+              <option value={t("login.roleStudent")}>{t("login.roleStudent")}</option>
+              <option value={t("login.roleStaff")}>{t("login.roleStaff")}</option>
+              <option value={t("login.roleAdmin")}>{t("login.roleAdmin")}</option>
             </Form.Select>
           </Form.Group>
 
@@ -103,7 +102,7 @@ const Login = () => {
           ) : (
             <div className="d-grid">
               <Button type="submit" variant="primary">
-                Đăng nhập
+                {t("login.loginButton")}
               </Button>
             </div>
           )}

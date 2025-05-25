@@ -147,5 +147,209 @@
     },
     "noData": "Không có báo cáo nào.",
     "noImage": "Không có minh chứng"
+  },
+  "achievementChart": {
+    "distribution": "Biểu đồ phân bố thành tích",
+    "distributionStudent": "Phân bố thành tích sinh viên",
+    "count": "Số lượng"
+  },
+  "addActivity": {
+    "title": "Thêm Hoạt Động Mới",
+    "labels": {
+      "name": "Tên hoạt động",
+      "description": "Mô tả",
+      "startDate": "Thời gian bắt đầu",
+      "endDate": "Thời gian kết thúc",
+      "location": "Địa điểm",
+      "faculty": "Khoa tổ chức",
+      "maxParticipants": "Số lượng tối đa",
+      "pointType": "Loại điểm",
+      "pointValue": "Số điểm",
+      "status": "Trạng thái",
+      "image": "Hình ảnh",
+      "active": "Kích hoạt"
+    },
+    "facultyOption": "-- Chọn khoa --",
+    "pointTypeOptions": {
+      "POINT_1": "Điều 1",
+      "POINT_2": "Điều 2",
+      "POINT_3": "Điều 3",
+      "POINT_4": "Điều 4"
+    },
+    "statusOptions": {
+      "UPCOMING": "Sắp diễn ra",
+      "ONGOING": "Đang diễn ra",
+      "COMPLETED": "Đã kết thúc",
+      "CANCELLED": "Đã hủy"
+    },
+    "submitButton": "Thêm hoạt động"
+  },
+  "statisticsFilterForm": {
+    "labels": {
+      "faculty": "Khoa",
+      "className": "Lớp",
+      "classification": "Thành tích"
+    },
+    "placeholders": {
+      "faculty": "-- Chọn khoa --",
+      "className": "-- Chọn lớp --",
+      "classification": "-- Chọn loại --"
+    },
+    "classifications": {
+      "excellent": "Xuất sắc",
+      "good": "Giỏi",
+      "fair": "Khá",
+      "average": "Trung bình",
+      "weak": "Yếu"
+    },
+    "button": {
+      "filter": "Lọc"
+    }
+  },
+  "statisticsTable": {
+    "studentCode": "Mã SV",
+    "name": "Họ và tên",
+    "email": "Email",
+    "faculty": "Khoa",
+    "class": "Lớp",
+    "point1": "Điểm 1",
+    "point2": "Điểm 2",
+    "point3": "Điểm 3",
+    "point4": "Điểm 4",
+    "totalPoint": "Tổng điểm",
+    "classify": "Xếp loại"
+  },
+  "achievementTable": {
+    "title": "Bảng thành tích sinh viên",
+    "description": "Theo dõi thành tích của từng sinh viên theo các tiêu chí đánh giá",
+    "studentId": "Mã SV",
+    "name": "Họ tên",
+    "email": "Email",
+    "totalPoint": "Tổng điểm",
+    "classify": "Xếp loại",
+    "details": "Chi tiết",
+    "noData": "Không có dữ liệu sinh viên."
+  },
+  "registeredActivity": {
+    "title": "Hoạt động đã đăng ký",
+    "subtitle": "Quản lý thông tin hoạt động và minh chứng",
+    "table": {
+      "id": "ID",
+      "name": "Tên hoạt động",
+      "registeredAt": "Ngày đăng ký",
+      "evidence": "Minh chứng",
+      "actions": "Hành động",
+      "status": "Trạng thái"
+    },
+    "activity": "Hoạt động",
+    "evidenceAlt": "Minh chứng hoạt động",
+    "delete": "Xóa",
+    "noEvidence": "Chưa có minh chứng",
+    "evidenceSent": "Đã gửi minh chứng",
+    "submitEvidence": "Gửi minh chứng",
+    "cancelRegistration": "Hủy đăng ký",
+    "reportMissing": "Báo thiếu",
+    "status": {
+      "approved": "Đã duyệt",
+      "pending": "Đang chờ duyệt",
+      "rejected": "Bị từ chối",
+      "notSubmitted": "Chưa gửi minh chứng"
+    },
+    "noData": "Bạn chưa đăng ký hoạt động nào.",
+    "fetchError": "Lỗi khi tải hoạt động của bạn.",
+    "submitError": "Lỗi khi gửi minh chứng.",
+    "cancelError": "Lỗi khi hủy đăng ký.",
+    "deleteEvidenceError": "Lỗi khi xóa minh chứng.",
+    "reportMissingError": "Lỗi khi báo thiếu minh chứng."
+  },
+  "viewPoint": {
+    "loading": "Đang tải thông tin người dùng...",
+    "loadError": "Không tải được thông tin người dùng",
+    "role": "Vai trò",
+    "department": "Phòng ban",
+    "chartTitle": "Biểu đồ điểm rèn luyện",
+    "point1": "Điểm 1",
+    "point2": "Điểm 2",
+    "point3": "Điểm 3",
+    "point4": "Điểm 4",
+    "point": "Điểm"
+  },
+  "notificationDropdown": {
+    "title": "Thông báo",
+    "markAllRead": "Đánh dấu đã đọc tất cả",
+    "loading": "Đang tải...",
+    "noNotifications": "Không có thông báo nào"
+  },
+  "calendar": {
+    "title": "Lịch hoạt động — {{monthYear}}",
+    "prevMonth": "Tháng trước",
+    "nextMonth": "Tháng sau",
+    "weekDays": ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
+    "activitiesCount": "{{count}} hoạt động",
+    "noActivities": "Không có hoạt động",
+    "activityListTitle": "Hoạt động ngày",
+    "noActivityForDay": "Không có hoạt động nào trong ngày này.",
+    "viewDetails": "Xem chi tiết hoạt động"
+  },
+  "login": {
+    "systemTitle": "Hệ thống quản lý",
+    "systemSubtitle": "Điểm rèn luyện",
+    "loginPrompt": "Đăng nhập để truy cập hệ thống",
+    "roleLabel": "Vai trò",
+    "selectRolePlaceholder": "-- Chọn vai trò --",
+    "roleStudent": "Sinh viên",
+    "roleStaff": "CTV sinh viên",
+    "roleAdmin": "Quản Trị Viên",
+    "username": "Tên đăng nhập",
+    "password": "Mật khẩu",
+    "loginButton": "Đăng nhập",
+    "errorRoleMismatch": "Bạn không có quyền đăng nhập với vai trò \"{{role}}\".",
+    "errorLoginFailed": "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin."
+  },
+  "register": {
+    "systemTitle": "Hệ thống quản lý",
+    "systemSubtitle": "Điểm rèn luyện",
+    "registerPrompt": "Bạn chưa có tài khoản? Đăng ký ngay!",
+    "firstName": "Tên",
+    "lastName": "Họ và tên lót",
+    "email": "Tên đăng nhập",
+    "password": "Mật khẩu",
+    "confirm": "Xác nhận mật khẩu",
+    "selectFaculty": "-- Chọn khoa --",
+    "selectClass": "-- Chọn lớp --",
+    "avatar": "Ảnh đại diện",
+    "submitButton": "Đăng ký",
+    "passwordMismatch": "Mật khẩu không khớp",
+    "errorOccurred": "Đã xảy ra lỗi, vui lòng thử lại!"
+  },
+  "statistics": {
+    "pageTitle": "Thống kê thành tích sinh viên",
+    "exportCsv": "Xuất CSV",
+    "exportPdf": "Xuất PDF",
+    "csvTitle": "Xuất dữ liệu ra file CSV",
+    "pdfTitle": "Xuất dữ liệu ra file PDF",
+    "fetchError": "Lỗi khi lấy thống kê",
+    "exportError": "Lỗi khi xuất file"
+  },
+  "student": {
+    "backToAchievements": "Quay lại bảng thành tích",
+    "notFoundTitle": "Không tìm thấy thông tin sinh viên",
+    "notFoundMessage": "Vui lòng kiểm tra lại ID sinh viên hoặc thử lại sau.",
+    "personalInfo": "Thông tin cá nhân",
+    "email": "Email",
+    "highlightAchievements": "Thành tích nổi bật",
+    "totalPoint": "Tổng điểm",
+    "classify": "Xếp loại",
+    "academicResults": "Chi tiết kết quả học tập",
+    "classification": {
+      "excellent": "Xuất sắc",
+      "good": "Giỏi",
+      "fair": "Khá",
+      "average": "Trung bình"
+    },
+    "criteria1": "Điều 1",
+    "criteria2": "Điều 2",
+    "criteria3": "Điều 3",
+    "criteria4": "Điều 4"
   }
 }

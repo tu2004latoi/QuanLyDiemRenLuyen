@@ -2,12 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { MyUserContext } from "../../configs/MyContexts";
 import { authApis, endpoints } from "../../configs/Apis";
 import { FaTrashAlt } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const RegisteredActivity = () => {
+  const { t } = useTranslation();
   const [activities, setActivities] = useState([]);
   const user = useContext(MyUserContext);
 
-  // Hàm load danh sách hoạt động đã đăng ký
   const fetchMyActivities = async () => {
     try {
       const res = await authApis().get(endpoints.myActivities);
@@ -22,7 +23,7 @@ const RegisteredActivity = () => {
           };
         } catch (err) {
           console.error(`Không thể lấy thông tin hoạt động ${activityId}:`, err);
-          return { name: `Hoạt động #${activityId}`, point: 0 };
+          return { name: `${t("registeredActivity.activity")} #${activityId}`, point: 0 };
         }
       };
 
@@ -56,7 +57,7 @@ const RegisteredActivity = () => {
 
       setActivities(data);
     } catch (err) {
-      console.error("Lỗi khi tải danh sách hoạt động:", err);
+      console.error(t("registeredActivity.fetchError"), err);
     }
   };
 
@@ -94,10 +95,9 @@ const RegisteredActivity = () => {
         },
       });
 
-      // Gửi thành công, tải lại danh sách hoạt động
       await fetchMyActivities();
     } catch (err) {
-      console.error("Lỗi khi gửi minh chứng:", err);
+      console.error(t("registeredActivity.submitError"), err);
     }
   };
 
@@ -106,7 +106,7 @@ const RegisteredActivity = () => {
       await authApis().delete(`${endpoints.myActivities}/${id}`);
       setActivities((prev) => prev.filter((act) => act.id !== id));
     } catch (err) {
-      console.error("Lỗi khi hủy đăng ký:", err);
+      console.error(t("registeredActivity.cancelError"), err);
     }
   };
 
@@ -117,18 +117,18 @@ const RegisteredActivity = () => {
         prev.map((act) =>
           act.evidenceId === evidenceId
             ? {
-              ...act,
-              evidence: null,
-              file: null,
-              isSubmitted: false,
-              hasSentEvidence: false,
-              evidenceId: null,
-            }
+                ...act,
+                evidence: null,
+                file: null,
+                isSubmitted: false,
+                hasSentEvidence: false,
+                evidenceId: null,
+              }
             : act
         )
       );
     } catch (err) {
-      console.error("Lỗi khi xóa minh chứng:", err);
+      console.error(t("registeredActivity.deleteEvidenceError"), err);
     }
   };
 
@@ -149,10 +149,9 @@ const RegisteredActivity = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      // Gửi thành công -> cập nhật lại trạng thái giao diện
       await fetchMyActivities();
     } catch (err) {
-      console.error("Lỗi khi báo thiếu minh chứng:", err);
+      console.error(t("registeredActivity.reportMissingError"), err);
     }
   };
 
@@ -160,10 +159,10 @@ const RegisteredActivity = () => {
     <div className="p-6 max-w-7xl mx-auto space-y-6">
       <div className="max-w-6xl mx-auto px-4 py-6 text-center border-b border-gray-300">
         <h1 className="text-4xl font-extrabold text-blue-700 drop-shadow-lg">
-          OPEN TRAINING POINT
+          {t("registeredActivity.title")}
         </h1>
         <p className="text-xl font-semibold text-gray-700 mt-1 drop-shadow-md">
-          CÁC HOẠT ĐỘNG ĐÃ DĂNG KÝ
+          {t("registeredActivity.subtitle")}
         </p>
       </div>
 
@@ -171,12 +170,12 @@ const RegisteredActivity = () => {
         <table className="min-w-full border-collapse border border-gray-300">
           <thead className="bg-gray-200">
             <tr>
-              <th className="py-3 px-4 border text-blue-600 font-bold">ID</th>
-              <th className="py-3 px-4 border text-blue-600 font-bold">Tên hoạt động</th>
-              <th className="py-3 px-4 border text-blue-600 font-bold">Thời gian đăng ký</th>
-              <th className="py-3 px-4 border text-blue-600 font-bold">Minh chứng</th>
-              <th className="py-3 px-4 border text-blue-600 font-bold">Hành động</th>
-              <th className="py-3 px-4 border text-blue-600 font-bold">Trạng thái</th>
+              <th className="py-3 px-4 border text-blue-600 font-bold">{t("registeredActivity.table.id")}</th>
+              <th className="py-3 px-4 border text-blue-600 font-bold">{t("registeredActivity.table.name")}</th>
+              <th className="py-3 px-4 border text-blue-600 font-bold">{t("registeredActivity.table.registeredAt")}</th>
+              <th className="py-3 px-4 border text-blue-600 font-bold">{t("registeredActivity.table.evidence")}</th>
+              <th className="py-3 px-4 border text-blue-600 font-bold">{t("registeredActivity.table.actions")}</th>
+              <th className="py-3 px-4 border text-blue-600 font-bold">{t("registeredActivity.table.status")}</th>
             </tr>
           </thead>
           <tbody>
@@ -201,7 +200,7 @@ const RegisteredActivity = () => {
                         <a href={evidence} target="_blank" rel="noopener noreferrer">
                           <img
                             src={evidence}
-                            alt="Minh chứng"
+                            alt={t("registeredActivity.evidenceAlt")}
                             className="w-16 h-16 object-cover rounded hover:opacity-80 transition"
                           />
                         </a>
@@ -211,21 +210,21 @@ const RegisteredActivity = () => {
                             onClick={() => handleDeleteEvidence(evidenceId)}
                           >
                             <FaTrashAlt className="text-base" />
-                            Xóa
+                            {t("registeredActivity.delete")}
                           </button>
                         )}
                       </div>
                     )}
-                    {!evidence && <span className="text-gray-400 italic">Chưa có</span>}
+                    {!evidence && <span className="text-gray-400 italic">{t("registeredActivity.noEvidence")}</span>}
                   </td>
                   <td className="py-3 px-4 border space-y-2">
                     {verifyStatus === "APPROVED" ? (
-                      <span className="text-green-600 text-sm font-medium">Đã gửi minh chứng</span>
+                      <span className="text-green-600 text-sm font-medium">{t("registeredActivity.evidenceSent")}</span>
                     ) : (
                       <>
                         <div className="flex flex-col space-y-1">
                           {hasSentEvidence && (
-                            <span className="text-green-600 text-sm font-medium">Đã gửi minh chứng</span>
+                            <span className="text-green-600 text-sm font-medium">{t("registeredActivity.evidenceSent")}</span>
                           )}
                           <input
                             type="file"
@@ -241,7 +240,7 @@ const RegisteredActivity = () => {
                               onClick={() => handleReportMissing(id)}
                               disabled={!evidence}
                             >
-                              Báo thiếu
+                              {t("registeredActivity.reportMissing")}
                             </button>
                           ) : (
                             <button
@@ -249,14 +248,14 @@ const RegisteredActivity = () => {
                               onClick={() => handleSubmitEvidence(id)}
                               disabled={!evidence}
                             >
-                              Gửi minh chứng
+                              {t("registeredActivity.submitEvidence")}
                             </button>
                           )}
                           <button
                             className="bg-red-500 text-white text-sm px-3 py-1 rounded hover:bg-red-600"
                             onClick={() => handleCancel(id)}
                           >
-                            Hủy đăng ký
+                            {t("registeredActivity.cancelRegistration")}
                           </button>
                         </div>
                       </>
@@ -264,13 +263,13 @@ const RegisteredActivity = () => {
                   </td>
                   <td className="py-3 px-4 border text-center">
                     {verifyStatus === "APPROVED" ? (
-                      <span className="text-green-600 font-semibold">Đã duyệt</span>
+                      <span className="text-green-600 font-semibold">{t("registeredActivity.status.approved")}</span>
                     ) : verifyStatus === "PENDING" ? (
-                      <span className="text-yellow-600 font-semibold">Đang chờ duyệt</span>
+                      <span className="text-yellow-600 font-semibold">{t("registeredActivity.status.pending")}</span>
                     ) : verifyStatus === "REJECTED" ? (
-                      <span className="text-red-600 font-semibold">Bị từ chối</span>
+                      <span className="text-red-600 font-semibold">{t("registeredActivity.status.rejected")}</span>
                     ) : (
-                      <span className="text-red-600 italic">Chưa gửi minh chứng</span>
+                      <span className="text-red-600 italic">{t("registeredActivity.status.notSubmitted")}</span>
                     )}
                   </td>
                 </tr>
@@ -278,8 +277,8 @@ const RegisteredActivity = () => {
             )}
             {activities.length === 0 && (
               <tr>
-                <td colSpan="6" className="py-4 text-center text-gray-500 italic">
-                  Không có hoạt động nào được đăng ký.
+                <td colSpan={6} className="text-center py-6 italic text-gray-500">
+                  {t("registeredActivity.noData")}
                 </td>
               </tr>
             )}

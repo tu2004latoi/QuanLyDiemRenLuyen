@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Apis, { endpoints } from "../configs/Apis";
 import {
   FaArrowLeft,
@@ -10,13 +11,13 @@ import {
   FaIdCard,
   FaAward,
 } from "react-icons/fa";
-import { GiGraduateCap } from "react-icons/gi";
 import { motion } from "framer-motion";
 
 const StudentDetail = () => {
   const { userId } = useParams();
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const loadStudent = async () => {
@@ -34,13 +35,13 @@ const StudentDetail = () => {
 
   const getBadgeColor = (classify) => {
     switch (classify) {
-      case "Xuất sắc":
+      case t("student.classification.excellent"):
         return "bg-gradient-to-r from-purple-600 via-pink-600 to-rose-500";
-      case "Giỏi":
+      case t("student.classification.good"):
         return "bg-gradient-to-r from-blue-600 to-cyan-500";
-      case "Khá":
+      case t("student.classification.fair"):
         return "bg-gradient-to-r from-emerald-500 to-teal-400";
-      case "Trung bình":
+      case t("student.classification.average"):
         return "bg-gradient-to-r from-amber-500 to-yellow-400";
       default:
         return "bg-gradient-to-r from-gray-500 to-gray-400";
@@ -89,13 +90,9 @@ const StudentDetail = () => {
                 d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <h3 className="font-semibold">
-              Không tìm thấy thông tin sinh viên
-            </h3>
+            <h3 className="font-semibold">{t("student.notFoundTitle")}</h3>
           </div>
-          <p className="mt-2 text-sm">
-            Vui lòng kiểm tra lại ID sinh viên hoặc thử lại sau.
-          </p>
+          <p className="mt-2 text-sm">{t("student.notFoundMessage")}</p>
         </motion.div>
       </div>
     );
@@ -115,7 +112,7 @@ const StudentDetail = () => {
           >
             <motion.div whileHover={{ x: -4 }} className="flex items-center">
               <FaArrowLeft className="mr-2 transition-transform group-hover:-translate-x-1" />
-              <span>Quay lại bảng thành tích</span>
+              <span>{t("student.backToAchievements")}</span>
             </motion.div>
           </Link>
         </motion.div>
@@ -128,18 +125,13 @@ const StudentDetail = () => {
         >
           {/* Header */}
           <div className="bg-gradient-to-r from-indigo-700 to-blue-600 p-6 text-white relative overflow-hidden">
-            <div className="absolute -right-10 -top-10 w-32 h-32 bg-white/10 rounded-full"></div>
-            <div className="absolute -right-20 top-20 w-40 h-40 bg-white/5 rounded-full"></div>
-
-            <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6 relative z-10">
-              <div className="bg-white/20 p-3 rounded-full backdrop-blur-sm border border-white/30">
-                <div className="w-20 h-20 rounded-full border-4 border-white/30 overflow-hidden shadow-lg bg-white">
-                  <img
-                    src={student.avatar}
-                    alt={student.studentName}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+            <div className="flex items-center space-x-6 relative z-10">
+              <div className="w-20 h-20 rounded-full border-4 border-white/30 overflow-hidden shadow-lg bg-white">
+                <img
+                  src={student.avatar}
+                  alt={student.studentName}
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div>
                 <h1 className="text-3xl font-bold tracking-tight">
@@ -167,43 +159,35 @@ const StudentDetail = () => {
               <div className="bg-gray-50 p-5 rounded-xl border border-gray-100">
                 <h2 className="text-xl font-semibold text-gray-700 pb-3 border-b border-gray-200 flex items-center">
                   <FaUserGraduate className="mr-2 text-indigo-600" />
-                  Thông tin cá nhân
+                  {t("student.personalInfo")}
                 </h2>
-
                 <div className="space-y-4 mt-4">
                   <div className="flex items-start">
                     <div className="bg-indigo-100 p-2 rounded-lg mr-3">
                       <FaEnvelope className="text-indigo-600" />
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Email</p>
-                      <p className="font-medium text-gray-800 break-all">
-                        {student.email}
-                      </p>
+                      <p className="text-sm text-gray-500">{t("student.email")}</p>
+                      <p className="font-medium text-gray-800 break-all">{student.email}</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Achievements */}
               <div className="bg-gray-50 p-5 rounded-xl border border-gray-100">
                 <h2 className="text-xl font-semibold text-gray-700 pb-3 border-b border-gray-200 flex items-center">
                   <FaAward className="mr-2 text-amber-600" />
-                  Thành tích nổi bật
+                  {t("student.highlightAchievements")}
                 </h2>
                 <div className="mt-4 space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-600">Tổng điểm:</span>
-                    <span className="font-bold text-blue-600">
-                      {student.totalPoint}
-                    </span>
+                    <span className="text-gray-600">{t("student.totalPoint")}:</span>
+                    <span className="font-bold text-blue-600">{student.totalPoint}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-gray-600">Xếp loại:</span>
+                    <span className="text-gray-600">{t("student.classify")}:</span>
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-semibold text-white ${getBadgeColor(
-                        student.classify
-                      )}`}
+                      className={`px-3 py-1 rounded-full text-xs font-semibold text-white ${getBadgeColor(student.classify)}`}
                     >
                       {student.classify}
                     </span>
@@ -217,7 +201,7 @@ const StudentDetail = () => {
               <div className="bg-gray-50 p-5 rounded-xl border border-gray-100">
                 <h2 className="text-xl font-semibold text-gray-700 pb-3 border-b border-gray-200 flex items-center">
                   <FaChartBar className="mr-2 text-green-600" />
-                  Chi tiết kết quả học tập
+                  {t("student.academicResults")}
                 </h2>
 
                 <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -228,12 +212,8 @@ const StudentDetail = () => {
                       className="bg-white p-4 rounded-lg shadow border border-gray-100 hover:shadow-md transition-shadow"
                     >
                       <div className="flex items-center justify-between">
-                        <h3 className="font-medium text-gray-700">{`Điều ${i}`}</h3>
-                        <span
-                          className={`text-lg font-bold ${getPointColor(
-                            student[`point_${i}`]
-                          )}`}
-                        >
+                        <h3 className="font-medium text-gray-700">{t(`student.criteria${i}`)}</h3>
+                        <span className={`text-lg font-bold ${getPointColor(student[`point_${i}`])}`}>
                           {student[`point_${i}`]}
                         </span>
                       </div>
@@ -241,10 +221,7 @@ const StudentDetail = () => {
                         <div
                           className="h-full bg-gradient-to-r from-blue-400 to-blue-600 rounded-full"
                           style={{
-                            width: `${Math.min(
-                              100,
-                              parseFloat(student[`point_${i}`])
-                            )}%`,
+                            width: `${Math.min(100, parseFloat(student[`point_${i}`]))}%`,
                           }}
                         />
                       </div>
@@ -256,16 +233,14 @@ const StudentDetail = () => {
                 <div className="mt-8 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl p-6 text-white shadow-lg">
                   <div className="flex flex-col md:flex-row justify-between items-center">
                     <div className="text-center md:text-left mb-4 md:mb-0">
-                      <p className="text-sm opacity-80">Tổng điểm học tập</p>
+                      <p className="text-sm opacity-80">{t("student.totalPoint")}</p>
                       <p className="text-4xl font-bold">{student.totalPoint}</p>
                     </div>
                     <div className="text-center">
-                      <p className="text-sm opacity-80">Xếp hạng</p>
+                      <p className="text-sm opacity-80">{t("student.classify")}</p>
                       <div className="mt-1 flex items-center justify-center">
                         <span
-                          className={`px-4 py-2 rounded-full text-white text-lg font-semibold ${getBadgeColor(
-                            student.classify
-                          )}`}
+                          className={`px-4 py-2 rounded-full text-white text-lg font-semibold ${getBadgeColor(student.classify)}`}
                         >
                           {student.classify}
                         </span>

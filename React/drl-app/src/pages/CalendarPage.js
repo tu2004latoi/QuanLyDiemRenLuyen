@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { useNavigate } from "react-router-dom"; // Thêm import
+import { useNavigate } from "react-router-dom";
 import { authApis, endpoints } from "../configs/Apis";
+import { useTranslation } from "react-i18next";
 
 function CalendarPage() {
+  const { t } = useTranslation();
   const [activities, setActivities] = useState([]);
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
-  const navigate = useNavigate(); // Khởi tạo hook điều hướng
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchActivities = async () => {
@@ -15,12 +17,12 @@ function CalendarPage() {
         const res = await authApis().get(endpoints["activities"]);
         setActivities(res.data);
       } catch (error) {
-        alert("Không tải được danh sách hoạt động");
+        alert(t("calendar.noActivities")); // Hoặc tạo riêng key báo lỗi tải hoạt động
         console.error(error);
       }
     };
     fetchActivities();
-  }, []);
+  }, [t]);
 
   const generateCalendarMatrix = (date) => {
     const year = date.getFullYear();
@@ -68,10 +70,8 @@ function CalendarPage() {
     setSelectedDate(null);
   };
 
-  // Ngày hôm nay
   const todayKey = new Date().toISOString().split("T")[0];
 
-  // Hàm điều hướng đến trang chi tiết hoạt động
   const goToActivityDetail = (id) => {
     navigate(`/activitydetails/${id}`);
   };
@@ -79,33 +79,32 @@ function CalendarPage() {
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
       <h2 className="text-3xl font-extrabold mb-6 text-center text-indigo-700">
-        Lịch hoạt động —{" "}
-        <span className="capitalize">
-          {currentDate.toLocaleString("vi-VN", {
+        {t("calendar.title", {
+          monthYear: currentDate.toLocaleString("vi-VN", {
             month: "long",
             year: "numeric",
-          })}
-        </span>
+          }),
+        })}
       </h2>
 
       <div className="flex justify-between items-center mb-6">
         <button
           onClick={() => changeMonth(-1)}
           className="flex items-center gap-2 px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 transition"
-          aria-label="Tháng trước"
-          title="Tháng trước"
+          aria-label={t("calendar.prevMonth")}
+          title={t("calendar.prevMonth")}
         >
           <FaChevronLeft />
-          Tháng trước
+          {t("calendar.prevMonth")}
         </button>
 
         <button
           onClick={() => changeMonth(1)}
           className="flex items-center gap-2 px-4 py-2 rounded-md bg-indigo-600 text-white hover:bg-indigo-700 transition"
-          aria-label="Tháng sau"
-          title="Tháng sau"
+          aria-label={t("calendar.nextMonth")}
+          title={t("calendar.nextMonth")}
         >
-          Tháng sau
+          {t("calendar.nextMonth")}
           <FaChevronRight />
         </button>
       </div>
@@ -113,7 +112,7 @@ function CalendarPage() {
       <table className="w-full border-collapse shadow-md rounded-lg overflow-hidden">
         <thead className="bg-indigo-100 text-indigo-700 font-semibold">
           <tr>
-            {["CN", "T2", "T3", "T4", "T5", "T6", "T7"].map((day) => (
+            {t("calendar.weekDays", { returnObjects: true }).map((day) => (
               <th key={day} className="p-3 border border-indigo-200">
                 {day}
               </th>
@@ -125,13 +124,10 @@ function CalendarPage() {
             <tr key={idx} className="even:bg-indigo-50">
               {week.map((date, idx2) => {
                 const dayKey = date ? date.toISOString().split("T")[0] : null;
-                const hasActivity =
-                  dayKey && activitiesByDate[dayKey]?.length > 0;
+                const hasActivity = dayKey && activitiesByDate[dayKey]?.length > 0;
                 const isSelected =
                   dayKey ===
-                  (selectedDate
-                    ? selectedDate.toISOString().split("T")[0]
-                    : null);
+                  (selectedDate ? selectedDate.toISOString().split("T")[0] : null);
                 const isToday = dayKey === todayKey;
 
                 return (
@@ -153,9 +149,11 @@ function CalendarPage() {
                     onClick={() => date && setSelectedDate(date)}
                     title={
                       hasActivity
-                        ? `${activitiesByDate[dayKey].length} hoạt động`
+                        ? t("calendar.activitiesCount", {
+                            count: activitiesByDate[dayKey].length,
+                          })
                         : date
-                        ? "Không có hoạt động"
+                        ? t("calendar.noActivities")
                         : ""
                     }
                   >
@@ -172,7 +170,6 @@ function CalendarPage() {
                           {date.getDate()}
                         </div>
 
-                        {/* Chấm đỏ báo hoạt động */}
                         {hasActivity && (
                           <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 w-2.5 h-2.5 bg-red-500 rounded-full shadow-md"></div>
                         )}
@@ -188,11 +185,10 @@ function CalendarPage() {
         </tbody>
       </table>
 
-      {/* Danh sách hoạt động ngày được chọn */}
       {selectedDate && (
         <div className="mt-8 p-4 border border-indigo-200 rounded-lg shadow-inner bg-indigo-50">
           <h3 className="text-2xl font-semibold mb-4 text-indigo-700">
-            Hoạt động ngày {selectedDate.toLocaleDateString("vi-VN")}
+            {selectedDate.toLocaleDateString("vi-VN")}
           </h3>
           {activitiesByDate[selectedDate.toISOString().split("T")[0]] ? (
             <ul className="list-disc pl-5 space-y-2 text-indigo-900">
@@ -202,11 +198,11 @@ function CalendarPage() {
                     key={act.id}
                     className="text-lg font-medium hover:text-indigo-600 cursor-pointer transition"
                     onClick={() => goToActivityDetail(act.id)}
-                    title="Xem chi tiết hoạt động"
+                    title={t("calendar.viewDetails")}
                   >
                     <span className="font-semibold underline">{act.name}</span>{" "}
                     <span className="italic text-indigo-700">
-                      - {act.location || "Chưa có địa điểm"}
+                      - {act.location || t("calendar.noActivities")}
                     </span>
                   </li>
                 )
@@ -214,7 +210,7 @@ function CalendarPage() {
             </ul>
           ) : (
             <p className="text-indigo-600 text-lg">
-              Không có hoạt động nào trong ngày này.
+              {t("calendar.noActivityForDay")}
             </p>
           )}
         </div>

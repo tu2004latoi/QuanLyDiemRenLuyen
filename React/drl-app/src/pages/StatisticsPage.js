@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import StatisticsFilterForm from "../components/Staffs/StatisticsFilterForm";
 import StatisticsTable from "../components/Staffs/StatisticsTable";
 import AchievementChart from "../components/Staffs/AchievementChart";
 import Apis, { endpoints } from "../configs/Apis";
 
 const StatisticsPage = () => {
+  const { t } = useTranslation();
   const [data, setData] = useState({ students: [], achievementCounts: {} });
   const [filters, setFilters] = useState({
     faculty: "",
     className: "",
-    classification: ""
+    classification: "",
   });
 
   const fetchData = async (params = {}) => {
@@ -17,7 +19,7 @@ const StatisticsPage = () => {
       const res = await Apis.get(endpoints["statistics"], { params });
       setData(res.data);
     } catch (err) {
-      console.error("Lỗi khi lấy thống kê:", err);
+      console.error(t("statistics.fetchError"), err);
     }
   };
 
@@ -34,11 +36,11 @@ const StatisticsPage = () => {
       const url = endpoints[type];
       const res = await Apis.get(url, {
         params: filters,
-        responseType: "blob"
+        responseType: "blob",
       });
 
       const blob = new Blob([res.data], {
-        type: type === "csv" ? "text/csv" : "application/pdf"
+        type: type === "csv" ? "text/csv" : "application/pdf",
       });
       const downloadUrl = window.URL.createObjectURL(blob);
 
@@ -51,14 +53,18 @@ const StatisticsPage = () => {
       link.remove();
       window.URL.revokeObjectURL(downloadUrl);
     } catch (error) {
-      console.error("Lỗi khi xuất file:", error);
+      console.error(t("statistics.exportError"), error);
     }
   };
 
   return (
     <div className="container py-5">
-      <h2 className="fw-bold text-primary mb-4 text-center" style={{ fontSize: "2.5rem", letterSpacing: "1.2px" }}>
-        <i className="fas fa-chart-bar me-2"></i>Thống kê thành tích sinh viên
+      <h2
+        className="fw-bold text-primary mb-4 text-center"
+        style={{ fontSize: "2.5rem", letterSpacing: "1.2px" }}
+      >
+        <i className="fas fa-chart-bar me-2"></i>
+        {t("statistics.pageTitle")}
       </h2>
 
       <div className="card shadow-sm mb-4 p-4">
@@ -70,17 +76,17 @@ const StatisticsPage = () => {
           className="btn btn-success btn-lg shadow-sm"
           onClick={() => handleExport("csv")}
           style={{ minWidth: "140px", fontWeight: "600" }}
-          title="Xuất dữ liệu ra file CSV"
+          title={t("statistics.csvTitle")}
         >
-          <i className="fas fa-file-csv me-2"></i> Xuất CSV
+          <i className="fas fa-file-csv me-2"></i> {t("statistics.exportCsv")}
         </button>
         <button
           className="btn btn-danger btn-lg shadow-sm"
           onClick={() => handleExport("pdf")}
           style={{ minWidth: "140px", fontWeight: "600" }}
-          title="Xuất dữ liệu ra file PDF"
+          title={t("statistics.pdfTitle")}
         >
-          <i className="fas fa-file-pdf me-2"></i> Xuất PDF
+          <i className="fas fa-file-pdf me-2"></i> {t("statistics.exportPdf")}
         </button>
       </div>
 

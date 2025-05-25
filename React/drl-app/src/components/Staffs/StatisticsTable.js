@@ -1,23 +1,26 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const StatisticsTable = ({ students }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="table-responsive mb-4">
       <table className="table table-bordered table-hover rounded-4 overflow-hidden shadow-sm">
         <thead className="table-primary text-center align-middle">
           <tr>
             <th>#</th>
-            <th>Mã SV</th>
-            <th>Họ và tên</th>
-            <th>Email</th>
-            <th>Khoa</th>
-            <th>Lớp</th>
-            <th>Điểm 1</th>
-            <th>Điểm 2</th>
-            <th>Điểm 3</th>
-            <th>Điểm 4</th>
-            <th>Tổng điểm</th>
-            <th>Xếp loại</th>
+            <th>{t("statisticsTable.studentCode")}</th>
+            <th>{t("statisticsTable.name")}</th>
+            <th>{t("statisticsTable.email")}</th>
+            <th>{t("statisticsTable.faculty")}</th>
+            <th>{t("statisticsTable.class")}</th>
+            <th>{t("statisticsTable.point1")}</th>
+            <th>{t("statisticsTable.point2")}</th>
+            <th>{t("statisticsTable.point3")}</th>
+            <th>{t("statisticsTable.point4")}</th>
+            <th>{t("statisticsTable.totalPoint")}</th>
+            <th>{t("statisticsTable.classify")}</th>
           </tr>
         </thead>
         <tbody className="text-center align-middle">

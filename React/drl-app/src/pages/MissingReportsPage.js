@@ -108,11 +108,11 @@ const MissingReportsPage = () => {
                   </td>
                   <td>
                     {r.status === STATUS.PENDING
-                      ? t("trainingPointsPage.table.unconfirmed")
+                      ? t("missingReportsPage.status.pending")
                       : r.status === STATUS.CONFIRMED
-                      ? t("trainingPointsPage.table.confirmed")
+                      ? t("missingReportsPage.status.confirmed")
                       : r.status === STATUS.REJECTED
-                      ? t("trainingPointsPage.table.rejected")
+                      ? t("missingReportsPage.status.rejected")
                       : r.status}
                   </td>
                   <td>

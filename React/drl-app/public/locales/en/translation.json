@@ -140,10 +140,13 @@
       "point": "Point",
       "dateReport": "Report Date",
       "status": "Status",
-      "image": "Evidence Image"
+      "image": "Evidence Image",
+      "actions": "Action"
     },
     "status": {
-      "pending": "Pending Confirmation"
+      "pending": "Pending Confirmation",
+      "confirmed": "Confirmed",
+      "reject": "Rejected"
     },
     "noData": "No reports available.",
     "noImage": "No evidence provided"

@@ -140,10 +140,13 @@
       "point": "Điểm",
       "dateReport": "Ngày báo cáo",
       "status": "Trạng thái",
-      "image": "Hình minh chứng"
+      "image": "Hình minh chứng",
+      "actions": "Hành động"
     },
     "status": {
-      "pending": "Chờ xác nhận"
+      "pending": "Chờ xác nhận",
+      "confirmed": "Đã xác nhận",
+      "reject": "Bị từ chối"
     },
     "noData": "Không có báo cáo nào.",
     "noImage": "Không có minh chứng"

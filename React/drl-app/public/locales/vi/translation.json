@@ -134,19 +134,31 @@
   "missingReportsPage": {
     "title": "Báo cáo điểm rèn luyện thiếu",
     "headers": {
-      "userId": "Mã sinh viên",
-      "activityId": "Mã hoạt động",
-      "trainingPointId": "Mã điểm rèn luyện",
+      "userId": "Sinh viên báo thiếu",
+      "activityId": "Hoạt động",
+      "trainingPointId": "Điều",
       "point": "Điểm",
-      "dateReport": "Ngày báo cáo",
+      "dateReport": "Thời gian báo thiếu",
       "status": "Trạng thái",
-      "image": "Hình minh chứng",
+      "image": "Minh chứng",
       "actions": "Hành động"
     },
     "status": {
-      "pending": "Chờ xác nhận",
+      "unconfirmed": "Chờ xác nhận",
       "confirmed": "Đã xác nhận",
-      "reject": "Bị từ chối"
+      "rejected": "Đã từ chối"
+    },
+    "action": {
+      "confirmed": "Xác nhận",
+      "rejected": "Từ chối"
+    },
+    "filters": {
+      "nameUser": "Tên người dùng",
+      "nameActivity": "Tên hoạt động",
+      "fromPoint": "Từ điểm",
+      "toPoint": "Đến điểm",
+      "faculty": "Khoa",
+      "selectFaculty": "Chọn khoa"
     },
     "noData": "Không có báo cáo nào.",
     "noImage": "Không có minh chứng"
@@ -287,7 +299,15 @@
     "title": "Lịch hoạt động — {{monthYear}}",
     "prevMonth": "Tháng trước",
     "nextMonth": "Tháng sau",
-    "weekDays": ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
+    "weekDays": [
+      "CN",
+      "T2",
+      "T3",
+      "T4",
+      "T5",
+      "T6",
+      "T7"
+    ],
     "activitiesCount": "{{count}} hoạt động",
     "noActivities": "Không có hoạt động",
     "activityListTitle": "Hoạt động ngày",

@@ -6,7 +6,6 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ActivityDetail from "./pages/ActivityDetails";
 import AddActivity from "./components/Staffs/AddActivity";
-import ReportList from "./components/Staffs/ReportList";
 import ViewAchievement from "./components/Staffs/ViewAchievement";
 import RegisteredActivity from "./components/Students/RegisteredActivity";
 import ViewPoint from "./components/Students/ViewPoint";
@@ -67,18 +66,11 @@ const App = () => {
               <Route path="/settings" element={<SettingsPage />} />
               {/* Staff */}
               <Route path="/addactivity" element={<AddActivity />} />
-              <Route path="/reportlist" element={<ReportList />} />
               <Route path="/viewachievement" element={<ViewAchievement />} />
               <Route path="/statistics" element={<StatisticsPage />} />
               <Route path="/training-points" element={<TrainingPointsPage />} />
-              <Route
-                path="/users/students/:userId"
-                element={<StudentDetailsPage />}
-              />
-              <Route
-                path="/missing-reports"
-                element={<MissingReportsPage />}
-              />
+              <Route path="/users/students/:userId" element={<StudentDetailsPage />} />
+              <Route path="/missing-reports"element={<MissingReportsPage />} />
               {/* Student */}
               <Route
                 path="/registeredactivity"

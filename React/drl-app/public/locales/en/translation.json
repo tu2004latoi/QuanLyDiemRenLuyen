@@ -134,21 +134,33 @@
   "missingReportsPage": {
     "title": "Missing Training Point Reports",
     "headers": {
-      "userId": "Student ID",
-      "activityId": "Activity ID",
-      "trainingPointId": "Training Point ID",
+      "userId": "Reporting Student",
+      "activityId": "Activity",
+      "trainingPointId": "Criteria",
       "point": "Point",
       "dateReport": "Report Date",
       "status": "Status",
-      "image": "Evidence Image",
-      "actions": "Action"
+      "image": "Evidence",
+      "actions": "Actions"
     },
     "status": {
-      "pending": "Pending Confirmation",
+      "unconfirmed": "Pending Confirmation",
       "confirmed": "Confirmed",
-      "reject": "Rejected"
+      "rejected": "Rejected"
     },
-    "noData": "No reports available.",
+    "action": {
+      "confirmed": "Confirm",
+      "rejected": "Reject"
+    },
+    "filters": {
+      "nameUser": "User Name",
+      "nameActivity": "Activity Name",
+      "fromPoint": "From Point",
+      "toPoint": "To Point",
+      "faculty": "Faculty",
+      "selectFaculty": "Select Faculty"
+    },
+    "noData": "No reports found.",
     "noImage": "No evidence provided"
   },
   "achievementChart": {
@@ -287,7 +299,15 @@
     "title": "Activity Calendar — {{monthYear}}",
     "prevMonth": "Previous Month",
     "nextMonth": "Next Month",
-    "weekDays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "weekDays": [
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat"
+    ],
     "activitiesCount": "{{count}} activities",
     "noActivities": "No activities",
     "activityListTitle": "Activities on {{date}}",

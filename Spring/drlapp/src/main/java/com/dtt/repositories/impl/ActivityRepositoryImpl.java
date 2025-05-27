@@ -5,6 +5,7 @@
 package com.dtt.repositories.impl;
 
 import com.dtt.pojo.Activity;
+import com.dtt.pojo.ActivityRegistrations;
 import com.dtt.repositories.ActivityRepository;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
@@ -12,6 +13,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.HashSet;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -67,18 +69,14 @@ public class ActivityRepositoryImpl implements ActivityRepository {
 
     @Override
     public void deleteActivity(int id) {
-        try {
-            Session s = this.factory.getObject().getCurrentSession();
-            Activity a = this.getActivityById(id);
-            if (a != null) {
-                s.remove(a);
-                System.out.println("Deleted activity with id: " + id); // Log cho kiểm tra
-            } else {
-                throw new RuntimeException("Activity not found with id: " + id);
-            }
-        } catch (Exception e) {
-            System.err.println("Error during delete: " + e.getMessage()); // Log lỗi
-            throw e;
+        Session s = this.factory.getObject().getCurrentSession();
+        Activity a = this.getActivityById(id);
+        if (a != null) {
+            a.getRegistrations().clear();
+            s.flush();
+            s.remove(a);
+        } else {
+            throw new RuntimeException("Activity not found with id: " + id);
         }
     }
 

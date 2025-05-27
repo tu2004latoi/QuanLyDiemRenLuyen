@@ -66,6 +66,7 @@ const App = () => {
               <Route path="/settings" element={<SettingsPage />} />
               {/* Staff */}
               <Route path="/addactivity" element={<AddActivity />} />
+              <Route path="/addactivity/:activityId" element={<AddActivity />} />
               <Route path="/viewachievement" element={<ViewAchievement />} />
               <Route path="/statistics" element={<StatisticsPage />} />
               <Route path="/training-points" element={<TrainingPointsPage />} />

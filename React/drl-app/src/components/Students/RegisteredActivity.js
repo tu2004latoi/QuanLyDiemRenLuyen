@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 const RegisteredActivity = () => {
   const { t } = useTranslation();
   const [activities, setActivities] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
   const user = useContext(MyUserContext);
 
   const fetchMyActivities = async () => {
@@ -16,14 +17,22 @@ const RegisteredActivity = () => {
 
       const getActivityInfo = async (activityId) => {
         try {
-          const res = await authApis().get(endpoints.activityDetail(activityId));
+          const res = await authApis().get(
+            endpoints.activityDetail(activityId)
+          );
           return {
             name: res.data.name,
             point: res.data.pointValue,
           };
         } catch (err) {
-          console.error(`Không thể lấy thông tin hoạt động ${activityId}:`, err);
-          return { name: `${t("registeredActivity.activity")} #${activityId}`, point: 0 };
+          console.error(
+            `Không thể lấy thông tin hoạt động ${activityId}:`,
+            err
+          );
+          return {
+            name: `${t("registeredActivity.activity")} #${activityId}`,
+            point: 0,
+          };
         }
       };
 
@@ -49,15 +58,18 @@ const RegisteredActivity = () => {
             verifyStatus: item.verifyStatus,
             file: null,
             isSubmitted:
-              item.verifyStatus === "APPROVED" || item.verifyStatus === "PENDING",
+              item.verifyStatus === "APPROVED" ||
+              item.verifyStatus === "PENDING",
             hasSentEvidence: item.filePath ? true : false,
           };
         })
       );
 
       setActivities(data);
+      setErrorMessage("");
     } catch (err) {
       console.error(t("registeredActivity.fetchError"), err);
+      setErrorMessage(t("registeredActivity.fetchError") + ": " + err.message);
     }
   };
 
@@ -96,8 +108,13 @@ const RegisteredActivity = () => {
       });
 
       await fetchMyActivities();
-    } catch (err) {
-      console.error(t("registeredActivity.submitError"), err);
+      setErrorMessage("");
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setErrorMessage(error.response.data.error);
+      } else {
+        setErrorMessage("Có lỗi xảy ra. Vui lòng thử lại sau.");
+      }
     }
   };
 
@@ -105,8 +122,10 @@ const RegisteredActivity = () => {
     try {
       await authApis().delete(`${endpoints.myActivities}/${id}`);
       setActivities((prev) => prev.filter((act) => act.id !== id));
+      setErrorMessage("");
     } catch (err) {
       console.error(t("registeredActivity.cancelError"), err);
+      setErrorMessage(t("registeredActivity.cancelError") + ": " + err.message);
     }
   };
 
@@ -127,8 +146,12 @@ const RegisteredActivity = () => {
             : act
         )
       );
+      setErrorMessage("");
     } catch (err) {
       console.error(t("registeredActivity.deleteEvidenceError"), err);
+      setErrorMessage(
+        t("registeredActivity.deleteEvidenceError") + ": " + err.message
+      );
     }
   };
 
@@ -150,13 +173,41 @@ const RegisteredActivity = () => {
         },
       });
       await fetchMyActivities();
+      setErrorMessage("");
     } catch (err) {
       console.error(t("registeredActivity.reportMissingError"), err);
+      setErrorMessage(
+        t("registeredActivity.reportMissingError") + ": " + err.message
+      );
     }
   };
 
   return (
     <div className="p-6 max-w-7xl mx-auto space-y-6 mb-20">
+      {errorMessage && (
+        <div
+          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+          role="alert"
+        >
+          <strong className="font-bold">{t("error")}:</strong>
+          <span className="block sm:inline ml-2">{errorMessage}</span>
+          <button
+            onClick={() => setErrorMessage("")}
+            className="absolute top-0 bottom-0 right-0 px-4 py-3"
+            aria-label={t("close")}
+          >
+            <svg
+              className="fill-current h-6 w-6 text-red-500"
+              role="button"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <title>{t("close")}</title>
+              <path d="M14.348 5.652a1 1 0 0 0-1.414 0L10 8.586 7.066 5.652A1 1 0 1 0 5.652 7.066L8.586 10l-2.934 2.934a1 1 0 1 0 1.414 1.414L10 11.414l2.934 2.934a1 1 0 0 0 1.414-1.414L11.414 10l2.934-2.934a1 1 0 0 0 0-1.414z" />
+            </svg>
+          </button>
+        </div>
+      )}
       <div className="max-w-6xl mx-auto px-4 py-6 text-center border-b border-gray-300">
         <h1 className="text-4xl font-extrabold text-blue-700 drop-shadow-lg">
           {t("registeredActivity.title")}
@@ -170,12 +221,24 @@ const RegisteredActivity = () => {
         <table className="min-w-full border-collapse border border-gray-300">
           <thead className="bg-gray-200">
             <tr>
-              <th className="py-3 px-4 border text-blue-600 font-bold">{t("registeredActivity.table.id")}</th>
-              <th className="py-3 px-4 border text-blue-600 font-bold">{t("registeredActivity.table.name")}</th>
-              <th className="py-3 px-4 border text-blue-600 font-bold">{t("registeredActivity.table.registeredAt")}</th>
-              <th className="py-3 px-4 border text-blue-600 font-bold">{t("registeredActivity.table.evidence")}</th>
-              <th className="py-3 px-4 border text-blue-600 font-bold">{t("registeredActivity.table.actions")}</th>
-              <th className="py-3 px-4 border text-blue-600 font-bold">{t("registeredActivity.table.status")}</th>
+              <th className="py-3 px-4 border text-blue-600 font-bold">
+                {t("registeredActivity.table.id")}
+              </th>
+              <th className="py-3 px-4 border text-blue-600 font-bold">
+                {t("registeredActivity.table.name")}
+              </th>
+              <th className="py-3 px-4 border text-blue-600 font-bold">
+                {t("registeredActivity.table.registeredAt")}
+              </th>
+              <th className="py-3 px-4 border text-blue-600 font-bold">
+                {t("registeredActivity.table.evidence")}
+              </th>
+              <th className="py-3 px-4 border text-blue-600 font-bold">
+                {t("registeredActivity.table.actions")}
+              </th>
+              <th className="py-3 px-4 border text-blue-600 font-bold">
+                {t("registeredActivity.table.status")}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -197,7 +260,11 @@ const RegisteredActivity = () => {
                   <td className="py-3 px-4 border text-center">
                     {evidence && (
                       <div className="flex flex-col items-center space-y-2">
-                        <a href={evidence} target="_blank" rel="noopener noreferrer">
+                        <a
+                          href={evidence}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           <img
                             src={evidence}
                             alt={t("registeredActivity.evidenceAlt")}
@@ -215,16 +282,24 @@ const RegisteredActivity = () => {
                         )}
                       </div>
                     )}
-                    {!evidence && <span className="text-gray-400 italic">{t("registeredActivity.noEvidence")}</span>}
+                    {!evidence && (
+                      <span className="text-gray-400 italic">
+                        {t("registeredActivity.noEvidence")}
+                      </span>
+                    )}
                   </td>
                   <td className="py-3 px-4 border space-y-2">
                     {verifyStatus === "APPROVED" ? (
-                      <span className="text-green-600 text-sm font-medium">{t("registeredActivity.evidenceSent")}</span>
+                      <span className="text-green-600 text-sm font-medium">
+                        {t("registeredActivity.evidenceSent")}
+                      </span>
                     ) : (
                       <>
                         <div className="flex flex-col space-y-1">
                           {hasSentEvidence && (
-                            <span className="text-green-600 text-sm font-medium">{t("registeredActivity.evidenceSent")}</span>
+                            <span className="text-green-600 text-sm font-medium">
+                              {t("registeredActivity.evidenceSent")}
+                            </span>
                           )}
                           <input
                             type="file"
@@ -263,13 +338,21 @@ const RegisteredActivity = () => {
                   </td>
                   <td className="py-3 px-4 border text-center">
                     {verifyStatus === "APPROVED" ? (
-                      <span className="text-green-600 font-semibold">{t("registeredActivity.status.approved")}</span>
+                      <span className="text-green-600 font-semibold">
+                        {t("registeredActivity.status.approved")}
+                      </span>
                     ) : verifyStatus === "PENDING" ? (
-                      <span className="text-yellow-600 font-semibold">{t("registeredActivity.status.pending")}</span>
+                      <span className="text-yellow-600 font-semibold">
+                        {t("registeredActivity.status.pending")}
+                      </span>
                     ) : verifyStatus === "REJECTED" ? (
-                      <span className="text-red-600 font-semibold">{t("registeredActivity.status.rejected")}</span>
+                      <span className="text-red-600 font-semibold">
+                        {t("registeredActivity.status.rejected")}
+                      </span>
                     ) : (
-                      <span className="text-red-600 italic">{t("registeredActivity.status.notSubmitted")}</span>
+                      <span className="text-red-600 italic">
+                        {t("registeredActivity.status.notSubmitted")}
+                      </span>
                     )}
                   </td>
                 </tr>
@@ -277,7 +360,10 @@ const RegisteredActivity = () => {
             )}
             {activities.length === 0 && (
               <tr>
-                <td colSpan={6} className="text-center py-6 italic text-gray-500">
+                <td
+                  colSpan={6}
+                  className="text-center py-6 italic text-gray-500"
+                >
                   {t("registeredActivity.noData")}
                 </td>
               </tr>

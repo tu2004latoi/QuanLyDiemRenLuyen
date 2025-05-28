@@ -6,12 +6,14 @@ package com.dtt.repositories.impl;
 
 import com.dtt.pojo.ActivityRegistrations;
 import com.dtt.pojo.Evidence;
+import com.dtt.pojo.TrainingPoint;
 import com.dtt.pojo.User;
 import com.dtt.repositories.EvidenceRepository;
 import com.dtt.repositories.MyActivityRepository;
 import com.dtt.services.ActivityRegistrationService;
 import com.dtt.services.EvidenceService;
 import com.dtt.services.MyActivityService;
+import com.dtt.services.TrainingPointService;
 import com.dtt.services.UserService;
 import java.util.List;
 import org.hibernate.Session;
@@ -45,6 +47,9 @@ public class MyActivityRepositoryImpl implements MyActivityRepository {
     
     @Autowired
     private ActivityRegistrationService arSer;
+    
+    @Autowired
+    private TrainingPointService tpSer;
 
     @Override
     public List<ActivityRegistrations> getListMyActivities() {
@@ -65,12 +70,11 @@ public class MyActivityRepositoryImpl implements MyActivityRepository {
         if (ar != null) {
             // Tìm Evidence theo ActivityRegistration
             Evidence e = this.evidenceRepo.getEvidenceByActivityRegistrationId(ar.getId());
-
             // Nếu tồn tại Evidence, tiến hành xóa
             if (e != null) {
                 this.evidenceRepo.deleteEvidence(e.getId());
             }
-
+            
             // Xóa ActivityRegistration
             s.remove(ar);
         } else {

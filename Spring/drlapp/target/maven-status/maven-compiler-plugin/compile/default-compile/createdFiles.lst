@@ -2,7 +2,6 @@ com\dtt\pojo\Activity$ActivityStatus.class
 com\dtt\controllers\ApiCommentController.class
 com\dtt\services\impl\FacultyServiceImpl.class
 com\dtt\controllers\ApiStudentController.class
-com\dtt\pojo\Message.class
 com\dtt\repositories\MyActivityRepository.class
 com\dtt\services\ActivityRegistrationService.class
 com\dtt\repositories\impl\ClassRoomRepositoryImpl.class
@@ -30,7 +29,6 @@ com\dtt\services\impl\StatisticsServiceImpl.class
 com\dtt\configs\HibernateConfigs.class
 com\dtt\controllers\ApiLikeController.class
 com\dtt\pojo\Attendance$Status.class
-com\dtt\pojo\Report.class
 com\dtt\services\impl\LikeServiceImpl.class
 com\dtt\repositories\impl\AdminRepositoryImpl.class
 com\dtt\repositories\impl\AttendanceRepositoryImpl.class
@@ -66,16 +64,13 @@ com\dtt\pojo\MissingReport$ReportStatus.class
 com\dtt\services\DepartmentService.class
 com\dtt\repositories\impl\StudentRepositoryImpl.class
 com\dtt\controllers\ApiTrainingPointController$1.class
-com\dtt\pojo\NewsFeed.class
 com\dtt\repositories\MissingReportRepository.class
 com\dtt\repositories\impl\NotificationRepositoryImpl.class
-com\dtt\repositories\NewsFeedRepository.class
 com\dtt\services\impl\ClassRoomServiceImpl.class
 com\dtt\services\impl\EmailServiceImpl.class
 com\dtt\services\impl\MyActivityServiceImpl.class
 com\dtt\controllers\IndexController.class
 com\dtt\configs\DispatcherServletInit.class
-com\dtt\pojo\ReportDetail.class
 com\dtt\configs\PasswordEncoderExample.class
 com\dtt\repositories\AdminRepository.class
 com\dtt\repositories\DepartmentRepository.class
@@ -105,7 +100,6 @@ com\dtt\configs\ThymeleafConfig.class
 com\dtt\pojo\Activity$PointType.class
 com\dtt\services\StaffService.class
 com\dtt\repositories\TrainingPointRepository.class
-com\dtt\repositories\impl\NewsFeedRepositoryImpl.class
 com\dtt\services\impl\TrainingPointServiceImpl$1.class
 com\dtt\repositories\AttendanceRepository.class
 com\dtt\repositories\impl\UserRepositoryImpl.class
@@ -117,7 +111,6 @@ com\dtt\repositories\impl\ActivityRepositoryImpl.class
 com\dtt\formatters\FacultyFormatter.class
 com\dtt\controllers\ActivityRegistrationController.class
 com\dtt\repositories\impl\MyActivityRepositoryImpl.class
-com\dtt\services\NewsFeedService.class
 com\dtt\services\impl\NotificationServiceImpl.class
 com\dtt\controllers\ApiFacultyController.class
 com\dtt\controllers\ApiStatisticsController.class
@@ -148,7 +141,6 @@ com\dtt\services\impl\TrainingPointServiceImpl.class
 com\dtt\controllers\ApiMyActivityController.class
 com\dtt\controllers\ApiUserController.class
 com\dtt\repositories\FacultyRepository.class
-com\dtt\services\impl\NewsFeedServiceImpl.class
 com\dtt\drlapp\resources\JakartaEE11Resource.class
 com\dtt\pojo\Student.class
 com\dtt\controllers\NotificationController.class
@@ -156,4 +148,3 @@ com\dtt\pojo\Faculty.class
 com\dtt\pojo\User.class
 com\dtt\services\ActivityService.class
 com\dtt\repositories\ActivityRepository.class
-com\dtt\pojo\ChatService.class

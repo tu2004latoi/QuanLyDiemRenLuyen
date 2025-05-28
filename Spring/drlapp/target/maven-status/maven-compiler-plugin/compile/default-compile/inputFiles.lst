@@ -46,7 +46,6 @@ E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\m
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\ActivityRegistrations.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Admin.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Attendance.java
-E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\ChatService.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\ClassRoom.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Comment.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Department.java
@@ -54,12 +53,8 @@ E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\m
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Evidence.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Faculty.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Like.java
-E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Message.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\MissingReport.java
-E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\NewsFeed.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Notification.java
-E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Report.java
-E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\ReportDetail.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Staff.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\Student.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\pojo\TrainingPoint.java
@@ -87,7 +82,6 @@ E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\m
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\LikeRepositoryImpl.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\MissingReportRepositoryImpl.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\MyActivityRepositoryImpl.java
-E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\NewsFeedRepositoryImpl.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\NotificationRepositoryImpl.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\StaffRepositoryImpl.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\impl\StatisticsRepositoryImpl.java
@@ -97,7 +91,6 @@ E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\m
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\LikeRepository.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\MissingReportRepository.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\MyActivityRepository.java
-E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\NewsFeedRepository.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\NotificationRepository.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\StaffRepository.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\repositories\StatisticsRepository.java
@@ -132,7 +125,6 @@ E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\m
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\LikeServiceImpl.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\MissingReportServiceImpl.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\MyActivityServiceImpl.java
-E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\NewsFeedServiceImpl.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\NotificationServiceImpl.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\StaffServiceImpl.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\impl\StatisticsServiceImpl.java
@@ -142,7 +134,6 @@ E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\m
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\LikeService.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\MissingReportService.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\MyActivityService.java
-E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\NewsFeedService.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\NotificationService.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\StaffService.java
 E:\Documents\Professional Documents\PTHTW\QuanLyDiemRenLuyen\Spring\drlapp\src\main\java\com\dtt\services\StatisticsService.java

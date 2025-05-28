@@ -4,6 +4,8 @@
  */
 package com.dtt.controllers;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.dtt.pojo.Activity;
 import static com.dtt.pojo.Activity.PointType.POINT_1;
 import static com.dtt.pojo.Activity.PointType.POINT_2;
@@ -19,6 +21,7 @@ import com.dtt.services.EvidenceService;
 import com.dtt.services.NotificationService;
 import com.dtt.services.TrainingPointService;
 import com.dtt.services.UserService;
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -66,6 +69,9 @@ public class ApiTrainingPointController {
 
     @Autowired
     private NotificationService noSer;
+    
+    @Autowired
+    private Cloudinary cloudinary;
 
     @GetMapping("/training-points")
     public ResponseEntity<?> getAllTrainingPoint() {
@@ -210,7 +216,7 @@ public class ApiTrainingPointController {
     }
 
     @PostMapping("/training-points/create")
-    public ResponseEntity<?> createTrainingPoint(
+    public ResponseEntity<?> createTrainingPointApi(
             @RequestParam("arId") Integer arId,
             @RequestParam("userId") Integer userId,
             @RequestParam("activityId") Integer activityId,
@@ -218,9 +224,27 @@ public class ApiTrainingPointController {
             @RequestParam("file") MultipartFile file) {
 
         try {
-            ActivityRegistrations ar = arSer.getActivityRegistrationById(arId);
-            User u = userSer.getUserById(userId);
-            Activity a = actSer.getActivityById(activityId);
+            // Tạo file tạm từ MultipartFile
+            File tempFile = File.createTempFile("upload-", ".tmp");
+            file.transferTo(tempFile);
+
+            // Kiểm tra chất lượng ảnh
+            boolean isGood = this.evidenceSer.checkImageQuality(tempFile);
+            if (!isGood) {
+                tempFile.delete();
+                return ResponseEntity
+                        .badRequest()
+                        .body(Map.of("error", "Ảnh bạn tải lên bị mờ, trắng hoặc đen. Vui lòng thử lại!"));
+            }
+
+            // Upload và xử lý tiếp
+            Map uploadResult = cloudinary.uploader().upload(tempFile, ObjectUtils.emptyMap());
+            String imageUrl = uploadResult.get("secure_url").toString();
+            tempFile.delete();
+
+            ActivityRegistrations ar = this.arSer.getActivityRegistrationById(arId);
+            User u = this.userSer.getUserById(userId);
+            Activity a = this.actSer.getActivityById(activityId);
 
             TrainingPoint t = new TrainingPoint();
             t.setUser(u);
@@ -229,23 +253,23 @@ public class ApiTrainingPointController {
             t.setDateAwarded(LocalDateTime.now());
             t.setConfirmedBy(null);
             t.setStatus(TrainingPoint.Status.PENDING);
-
-            tpSer.addOrUpdateTrainingPoint(t);
+            this.tpSer.addOrUpdateTrainingPoint(t);
 
             Evidence e = new Evidence();
             e.setActivityRegistration(ar);
             e.setUser(u);
             e.setTrainingPoint(t);
-            e.setFile(file);
+            e.setFilePath(imageUrl);
             e.setUploadDate(LocalDateTime.now());
             e.setVerifyStatus(Evidence.VerifyStatus.PENDING);
+            this.evidenceSer.addOrUpdateEvidence(e);
 
-            evidenceSer.addOrUpdateEvidence(e);
+            return ResponseEntity.ok(Map.of("message", "Gửi minh chứng thành công!"));
 
-            return ResponseEntity.ok("Training point and evidence created successfully.");
         } catch (Exception ex) {
+            ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error: " + ex.getMessage());
+                    .body(Map.of("error", "Đã xảy ra lỗi khi xử lý ảnh."));
         }
     }
 

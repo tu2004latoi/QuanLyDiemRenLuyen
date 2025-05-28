@@ -162,26 +162,6 @@ CREATE TABLE attendances (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- 11. Tạo bảng reports
-CREATE TABLE reports (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    generated_at DATETIME
-);
-
--- 12. Tạo bảng report_details
-CREATE TABLE report_details (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    report_id INT,
-    training_point_id INT,
-    FOREIGN KEY (report_id) REFERENCES reports(id) ON DELETE CASCADE,
-    FOREIGN KEY (training_point_id) REFERENCES training_points(id) ON DELETE CASCADE
-);
-
--- 13. Tạo bảng news_feed
-CREATE TABLE news_feed (
-    id INT AUTO_INCREMENT PRIMARY KEY
-);
-
 -- 14. Tạo bảng comments
 CREATE TABLE comments (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -201,22 +181,6 @@ CREATE TABLE likes (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (activity_id) REFERENCES activities(id) ON DELETE CASCADE
-);
-
--- 16. Tạo bảng chat_service
-CREATE TABLE chat_service (
-    id INT AUTO_INCREMENT PRIMARY KEY
-);
-
--- 17. Tạo bảng messages
-CREATE TABLE messages (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    chat_service_id INT,
-    sender_id INT,
-    content TEXT,
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (chat_service_id) REFERENCES chat_service(id) ON DELETE CASCADE,
-    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE notifications (

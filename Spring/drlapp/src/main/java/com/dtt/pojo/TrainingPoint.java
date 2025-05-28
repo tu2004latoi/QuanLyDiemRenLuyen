@@ -51,13 +51,9 @@ public class TrainingPoint implements Serializable {
     @Column(name = "status")
     private Status status;
 
-    @OneToOne(mappedBy = "trainingPoint")
+    @OneToOne(mappedBy = "trainingPoint", orphanRemoval = true)
     @JsonIgnore
     private Evidence evidences;
-
-    @OneToMany(mappedBy = "trainingPoint")
-    @JsonIgnore
-    private Set<ReportDetail> reportDetails;
 
     public enum Status {
         PENDING, CONFIRMED, REJECTED
@@ -128,13 +124,5 @@ public class TrainingPoint implements Serializable {
 
     public void setEvidences(Evidence evidences) {
         this.evidences = evidences;
-    }
-
-    public Set<ReportDetail> getReportDetails() {
-        return reportDetails;
-    }
-
-    public void setReportDetails(Set<ReportDetail> reportDetails) {
-        this.reportDetails = reportDetails;
     }
 }

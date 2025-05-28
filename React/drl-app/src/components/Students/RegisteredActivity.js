@@ -156,7 +156,7 @@ const RegisteredActivity = () => {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto space-y-6">
+    <div className="p-6 max-w-7xl mx-auto space-y-6 mb-20">
       <div className="max-w-6xl mx-auto px-4 py-6 text-center border-b border-gray-300">
         <h1 className="text-4xl font-extrabold text-blue-700 drop-shadow-lg">
           {t("registeredActivity.title")}

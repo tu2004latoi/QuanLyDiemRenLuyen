@@ -28,10 +28,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -142,6 +144,54 @@ public class ApiActivityController {
 
         // Trả về chuỗi đơn giản
         return ResponseEntity.status(HttpStatus.CREATED).body("Hoạt động đã được tạo thành công!");
+    }
+
+    //Cập nhật 1 hoạt động
+    @PutMapping(path = "/activities/{id}", consumes = MediaType.MULTIPART_FORM_DATA)
+    public ResponseEntity<String> updateActivity(
+            @PathVariable("id") int id,
+            @ModelAttribute Activity a,
+            @RequestParam(value = "file", required = false) MultipartFile file,
+            @RequestParam("facultyId") Integer facultyId,
+            Principal principal) {
+
+        User u = userSer.getUserByUsername(principal.getName());
+
+        if (u.getRole() == User.Role.STUDENT) {
+            throw new AccessDeniedException("Sinh viên không được phép cập nhật hoạt động");
+        }
+
+        Activity existingActivity = activityService.getActivityById(id);
+        if (existingActivity == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Hoạt động không tồn tại");
+        }
+
+        // Cập nhật các trường từ a
+        existingActivity.setName(a.getName());
+        existingActivity.setDescription(a.getDescription());
+        existingActivity.setStartDate(a.getStartDate());
+        existingActivity.setEndDate(a.getEndDate());
+        existingActivity.setLocation(a.getLocation());
+        existingActivity.setMaxParticipants(a.getMaxParticipants());
+        existingActivity.setActive(a.getActive());
+        existingActivity.setStatus(a.getStatus());
+        existingActivity.setPointType(a.getPointType());
+        existingActivity.setPointValue(a.getPointValue());
+
+        // ✅ Gán file upload nếu có
+        if (file != null && !file.isEmpty()) {
+            existingActivity.setFile(file); // Quan trọng
+        }
+
+        // Gán khoa và người tổ chức
+        Faculty f = facultySer.getFacultyById(facultyId);
+        existingActivity.setFaculty(f);
+        existingActivity.setOrganizer(u);
+
+        // Gọi service
+        activityService.addOrUpdateActivity(existingActivity);
+
+        return ResponseEntity.ok("Hoạt động đã được cập nhật thành công");
     }
 
 }

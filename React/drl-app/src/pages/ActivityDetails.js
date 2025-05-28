@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Apis, { authApis, endpoints } from "../configs/Apis";
+import { useNavigate } from "react-router-dom";
 import {
   FaArrowLeft,
   FaClipboardList,
@@ -22,6 +23,7 @@ const ActivityDetail = () => {
   const [commentContent, setCommentContent] = useState("");
   const [commentLoading, setCommentLoading] = useState(true);
   const user = useContext(MyUserContext);
+  const navigate = useNavigate();
 
   const loadActivityDetail = async () => {
     try {
@@ -173,6 +175,29 @@ const ActivityDetail = () => {
     }
   };
 
+  const handleDelete = async () => {
+    if (!window.confirm(t("activityDetails.confirmDelete"))) return;
+
+    const token = cookie.load("token");
+    if (!token || !user) {
+      alert(t("activityDetails.tokenMissing"));
+      return;
+    }
+
+    try {
+      const api = authApis();
+      await api.delete(endpoints.activityDetail(activityId));
+
+      alert(t("activityDetails.deleteSuccess", { activityName: activity.name }));
+      navigate("/"); // hoặc navigate("/activities") nếu bạn có route riêng
+    } catch (err) {
+      console.error("Lỗi khi xóa hoạt động:", err);
+      const msg =
+        err.response?.data?.message || err.response?.data || err.message;
+      alert(t("activityDetails.deleteFail", { error: msg }));
+    }
+  };
+
   useEffect(() => {
     loadActivityDetail();
     loadLikeCount();
@@ -298,10 +323,14 @@ const ActivityDetail = () => {
           )}
           {user?.role === "STAFF" && (
             <>
-              <button className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl">
+              <button
+                onClick={() => navigate(`/addactivity/${activityId}`)} className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl">
                 <FaEdit /> {t("activityDetails.edit")}
               </button>
-              <button className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl">
+              <button
+                onClick={handleDelete}
+                className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl"
+              >
                 <FaTrash /> {t("activityDetails.delete")}
               </button>
             </>

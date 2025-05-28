@@ -6,6 +6,7 @@ package com.dtt.services;
 
 import com.dtt.pojo.ActivityRegistrations;
 import com.dtt.pojo.Evidence;
+import java.io.File;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,4 +21,5 @@ public interface EvidenceService {
     Evidence getEvidenceById(int id);
     Evidence getEvidenceByActivityRegistrationId(int id);
     Evidence getEvidenceByTrainingPointId(int id);
+    boolean checkImageQuality(File imageFile);
 }

@@ -4,6 +4,8 @@
  */
 package com.dtt.controllers;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.dtt.pojo.Activity;
 import com.dtt.pojo.ActivityRegistrations;
 import com.dtt.pojo.Evidence;
@@ -15,6 +17,9 @@ import com.dtt.services.EvidenceService;
 import com.dtt.services.TrainingPointService;
 import com.dtt.services.UserService;
 import jakarta.validation.Valid;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +34,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -51,6 +57,9 @@ public class TrainingPointController {
 
     @Autowired
     private ActivityRegistrationService arSer;
+    
+    @Autowired
+    private Cloudinary cloudinary;
 
     @GetMapping("/training-points")
     public String trainingPointListView(Model model, @RequestParam Map<String, String> params) {
@@ -69,34 +78,63 @@ public class TrainingPointController {
     }
 
     @PostMapping("/training-points/create")
-    public String createTrainingPoint(@RequestParam("arId") Integer arId,
+    public String createTrainingPoint(
+            @RequestParam("arId") Integer arId,
             @RequestParam("userId") Integer userId,
             @RequestParam("activityId") Integer activityId,
             @RequestParam("point") Integer point,
-            @RequestParam("file") MultipartFile file) {
+            @RequestParam("file") MultipartFile file,
+            RedirectAttributes redirectAttributes) {
 
-        ActivityRegistrations ar = this.arSer.getActivityRegistrationById(arId);
-        User u = this.userSer.getUserById(userId);
-        Activity a = this.activitySer.getActivityById(activityId);
-        TrainingPoint t = new TrainingPoint();
-        t.setUser(u);
-        t.setActivity(a);
-        t.setPoint(point);
-        t.setDateAwarded(LocalDateTime.now());
-        t.setConfirmedBy(null);
-        t.setStatus(TrainingPoint.Status.PENDING);
+        try {
+            // Tạo file tạm từ MultipartFile
+            File tempFile = File.createTempFile("upload-", ".tmp");
+            file.transferTo(tempFile);
 
-        this.tpSer.addOrUpdateTrainingPoint(t);
+            // Kiểm tra chất lượng ảnh
+            boolean isGood = this.evidenceSer.checkImageQuality(tempFile);
+            if (!isGood) {
+                tempFile.delete();
+                redirectAttributes.addFlashAttribute("error", "Ảnh bạn tải lên bị mờ, trắng hoặc đen. Vui lòng thử lại!");
+                return "redirect:/my-activities";
+            }
 
-        Evidence e = new Evidence();
-        e.setActivityRegistration(ar);
-        e.setUser(u);
-        e.setTrainingPoint(t);
-        e.setFile(file);
-        e.setUploadDate(LocalDateTime.now());
-        e.setVerifyStatus(Evidence.VerifyStatus.PENDING);
+            Map uploadResult = cloudinary.uploader().upload(tempFile, ObjectUtils.emptyMap());
+            String imageUrl = uploadResult.get("secure_url").toString();
 
-        this.evidenceSer.addOrUpdateEvidence(e);
+            // Xoá file tạm sau khi upload
+            tempFile.delete();
+
+            // Tạo đối tượng entity
+            ActivityRegistrations ar = this.arSer.getActivityRegistrationById(arId);
+            User u = this.userSer.getUserById(userId);
+            Activity a = this.activitySer.getActivityById(activityId);
+
+            TrainingPoint t = new TrainingPoint();
+            t.setUser(u);
+            t.setActivity(a);
+            t.setPoint(point);
+            t.setDateAwarded(LocalDateTime.now());
+            t.setConfirmedBy(null);
+            t.setStatus(TrainingPoint.Status.PENDING);
+            this.tpSer.addOrUpdateTrainingPoint(t);
+
+            Evidence e = new Evidence();
+            e.setActivityRegistration(ar);
+            e.setUser(u);
+            e.setTrainingPoint(t);
+            e.setFilePath(imageUrl); // dùng URL từ Cloudinary
+            e.setUploadDate(LocalDateTime.now());
+            e.setVerifyStatus(Evidence.VerifyStatus.PENDING);
+            this.evidenceSer.addOrUpdateEvidence(e);
+
+            redirectAttributes.addFlashAttribute("msg", "Gửi minh chứng thành công!");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Đã xảy ra lỗi khi xử lý ảnh.");
+        }
+
         return "redirect:/my-activities";
     }
 

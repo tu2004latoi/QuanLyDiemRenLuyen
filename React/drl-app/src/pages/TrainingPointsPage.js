@@ -19,19 +19,16 @@ const TrainingPointsPage = () => {
     activityName: "",
   });
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
 
   const fetchTrainingPoints = async () => {
     setLoading(true);
     try {
-      const params = {};
-
-      if (filters.firstName) params.firstName = filters.firstName;
-      if (filters.lastName) params.lastName = filters.lastName;
-      if (filters.email) params.email = filters.email;
-      if (filters.activityName) params.activityName = filters.activityName;
-
-      const res = await Apis.get(endpoints["trainingPoints"], { params });
-      setTrainingPoints(res.data);
+      const res = await Apis.get(endpoints["trainingPoints"]);
+      console.log("Response:", res.data);
+      setTrainingPoints(res.data); // Mảng dữ liệu trả về
+      setCurrentPage(1); // Reset về trang đầu
     } catch (error) {
       console.error("Error fetching training points:", error);
     }
@@ -51,7 +48,7 @@ const TrainingPointsPage = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchTrainingPoints();
+    setCurrentPage(1); // Reset về trang đầu khi tìm kiếm
   };
 
   const updateTrainingPoint = async (id, action) => {
@@ -63,8 +60,24 @@ const TrainingPointsPage = () => {
     }
   };
 
+  // Lọc theo input
+  const filteredItems = trainingPoints.filter((tp) => {
+    return (
+      tp.userName?.toLowerCase().includes(filters.firstName.toLowerCase()) &&
+      tp.userName?.toLowerCase().includes(filters.lastName.toLowerCase()) &&
+      tp.userEmail?.toLowerCase().includes(filters.email.toLowerCase()) &&
+      tp.activityName?.toLowerCase().includes(filters.activityName.toLowerCase())
+    );
+  });
+
+  // Phân trang frontend
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
+
   return (
-    <div className="container py-5">
+    <div className="container py-5 mb-20">
       <h2 className="fw-bold text-primary mb-4">
         {t("trainingPointsPage.title")}
       </h2>
@@ -106,9 +119,7 @@ const TrainingPointsPage = () => {
             <input
               type="text"
               className="form-control"
-              placeholder={t(
-                "trainingPointsPage.search.placeholder.activityName"
-              )}
+              placeholder={t("trainingPointsPage.search.placeholder.activityName")}
               name="activityName"
               value={filters.activityName}
               onChange={handleInputChange}
@@ -116,8 +127,7 @@ const TrainingPointsPage = () => {
           </div>
           <div className="col-12 text-end mt-3">
             <button type="submit" className="btn btn-primary rounded-pill px-4">
-              <i className="fas fa-search"></i>{" "}
-              {t("trainingPointsPage.search.button")}
+              <i className="fas fa-search"></i> {t("trainingPointsPage.search.button")}
             </button>
           </div>
         </div>
@@ -148,25 +158,20 @@ const TrainingPointsPage = () => {
                   {t("trainingPointsPage.table.loading")}
                 </td>
               </tr>
-            ) : trainingPoints.length === 0 ? (
+            ) : currentItems.length === 0 ? (
               <tr>
                 <td colSpan="11" className="text-center">
                   {t("trainingPointsPage.table.noData")}
                 </td>
               </tr>
             ) : (
-              trainingPoints.map((tp) => (
+              currentItems.map((tp) => (
                 <tr key={tp.id} className="text-center">
                   <td>{tp.id}</td>
                   <td>{tp.userName}</td>
-                  <td>
-                    {tp.userEmail || t("trainingPointsPage.table.noEmail")}
-                  </td>
+                  <td>{tp.userEmail || t("trainingPointsPage.table.noEmail")}</td>
                   <td>{tp.activityName}</td>
-                  <td>
-                    {tp.pointType ||
-                      t("trainingPointsPage.table.unknownPointType")}
-                  </td>
+                  <td>{tp.pointType || t("trainingPointsPage.table.unknownPointType")}</td>
                   <td>{tp.point}</td>
                   <td>{tp.dataAwarded}</td>
                   <td>
@@ -193,9 +198,7 @@ const TrainingPointsPage = () => {
                       ? t("trainingPointsPage.table.unconfirmed")
                       : tp.status}
                   </td>
-                  <td>
-                    {tp.comfirmBy || t("trainingPointsPage.table.unconfirmed")}
-                  </td>
+                  <td>{tp.comfirmBy || t("trainingPointsPage.table.unconfirmed")}</td>
                   <td>
                     {tp.status === STATUS.PENDING && (
                       <>
@@ -218,9 +221,7 @@ const TrainingPointsPage = () => {
                     {tp.status === STATUS.CONFIRMED && (
                       <button
                         className="btn btn-sm btn-danger"
-                        onClick={() =>
-                          updateTrainingPoint(tp.id, "reject-after-approved")
-                        }
+                        onClick={() => updateTrainingPoint(tp.id, "reject-after-approved")}
                       >
                         <i className="fas fa-times"></i>{" "}
                         {t("trainingPointsPage.table.actions.reject")}
@@ -241,6 +242,29 @@ const TrainingPointsPage = () => {
             )}
           </tbody>
         </table>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="d-flex justify-content-center mt-4">
+            <nav>
+              <ul className="pagination">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                  <li
+                    key={pageNum}
+                    className={`page-item ${currentPage === pageNum ? "active" : ""}`}
+                  >
+                    <button
+                      className="page-link"
+                      onClick={() => setCurrentPage(pageNum)}
+                    >
+                      {pageNum}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        )}
       </div>
     </div>
   );

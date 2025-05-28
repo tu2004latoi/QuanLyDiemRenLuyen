@@ -17,11 +17,14 @@ const Home = () => {
   const [toPoint, setToPoint] = useState("");
   const [q] = useSearchParams();
   const navigate = useNavigate();
-  const PAGE_SIZE = 5;
+  const PAGE_SIZE = 6;
 
   const loadActivities = async () => {
     try {
       setLoading(true);
+
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       let url = `${endpoints["activities"]}?page=${page}&pageSize=${PAGE_SIZE}`;
       const faculId = q.get("faculId");
       const kw = q.get("kw");
@@ -52,10 +55,6 @@ const Home = () => {
     setFaculty(res.data);
   };
 
-  const loadMore = () => {
-    if (!loading && hasMore) setPage((prev) => prev + 1);
-  };
-
   const search = (e) => {
     e.preventDefault();
     let query = `/?`;
@@ -76,11 +75,11 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setPage(1);
-    setActivities([]);
     setFromPoint(q.get("fromPoint") || "");
     setToPoint(q.get("toPoint") || "");
     setKw(q.get("kw") || "");
+    setPage(1);
+    setActivities([]);
     setHasMore(true);
   }, [q]);
 
@@ -88,6 +87,21 @@ const Home = () => {
     if (page > 0) loadActivities();
     loadFacul();
   }, [page, q]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 300 &&
+        !loading &&
+        hasMore
+      ) {
+        setPage((prev) => prev + 1);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [loading, hasMore]);
 
   return (
     <>
@@ -168,11 +182,7 @@ const Home = () => {
         </div>
       )}
 
-      <div
-        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 py-8 ${
-          !hasMore ? "mb-20" : ""
-        }`}
-      >
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto px-4 py-8 mb-20">
         {activities.map((a) => (
           <div
             key={a.id}
@@ -206,19 +216,11 @@ const Home = () => {
           </div>
         ))}
       </div>
-
-      {hasMore && (
-        <div className="text-center mb-20">
-          <button
-            onClick={loadMore}
-            className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 shadow-lg transition"
-          >
-            {t("loadMore")}
-          </button>
+      {loading && (
+        <div className="flex justify-center mb-20">
+          <MySpinner />
         </div>
       )}
-
-      {loading && <MySpinner />}
     </>
   );
 };

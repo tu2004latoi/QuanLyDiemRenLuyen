@@ -6,12 +6,18 @@ package com.dtt.repositories.impl;
 
 import com.dtt.pojo.Activity;
 import com.dtt.pojo.ActivityRegistrations;
+import com.dtt.pojo.Notification;
+import com.dtt.pojo.User;
 import com.dtt.repositories.ActivityRepository;
+import com.dtt.services.EmailService;
+import com.dtt.services.NotificationService;
+import com.dtt.services.UserService;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import org.hibernate.Session;
@@ -21,6 +27,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 
 /**
@@ -34,6 +41,15 @@ public class ActivityRepositoryImpl implements ActivityRepository {
     private static final int PAGE_SIZE = 6;
     @Autowired
     private LocalSessionFactoryBean factory;
+    
+    @Autowired
+    private EmailService emailSer;
+    
+    @Autowired
+    private UserService userSer;
+    
+    @Autowired
+    private NotificationService noSer;
 
     @Override
     public Activity getActivityById(int id) {
@@ -72,6 +88,19 @@ public class ActivityRepositoryImpl implements ActivityRepository {
         Session s = this.factory.getObject().getCurrentSession();
         Activity a = this.getActivityById(id);
         if (a != null) {
+            Set<ActivityRegistrations> listRes = a.getRegistrations();
+            for (ActivityRegistrations ar : listRes){
+                User u = this.userSer.getUserById(ar.getUser().getId());
+                String subject = "Thông báo về hoạt động";
+                String content = "Hoạt động " + ar.getActivity().getName() + " đã bị xóa, vui lòng kiểm tra lại";
+                emailSer.sendEmail(u.getEmail(), subject, content);
+                Notification n = new Notification();
+                n.setContent(content);
+                n.setCreatedAt(LocalDateTime.now());
+                n.setUser(u);
+                n.setIsRead(false);
+                this.noSer.addNotification(n);
+            }
             a.getRegistrations().clear();
             s.flush();
             s.remove(a);

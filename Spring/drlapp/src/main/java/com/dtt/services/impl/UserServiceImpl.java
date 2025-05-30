@@ -197,4 +197,9 @@ public class UserServiceImpl implements UserService {
         .filter(u -> !u.getEmail().equals(username))
         .collect(Collectors.toList());
     }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return this.userRepo.getUserByEmail(email);
+    }
 }

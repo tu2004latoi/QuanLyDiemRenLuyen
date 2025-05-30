@@ -20,16 +20,33 @@ const Register = () => {
   const [classes, setClasses] = useState([]);
   const [msg, setMsg] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [emailError, setEmailError] = useState(null);
+  const emailTimeoutRef = useRef(null);
 
   const avatar = useRef();
   const nav = useNavigate();
 
   const setState = (value, field) => {
     setUser((prev) => ({ ...prev, [field]: value }));
+
+    // Nếu đang nhập email thì debounce kiểm tra
+    if (field === "email") {
+      if (emailTimeoutRef.current) clearTimeout(emailTimeoutRef.current);
+
+      emailTimeoutRef.current = setTimeout(() => {
+        checkEmailExists(value);
+      }, 500);
+    }
   };
 
   const register = async (e) => {
     e.preventDefault();
+
+    if (emailError) {
+      setMsg(emailError);
+      return;
+    }
+
     if (user.password !== user.confirm) {
       setMsg(t("register.passwordMismatch"));
       return;
@@ -68,6 +85,33 @@ const Register = () => {
     }
   };
 
+  const checkEmailExists = async (email) => {
+    if (!email) {
+      setEmailError(null);
+      return;
+    }
+
+    try {
+      const res = await Apis.get(endpoints["checkEmail"], {
+        params: { email },
+      });
+
+      // API trả về 200 nhưng có thể là "Email hợp lệ" hoặc "Email chưa được đăng ký"
+      if (res.data === "Email đã được sử dụng để đăng ký tài khoản") {
+        setEmailError("Email đã được sử dụng để đăng ký tài khoản");
+      } else {
+        setEmailError(null); // Email hợp lệ hoặc chưa tồn tại
+      }
+    } catch (ex) {
+      // Nếu lỗi 409 (email tồn tại và đã có user)
+      if (ex.response && ex.response.status === 409) {
+        setEmailError("Email đã được sử dụng để đăng ký tài khoản");
+      } else {
+        setEmailError("Lỗi kiểm tra email");
+      }
+    }
+  };
+
   useEffect(() => {
     const loadFaculties = async () => {
       try {
@@ -96,16 +140,24 @@ const Register = () => {
 
       <Form onSubmit={register}>
         {info.map((i) => (
-          <Form.Control
-            className="mt-3 mb-2 p-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400"
-            value={user[i.field] || ""}
-            onChange={(e) => setState(e.target.value, i.field)}
-            type={i.type}
-            key={i.field}
-            placeholder={i.title}
-            required
-          />
+          <div key={i.field} className="mb-2">
+            <Form.Control
+              className="mt-3 p-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400"
+              value={user[i.field] || ""}
+              onChange={(e) => setState(e.target.value, i.field)}
+              type={i.type}
+              placeholder={i.title}
+              required
+              isInvalid={i.field === "email" && !!emailError}
+            />
+            {i.field === "email" && emailError && (
+              <Form.Control.Feedback type="invalid">
+                {emailError}
+              </Form.Control.Feedback>
+            )}
+          </div>
         ))}
+        <Form.Control.Feedback type="invalid">{emailError}</Form.Control.Feedback>
 
         <Form.Select
           className="mt-3 mb-2 p-2 rounded-xl border border-gray-300"

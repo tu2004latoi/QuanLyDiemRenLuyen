@@ -41,7 +41,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Autowired
     private StudentService stSer;
-    
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -52,6 +52,19 @@ public class UserRepositoryImpl implements UserRepository {
         q.setParameter("email", username);
 
         return (User) q.getSingleResult();
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createNamedQuery("User.findByEmail", User.class);
+        q.setParameter("email", email);
+
+        try {
+            return (User) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override
@@ -105,7 +118,7 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         Query query = s.createQuery(q);
-        
+
         if (params != null) {
             int page = Integer.parseInt(params.getOrDefault("page", "1"));
             int size = Integer.parseInt(params.getOrDefault("size", "8"));
@@ -126,9 +139,9 @@ public class UserRepositoryImpl implements UserRepository {
             throw new IllegalArgumentException("Email này chưa được cấp!");
         }
         if (u.getId() == null) {
-            s.persist(u); 
+            s.persist(u);
         } else {
-            s.merge(u); 
+            s.merge(u);
         }
 
         return u;
@@ -187,7 +200,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         return q.getResultList();
     }
-    
+
     @Override
     public boolean authenticate(String username, String password) {
         User u = this.getUserByUsername(username);

@@ -73,6 +73,7 @@ public class SpringSecurityConfigs {
                 .authorizeHttpRequests(auth -> auth
                 // Public endpoints
                 .requestMatchers("/login", "/oauth2/**", "/register", "/users/register", "/users/update").permitAll()
+                .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers("/api/secure/profile", "/api/missing-reports/create").permitAll()
                 .requestMatchers("/faculties", "/classes", "/api/faculties/**").permitAll()
                 .requestMatchers("/js/**").permitAll()

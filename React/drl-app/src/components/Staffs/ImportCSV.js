@@ -138,11 +138,11 @@ export default function ImportCSV() {
                             setError(
                                 <span className="flex items-center">
                                     <FaTimesCircle className="mr-2" />
-                                    {err.response?.data?.error || "❌ Lỗi khi nhập dữ liệu từ CSV"}
+                                    {err.response?.data?.error || "Lỗi khi nhập dữ liệu từ CSV"}
                                 </span>
                             );
                             setMessage("");
-                            
+
                             // Reset file input even khi lỗi (nếu muốn)
                             setFile(null);
                             if (fileInputRef.current) fileInputRef.current.value = null;

@@ -78,7 +78,7 @@ public class SpringSecurityConfigs {
                 .requestMatchers("/faculties", "/classes", "/api/faculties/**").permitAll()
                 .requestMatchers("/js/**").permitAll()
                 // Restricted API endpoints
-                .requestMatchers("/api/export", "/api/missing-reports").hasAnyRole("ADMIN", "STAFF")
+                .requestMatchers("/api/export", "/api/missing-reports", "/api/attendances/**").hasAnyRole("ADMIN", "STAFF")
                 .requestMatchers("/training-points", "/statistics").hasAnyRole("ADMIN", "STAFF")
                 .requestMatchers("/api/classes/**").hasRole("ADMIN")
                 // Admin UI endpoints

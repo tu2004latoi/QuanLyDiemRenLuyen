@@ -31,7 +31,8 @@ export const endpoints = {
   missingReports: "/missing-reports",
   importCSVFile: "/attendances/import",
   confirmCSVFile: "/attendances/confirm",
-  attendances: "/attendances"
+  attendances: "/attendances",
+  checkEmail: "/public/check-email"
 };
 
 export const authApis = () => {

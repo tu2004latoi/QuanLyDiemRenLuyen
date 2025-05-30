@@ -28,4 +28,5 @@ public interface UserService extends UserDetailsService{
     public void flush();
     boolean authenticate(String username, String password);
     List<User> getUsersExcept(String username);
+    public User getUserByEmail(String email);
 }

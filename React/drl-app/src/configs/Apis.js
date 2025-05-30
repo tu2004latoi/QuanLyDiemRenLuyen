@@ -29,6 +29,9 @@ export const endpoints = {
   notifications: (userId) => `/users/${userId}/notifications`,
   markAllRead: (userId) => `/users/${userId}/notifications/mark-all-read`,
   missingReports: "/missing-reports",
+  importCSVFile: "/attendances/import",
+  confirmCSVFile: "/attendances/confirm",
+  attendances: "/attendances"
 };
 
 export const authApis = () => {

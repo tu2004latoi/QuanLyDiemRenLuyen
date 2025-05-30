@@ -23,6 +23,7 @@ import SettingsPage from "./pages/SettingPage";
 import StudentDetailsPage from "./pages/StudentDetailsPage";
 import CalendarPage from "./pages/CalendarPage";
 import MissingReportsPage from "./pages/MissingReportsPage"
+import ImportCSV from "./components/Staffs/ImportCSV";
 
 const App = () => {
   const [user, dispatch] = useReducer(MyUserReducer, null);
@@ -72,6 +73,7 @@ const App = () => {
               <Route path="/training-points" element={<TrainingPointsPage />} />
               <Route path="/users/students/:userId" element={<StudentDetailsPage />} />
               <Route path="/missing-reports"element={<MissingReportsPage />} />
+              <Route path="/importcsv"element={<ImportCSV />} />
               {/* Student */}
               <Route
                 path="/registeredactivity"

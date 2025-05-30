@@ -119,6 +119,13 @@ const Header = () => {
                   "text-blue-600",
                   "hover:bg-blue-100 hover:text-blue-800"
                 )}
+                {navItem(
+                  "/importcsv",
+                  <FaClipboardCheck />,
+                  t("nav.importCSV"),
+                  "text-blue-600",
+                  "hover:bg-blue-100 hover:text-blue-800"
+                )}
               </>
             )}
 

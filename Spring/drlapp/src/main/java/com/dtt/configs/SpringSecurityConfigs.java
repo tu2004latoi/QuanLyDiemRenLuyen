@@ -87,7 +87,6 @@ public class SpringSecurityConfigs {
                         "/js/**",
                         "/my-activities",
                         "/api/activities", "/api/activities/**",
-                        "/api/activity-registrations",
                         "/api/public/check-email",
                         "/api/users",
                         "/api/faculties",
@@ -96,6 +95,7 @@ public class SpringSecurityConfigs {
                         "/api/login"
                 ).permitAll()
                 .requestMatchers(
+                        "/api/activity-registrations",
                         "/api/users/activity-registration",
                         "/api/users/activity-registration/**",
                         "/api//activities/*/comments", "/api/activities/{id}/comments",

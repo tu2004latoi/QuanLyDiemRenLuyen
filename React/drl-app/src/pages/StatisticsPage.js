@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import StatisticsFilterForm from "../components/Staffs/StatisticsFilterForm";
 import StatisticsTable from "../components/Staffs/StatisticsTable";
 import AchievementChart from "../components/Staffs/AchievementChart";
-import Apis, { endpoints } from "../configs/Apis";
+import Apis, { authApis, endpoints } from "../configs/Apis";
 
 const StatisticsPage = () => {
   const { t } = useTranslation();
@@ -16,7 +16,7 @@ const StatisticsPage = () => {
 
   const fetchData = async (params = {}) => {
     try {
-      const res = await Apis.get(endpoints["statistics"], { params });
+      const res = await authApis().get(endpoints["statistics"], { params });
       setData(res.data);
     } catch (err) {
       console.error(t("statistics.fetchError"), err);

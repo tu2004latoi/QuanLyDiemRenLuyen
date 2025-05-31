@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Apis, { endpoints } from "../../configs/Apis";
+import Apis, { authApis, endpoints } from "../../configs/Apis";
 
 const ViewAchievement = () => {
   const { t } = useTranslation();
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
-    Apis.get(endpoints["students"])
+    authApis().get(endpoints["students"])
       .then((res) => setStudents(res.data))
       .catch((err) => console.error("Error fetching students:", err));
   }, []);

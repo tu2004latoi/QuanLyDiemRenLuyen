@@ -25,7 +25,7 @@ const TrainingPointsPage = () => {
   const fetchTrainingPoints = async () => {
     setLoading(true);
     try {
-      const res = await Apis.get(endpoints["trainingPoints"]);
+      const res = await authApis().get(endpoints["trainingPoints"]);
       console.log("Response:", res.data);
       setTrainingPoints(res.data); // Mảng dữ liệu trả về
       setCurrentPage(1); // Reset về trang đầu

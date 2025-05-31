@@ -64,7 +64,8 @@ const ActivityDetail = () => {
       return;
     }
 
-    const res = await Apis.get(endpoints.activityRegistratons);
+    const res = await authApis().get(endpoints.activityRegistratons);
+    console.log(res.data)
     const registrations = res.data;
 
     const hasRegistered = registrations.some(
@@ -92,7 +93,7 @@ const ActivityDetail = () => {
     if (!confirmRegister) return;
 
     try {
-      await Apis.post(endpoints.activityRegister, {
+      await authApis().post(endpoints.activityRegister, {
         userId: user.id,
         activityId: parseInt(activityId),
       });
@@ -189,7 +190,7 @@ const ActivityDetail = () => {
       await api.delete(endpoints.activityDetail(activityId));
 
       alert(t("activityDetails.deleteSuccess", { activityName: activity.name }));
-      navigate("/"); // hoặc navigate("/activities") nếu bạn có route riêng
+      navigate("/")
     } catch (err) {
       console.error("Lỗi khi xóa hoạt động:", err);
       const msg =

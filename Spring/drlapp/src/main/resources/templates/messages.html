@@ -229,25 +229,10 @@
                             <a class="nav-link" th:href="@{/activities}"><i class="fas fa-calendar-check"></i>Hoạt động</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/students}"><i class="fas fa-users"></i>Sinh viên</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/notifications}"><i class="fas fa-bell"></i>Thông báo</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" th:href="@{/statistics}"><i class="fas fa-chart-line"></i>Thống kê</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/account}"><i class="fas fa-user-circle"></i>Tài khoản</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link active" th:href="@{/messages}"><i class="fas fa-comments"></i>Tin nhắn</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" th:href="@{/settings}"><i class="fas fa-cogs"></i>Cài đặt</a>
-                        </li>
-                        <li class="nav-item mt-3 border-top pt-3">
-                            <a class="nav-link" th:href="@{/help}"><i class="fas fa-question-circle"></i>Trợ giúp</a>
                         </li>
                         <li class="nav-item" sec:authorize="isAuthenticated()">
                             <a class="nav-link" th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>Đăng xuất</a>

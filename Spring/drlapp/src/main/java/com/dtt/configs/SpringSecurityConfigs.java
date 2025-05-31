@@ -17,8 +17,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
@@ -67,27 +70,67 @@ public class SpringSecurityConfigs {
     }
 
     @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
+
+    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                 // Public endpoints
-                .requestMatchers("/login", "/oauth2/**", "/register", "/users/register", "/users/update").permitAll()
-                .requestMatchers("/api/public/**").permitAll()
-                .requestMatchers("/api/secure/profile", "/api/missing-reports/create").permitAll()
-                .requestMatchers("/faculties", "/classes", "/api/faculties/**").permitAll()
-                .requestMatchers("/js/**").permitAll()
-                // Restricted API endpoints
-                .requestMatchers("/api/export", "/api/missing-reports", "/api/attendances/**").hasAnyRole("ADMIN", "STAFF")
-                .requestMatchers("/training-points", "/statistics").hasAnyRole("ADMIN", "STAFF")
-                .requestMatchers("/api/classes/**").hasRole("ADMIN")
-                // Admin UI endpoints
-                .requestMatchers("/", "/home", "/activities/**", "/add", "/users/**", "/emails/**", "/missing-reports", "/classes/**", "/faculties/**").hasRole("ADMIN")
-                // Student/Staff access
-                .requestMatchers("/my-activities").permitAll()
-                // Optionally expose remaining API if needed
-                .requestMatchers("/api/**").permitAll()
-                // All other requests
+                .requestMatchers(
+                        "/login", "/oauth2/**", "/register", "/users/register", "/users/update",
+                        "/api/public/**",
+                        "/faculties", "/classes", "/api/faculties/**",
+                        "/js/**",
+                        "/my-activities",
+                        "/api/activities", "/api/activities/**",
+                        "/api/public/check-email",
+                        "/api/users",
+                        "/api/faculties",
+                        "/api/users/faculty/*/classes",
+                        "/api/activities/{activityId}/likes", "/api/activities/{id}/likes/count",
+                        "/api/login"
+                ).permitAll()
+                .requestMatchers(
+                        "/api/activity-registrations",
+                        "/api/users/activity-registration",
+                        "/api/users/activity-registration/**",
+                        "/api//activities/*/comments", "/api/activities/{id}/comments",
+                        "/api/evidences/**",
+                        "/api/activities/{activityId}/likes",
+                        "/api/secure/profile",
+                        "/api/missing-reports/create", "/api/missing-reports", "/api/missing-reports/{id}",
+                        "/api/my-activities", "/api/my-activities/**",
+                        "/api/notifications",
+                        "/api/users/students", "/api/users/students/**",
+                        "/api/training-points/create",
+                        "/api/users/{id}/notifications", "/api/users/{id}/notifications/mark-all-read"
+                ).hasAnyRole("ADMIN", "STAFF", "STUDENT")
+                // Restricted endpoints for ADMIN and STAFF
+                .requestMatchers(
+                        "/api/export", "/api/export/**",
+                        "/api/missing-reports",
+                        "/api/attendances/**", "/api/attendances",
+                        "/api/missing-reports/confirm/**", "/api/missing-reports/reject/{id}", "/api/missing-reports/reject-after-confirm/**",
+                        "/api/statistics",
+                        "/api/training-points", "/api/training-points/**", "/api/training-points/confirm/**", "/api/training-points/reject/**", "/api/training-points/reject-after-approved/**",
+                        "/training-points",
+                        "/statistics"
+                ).hasAnyRole("ADMIN", "STAFF")
+                // Restricted endpoints for ADMIN only
+                .requestMatchers(
+                        "/api/classes/**",
+                        "/api/emails/**",
+                        "/api/faculties/**",
+                        "/api/users/**",
+                        "/", "/home", "/activities/**", "/add",
+                        "/users/**", "/emails/**", "/missing-reports",
+                        "/classes/**", "/faculties/**"
+                ).hasRole("ADMIN")
+                // All other requests require authentication
                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -95,10 +138,12 @@ public class SpringSecurityConfigs {
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/", true)
-                .failureUrl("/login?error=true").permitAll()
+                .failureUrl("/login?error=true")
+                .permitAll()
                 )
                 .logout(logout -> logout
-                .logoutSuccessUrl("/login").permitAll()
+                .logoutSuccessUrl("/login")
+                .permitAll()
                 );
 
         return http.build();

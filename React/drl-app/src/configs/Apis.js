@@ -37,6 +37,7 @@ export const endpoints = {
 
 export const authApis = () => {
   const token = cookie.load("token");
+  console.log(token);
   return axios.create({
     baseURL: BASE_URL,
     headers: {

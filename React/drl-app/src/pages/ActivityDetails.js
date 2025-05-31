@@ -65,6 +65,7 @@ const ActivityDetail = () => {
     }
 
     const res = await Apis.get(endpoints.activityRegistratons);
+    console.log(res.data)
     const registrations = res.data;
 
     const hasRegistered = registrations.some(
@@ -189,7 +190,6 @@ const ActivityDetail = () => {
       await api.delete(endpoints.activityDetail(activityId));
 
       alert(t("activityDetails.deleteSuccess", { activityName: activity.name }));
-      navigate("/"); // hoặc navigate("/activities") nếu bạn có route riêng
     } catch (err) {
       console.error("Lỗi khi xóa hoạt động:", err);
       const msg =

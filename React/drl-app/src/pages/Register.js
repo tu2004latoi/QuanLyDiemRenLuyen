@@ -78,6 +78,7 @@ const Register = () => {
   const loadClasses = async (facultyId) => {
     try {
       let res = await Apis.get(endpoints["classes"](facultyId));
+      console.log("Classes response:", res.data);
       setClasses(res.data);
       setUser((prev) => ({ ...prev, classRoomId: "", facultyId }));
     } catch (err) {

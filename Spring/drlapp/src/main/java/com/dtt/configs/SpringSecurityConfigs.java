@@ -87,18 +87,21 @@ public class SpringSecurityConfigs {
                         "/js/**",
                         "/my-activities",
                         "/api/activities", "/api/activities/**",
+                        "/api/activity-registrations",
                         "/api/public/check-email",
+                        "/api/users",
                         "/api/faculties",
+                        "/api/users/faculty/*/classes",
                         "/api/activities/{activityId}/likes", "/api/activities/{id}/likes/count",
                         "/api/login"
                 ).permitAll()
                 .requestMatchers(
-                        "/api/users/activity-registration/**", "/api/users/activity-registration",
-                        "/api/users/faculty/*/classes",
+                        "/api/users/activity-registration",
+                        "/api/users/activity-registration/**",
                         "/api//activities/*/comments", "/api/activities/{id}/comments",
                         "/api/evidences/**",
                         "/api/activities/{activityId}/likes",
-                        "/api/secure/profile", 
+                        "/api/secure/profile",
                         "/api/missing-reports/create", "/api/missing-reports", "/api/missing-reports/{id}",
                         "/api/my-activities", "/api/my-activities/**",
                         "/api/notifications",
@@ -113,7 +116,7 @@ public class SpringSecurityConfigs {
                         "/api/attendances/**", "/api/attendances",
                         "/api/missing-reports/confirm/**", "/api/missing-reports/reject/{id}", "/api/missing-reports/reject-after-confirm/**",
                         "/api/statistics",
-                        "/api/training-points", "/api/training-points/**", "/api/training-points/confirm/**", "/api/training-points/reject/**", "/api/training-points/reject-after-approved/**", 
+                        "/api/training-points", "/api/training-points/**", "/api/training-points/confirm/**", "/api/training-points/reject/**", "/api/training-points/reject-after-approved/**",
                         "/training-points",
                         "/statistics"
                 ).hasAnyRole("ADMIN", "STAFF")
@@ -122,7 +125,7 @@ public class SpringSecurityConfigs {
                         "/api/classes/**",
                         "/api/emails/**",
                         "/api/faculties/**",
-                        "/api/users", "/api/users/**",
+                        "/api/users/**",
                         "/", "/home", "/activities/**", "/add",
                         "/users/**", "/emails/**", "/missing-reports",
                         "/classes/**", "/faculties/**"
